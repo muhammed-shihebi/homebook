@@ -12,6 +12,12 @@
 
 # Links
 
+**Git Erklärung part1:** <https://drive.google.com/file/d/1YdrXWTUmYxifWOel7CqRtToexzy5etFm/view?usp=sharing>
+
+**Git Erklärung part2:** <https://drive.google.com/file/d/1MCN5ylbF5lWTVEzC80FlwUQwGWtidJyS/view?usp=sharing>
+
+**Git & Github.pdf:** <https://drive.google.com/file/d/11DXjaS9XUuhwQp6f957lnjNTpuZyYuc7/view?usp=sharing> 
+
 **Meeting:** meet.google.com/xzv-gbap-awf
 
 **PRODUCT SPRINT PLAN:** https://rb.gy/0tg9dp
