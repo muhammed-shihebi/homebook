@@ -6,32 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="532dp"
+        android:layout_height="1021dp"
+        android:contentDescription="TODO"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_login_background"
+        tools:ignore="VectorDrawableCompat" />
+
     <Button
         android:id="@+id/LoginButton"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="272dp"
-        android:text="Login"
+        android:text="Log In"
+        app:backgroundTint="#857C23"
+        app:cornerRadius="50"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="161dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/PasswordField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="204dp"
+        android:layout_height="36dp"
+        android:background="@drawable/roundededittext"
         android:ems="10"
         android:hint="Password"
         android:inputType="textPassword"
-        tools:layout_editor_absoluteX="100dp"
+        android:paddingLeft="15"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="343dp" />
 
     <EditText
         android:id="@+id/EmailField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_width="204dp"
+        android:layout_height="36dp"
+        android:background="#FFFFFF"
+        android:background="@drawable/roundededittext"
+        android:ellipsize="none"
+        android:ems="50"
+        android:fadingEdge="horizontal"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="101dp"
+        android:paddingLeft="15"
+        android:shadowColor="#FAF3F3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintCircleRadius="50"
         tools:layout_editor_absoluteY="279dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
