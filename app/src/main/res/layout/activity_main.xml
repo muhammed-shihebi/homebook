@@ -8,8 +8,8 @@
 
     <Button
         android:id="@+id/LoginButton"
-        android:layout_width="88dp"
-        android:layout_height="wrap_content"
+        android:layout_width="132dp"
+        android:layout_height="56dp"
         android:text="Anmelden"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
