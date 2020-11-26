@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "565615834675",
+    "firebase_url": "https://homebook-420a0.firebaseio.com",
+    "project_id": "homebook-420a0",
+    "storage_bucket": "homebook-420a0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565615834675:android:035d5a59d7d35988c1d546",
+        "android_client_info": {
+          "package_name": "com.mabem.homebook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565615834675-ncjssh2lrbcn93p9ibtech2a9mt6d65p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Lbn4Blxbs2UT5w4T-IbhGyOwqeWZF1w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565615834675-ncjssh2lrbcn93p9ibtech2a9mt6d65p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
