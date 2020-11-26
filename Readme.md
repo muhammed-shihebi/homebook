@@ -26,8 +26,6 @@
 
 # Wichtige-Links
 
-**MVVM Erklärung:** <https://drive.google.com/file/d/1K7PAt2NL2hJVbJI2Vtounf2jsQw7vYJR/view?usp=sharing>
-
 **Git Erklärung part1:** <https://drive.google.com/file/d/1YdrXWTUmYxifWOel7CqRtToexzy5etFm/view?usp=sharing>
 
 **Git Erklärung part2:** <https://drive.google.com/file/d/1MCN5ylbF5lWTVEzC80FlwUQwGWtidJyS/view?usp=sharing>
