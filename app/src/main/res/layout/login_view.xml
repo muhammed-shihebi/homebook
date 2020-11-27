@@ -20,13 +20,13 @@
         tools:ignore="VectorDrawableCompat" />
 
     <Button
-        android:id="@+id/Rergister_signup"
+        android:id="@+id/register_sign_up"
         android:layout_width="88dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="236dp"
-        android:text="Log In"
+        android:text="@string/log_in"
         app:backgroundTint="#857C23"
-        app:cornerRadius="50"
+        app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -37,37 +37,40 @@
         android:layout_width="204dp"
         android:layout_height="36dp"
         android:layout_marginTop="196dp"
-        android:background="@drawable/rounded_edittext"
+        android:background="@drawable/rounded_edit_text"
         android:ellipsize="none"
         android:ems="50"
         android:fadingEdge="horizontal"
-        android:hint="Email"
+        android:hint="@string/email"
         android:inputType="textEmailAddress"
-        android:paddingLeft="15"
+        android:paddingStart="15dp"
         android:shadowColor="#FAF3F3"
-        app:layout_constraintBottom_toTopOf="@+id/Rergister_signup"
+        app:layout_constraintBottom_toTopOf="@+id/register_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo_text"
         app:layout_constraintVertical_bias="0.28"
-        tools:layout_constraintCircleRadius="50" />
+        tools:layout_constraintCircleRadius="50"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/PasswordField"
         android:layout_width="204dp"
         android:layout_height="36dp"
-        android:background="@drawable/rounded_edittext"
+        android:background="@drawable/rounded_edit_text"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
-        android:paddingLeft="15"
-        app:layout_constraintBottom_toTopOf="@+id/Rergister_signup"
+        app:layout_constraintBottom_toTopOf="@+id/register_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EmailField"
-        app:layout_constraintVertical_bias="0.152" />
+        app:layout_constraintVertical_bias="0.152"
+        android:paddingStart="15dp"
+
+        android:autofillHints="" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -79,17 +82,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.148"
-        app:srcCompat="@mipmap/ic_launcher_logo" />
+        app:srcCompat="@mipmap/ic_launcher_logo"
+        android:contentDescription="TODO" />
 
     <CheckBox
         android:id="@+id/Remember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Remember me"
+        android:text="@string/remember_me"
 
         android:textColor="#FFFFFF"
         app:buttonTint="#FFFFFF"
-        app:layout_constraintBottom_toTopOf="@+id/Rergister_signup"
+        app:layout_constraintBottom_toTopOf="@+id/register_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.362"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,10 +103,10 @@
         android:id="@+id/logo_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HOMEBOOK"
+        android:text="@string/homebook"
         android:textColor="#ACA325"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/Rergister_signup"
+        app:layout_constraintBottom_toTopOf="@+id/register_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
@@ -113,27 +117,27 @@
         android:id="@+id/LoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot Password"
+        android:text="@string/forgot_password"
         app:backgroundTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.882"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Rergister_signup"
+        app:layout_constraintTop_toBottomOf="@+id/register_sign_up"
         app:layout_constraintVertical_bias="0.095" />
 
     <Button
         android:id="@+id/SignupButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         app:backgroundTint="#00FFFFFF"
         app:iconTint="#00FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/LoginButton"
         app:layout_constraintHorizontal_bias="0.618"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Rergister_signup"
+        app:layout_constraintTop_toBottomOf="@+id/register_sign_up"
         app:layout_constraintVertical_bias="0.095"
         app:rippleColor="#00FFFFFF" />
 
