@@ -4,20 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".register_fragment.registerFragment"
+    android:background="@drawable/ic_login_background">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="532dp"
-        android:layout_height="1021dp"
-        android:background="#BC9191"
-        android:contentDescription="TODO"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_register_background"
-        tools:ignore="VectorDrawableCompat" />
+
 
     <Button
         android:id="@+id/register_sign_up"
@@ -37,12 +27,14 @@
         android:layout_width="204dp"
         android:layout_height="36dp"
         android:layout_marginTop="196dp"
+        android:autofillHints=""
         android:background="@drawable/rounded_edit_text"
         android:ellipsize="none"
         android:ems="50"
         android:fadingEdge="horizontal"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
         android:shadowColor="#FAF3F3"
         app:layout_constraintBottom_toTopOf="@+id/register_sign_up"
         app:layout_constraintEnd_toEndOf="parent"
@@ -50,15 +42,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo_text"
         app:layout_constraintVertical_bias="0.351"
-        tools:layout_constraintCircleRadius="50"
-        android:paddingStart="15dp"
-        android:autofillHints="" />
+        tools:layout_constraintCircleRadius="50dp" />
 
     <EditText
         android:id="@+id/NameField"
         android:layout_width="204dp"
         android:layout_height="36dp"
         android:layout_marginTop="196dp"
+        android:autofillHints=""
         android:background="@drawable/rounded_edit_text"
         android:ellipsize="none"
         android:ems="50"
@@ -73,13 +64,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logo_text"
         app:layout_constraintVertical_bias="0.0"
-        tools:layout_constraintCircleRadius="50"
-        android:autofillHints="" />
+        tools:layout_constraintCircleRadius="50dp" />
 
     <EditText
         android:id="@+id/PasswordField"
         android:layout_width="204dp"
         android:layout_height="36dp"
+        android:autofillHints=""
         android:background="@drawable/rounded_edit_text"
         android:ems="10"
         android:hint="@string/password"
@@ -90,13 +81,13 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EmailField"
-        app:layout_constraintVertical_bias="0.233"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="0.233" />
 
     <EditText
         android:id="@+id/Password2Field"
         android:layout_width="204dp"
         android:layout_height="36dp"
+        android:autofillHints=""
         android:background="@drawable/rounded_edit_text"
         android:ems="10"
         android:hint="@string/password_again"
@@ -107,21 +98,20 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EmailField"
-        app:layout_constraintVertical_bias="1.0"
-        android:autofillHints="" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="92dp"
         android:layout_height="80dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toTopOf="@+id/EmailField"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.148"
-        app:srcCompat="@mipmap/ic_launcher_logo"
-        android:contentDescription="TODO" />
+        app:srcCompat="@mipmap/ic_launcher_logo" />
 
     <TextView
         android:id="@+id/logo_text"
