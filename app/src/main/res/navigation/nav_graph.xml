@@ -14,10 +14,25 @@
         <action
             android:id="@+id/action_loginFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_welcomFragment"
+            app:destination="@id/welcomFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="com.mabem.homebook.register_fragment.registerFragment"
         android:label="register_fragment"
-        tools:layout="@layout/register_fragment" />
+        tools:layout="@layout/register_fragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_welcomFragment"
+            app:destination="@id/welcomFragment" />
+        <action
+            android:id="@+id/action_registerFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/welcomFragment"
+        android:name="com.mabem.homebook.welcome_fragment.WelcomeFragment"
+        android:label="welcom_fragment"
+        tools:layout="@layout/welcome_fragment" />
 </navigation>
