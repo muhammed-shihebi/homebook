@@ -17,4 +17,8 @@
     <string name="sign_up_with_google">Sign up with Google</string>
     <string name="sign_up_with_facebook">Sign up with Facebook</string>
     <string name="sign_out">Sign out</string>
+
+<!--    Don't change these keys when you translate the app [Nur] -->
+    <string name="saved_remember_me_preference">remember_me</string>
+    <bool name="remember_me_default_value">false</bool>
 </resources>

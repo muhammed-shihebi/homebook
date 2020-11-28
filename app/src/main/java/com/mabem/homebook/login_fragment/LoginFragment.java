@@ -1,23 +1,24 @@
 package com.mabem.homebook.login_fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,12 +37,12 @@ public class LoginFragment extends Fragment {
 
     //========================================= Attributes
 
-    private LoginViewModel mViewModel;
-    private LoginFragmentBinding loginBinding;
-    private FirebaseAuth firebaseAuth;
     private static final String LOGIN_FRAGMENT_TAG = "Login Fragment";
     private static final int RC_SIGN_IN = 385;
     GoogleSignInClient googleSignInClient;
+    private LoginViewModel mViewModel;
+    private LoginFragmentBinding loginBinding;
+    private FirebaseAuth firebaseAuth;
 
     //========================================= Methods
 
@@ -90,6 +91,15 @@ public class LoginFragment extends Fragment {
                 .build();
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
 
+        // Setup SharedPreferences for the Remember me checkbox
+        loginBinding.rememberCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(getString(R.string.saved_remember_me_preference), isChecked);
+            editor.apply();
+        });
+
+
         // The root must be returned to be displayed on the screen.
         // Make sure this statement stays at the bottom of onCreate function.
         return loginBinding.getRoot();
@@ -100,10 +110,10 @@ public class LoginFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             Log.d(LOGIN_FRAGMENT_TAG, "onViewCreated: There is a user logged in; " + currentUser.getEmail());
             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment);
-        }else{
+        } else {
             Log.d(LOGIN_FRAGMENT_TAG, "onViewCreated: There is no user logged in. Start normal. ");
         }
     }
@@ -137,22 +147,22 @@ public class LoginFragment extends Fragment {
 
     //========================================= Help Methods
 
-    public void loginWithEmail(View view){
+    public void loginWithEmail(View view) {
         String email = loginBinding.logInEmailEditText.getText().toString().trim();
         String password = loginBinding.logInPasswordEditText.getText().toString();
-        if(email.isEmpty() || password.isEmpty()){
+        if (email.isEmpty() || password.isEmpty()) {
             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: Email or Password were empty.");
             Toast.makeText(requireActivity(), "Please enter a Password and an Email.", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity(), task -> {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: The user was logged in successfully.");
                             Log.d(LOGIN_FRAGMENT_TAG, "registerWithEmail: userId: " + firebaseAuth.getCurrentUser().getUid());
                             Navigation.findNavController(view)
                                     .navigate(LoginFragmentDirections
                                             .actionLoginFragmentToMainFragment(firebaseAuth.getCurrentUser().getDisplayName()));
-                        }else{
+                        } else {
                             // The user is not logged in (Password or Email are false or no Internet).
                             Log.w(LOGIN_FRAGMENT_TAG, "loginWithEmail: ");
                             Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();

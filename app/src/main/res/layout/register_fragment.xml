@@ -26,14 +26,14 @@
             android:id="@+id/register_sign_up_button"
             android:layout_width="120dp"
             android:layout_height="62dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="12dp"
             android:text="@string/sign_up"
             android:textAllCaps="false"
             app:backgroundTint="#857C23"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toTopOf="@+id/register_log_in_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.642"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
@@ -79,6 +79,18 @@
             tools:layout_constraintCircleRadius="50dp" />
 
 
+        <CheckBox
+            android:id="@+id/register_remember_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remember_me"
+            android:textColor="#FFFFFF"
+            app:buttonTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/register_sign_up_button"
+            app:layout_constraintEnd_toStartOf="@+id/register_sign_up_button"
+            app:layout_constraintHorizontal_bias="0.825"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/register_sign_up_button" />
 
         <EditText
             android:id="@+id/register_password_edit_text"

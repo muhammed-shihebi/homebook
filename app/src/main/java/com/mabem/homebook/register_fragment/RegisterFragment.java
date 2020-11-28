@@ -1,6 +1,8 @@
 package com.mabem.homebook.register_fragment;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
@@ -89,6 +91,13 @@ public class RegisterFragment extends Fragment {
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+
+        registerBinding.registerRememberCheckbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean(getString(R.string.saved_remember_me_preference), isChecked);
+            editor.apply();
+        });
 
         return registerBinding.getRoot();
     }
