@@ -11,6 +11,8 @@
         android:background="@drawable/login_background"
         tools:context=".login_fragment.LoginFragment">
 
+
+
         <Button
             android:id="@+id/register_sign_up"
             android:layout_width="88dp"
@@ -23,6 +25,32 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/log_in_with_google_button"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/login_with_google"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LoginButton" />
+
+        <Button
+            android:id="@+id/log_in_with_facebook_button"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:text="@string/log_in_with_facebook"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/log_in_with_google_button"
+            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/EmailField"
@@ -111,10 +139,10 @@
             app:backgroundTint="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.778"
+            app:layout_constraintHorizontal_bias="0.826"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.941" />
+            app:layout_constraintVertical_bias="0.777" />
 
         <Button
             android:id="@+id/SignupButton"

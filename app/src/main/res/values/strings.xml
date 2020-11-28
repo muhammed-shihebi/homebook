@@ -13,4 +13,9 @@
     <string name="remember_me">Remember me</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="welcome">Welcome</string>
+    <string name="login_with_google">Log in with Google</string>
+    <string name="log_in_with_facebook">Log in with Facebook</string>
+    <string name="or">OR</string>
+    <string name="sign_up_with_google">Sign up with Google</string>
+    <string name="sign_up_with_facebook">Sign up with Facebook</string>
 </resources>
