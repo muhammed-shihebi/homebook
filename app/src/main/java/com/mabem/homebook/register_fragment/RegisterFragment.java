@@ -19,12 +19,12 @@ import android.view.ViewGroup;
 import com.mabem.homebook.R;
 import com.mabem.homebook.databinding.RegisterFragmentBinding;
 
-public class registerFragment extends Fragment {
+public class RegisterFragment extends Fragment {
 
     private RegisterViewModel mViewModel;
 
-    public static registerFragment newInstance() {
-        return new registerFragment();
+    public static RegisterFragment newInstance() {
+        return new RegisterFragment();
     }
 
     private RegisterFragmentBinding registerBinding;
@@ -36,11 +36,12 @@ public class registerFragment extends Fragment {
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         registerBinding = DataBindingUtil.inflate(inflater, R.layout.register_fragment, container, false);
 
-        registerBinding.LoginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_loginFragment);
-            }
+        registerBinding.registerLogInButton.setOnClickListener((v) ->{
+            Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_loginFragment);
+        });
+
+        registerBinding.registerSignUpButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_registerFragment_to_mainFragment);
         });
 
 

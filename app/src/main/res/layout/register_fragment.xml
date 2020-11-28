@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/login_background"
-        tools:context=".register_fragment.registerFragment">
+        tools:context=".register_fragment.RegisterFragment">
 
 
         <Button
@@ -17,6 +17,7 @@
             android:layout_width="225dp"
             android:layout_height="40dp"
             android:text="@string/sign_up_with_google"
+            android:textAllCaps="false"
             app:backgroundTint="#857C23"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toTopOf="@+id/sign_up_with_facebook_button"
@@ -32,28 +33,30 @@
             android:layout_height="40dp"
             android:layout_marginBottom="72dp"
             android:text="@string/sign_up_with_facebook"
+            android:textAllCaps="false"
             app:backgroundTint="#857C23"
             app:cornerRadius="50dp"
-            app:layout_constraintBottom_toTopOf="@+id/NameField"
+            app:layout_constraintBottom_toTopOf="@+id/name_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/register_sign_up"
+            android:id="@+id/register_sign_up_button"
             android:layout_width="120dp"
             android:layout_height="62dp"
             android:layout_marginBottom="15dp"
             android:text="@string/sign_up"
+            android:textAllCaps="false"
             app:backgroundTint="#857C23"
             app:cornerRadius="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/LoginButton"
+            app:layout_constraintBottom_toTopOf="@+id/register_log_in_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/EmailField"
+            android:id="@+id/register_email_edit_text"
             android:layout_width="204dp"
             android:layout_height="36dp"
             android:layout_marginBottom="6dp"
@@ -66,14 +69,14 @@
             android:inputType="textEmailAddress"
             android:paddingStart="15dp"
             android:shadowColor="#FAF3F3"
-            app:layout_constraintBottom_toTopOf="@+id/PasswordField"
+            app:layout_constraintBottom_toTopOf="@+id/register_password_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_constraintCircleRadius="50dp" />
 
         <EditText
-            android:id="@+id/NameField"
+            android:id="@+id/name_edit_text"
             android:layout_width="204dp"
             android:layout_height="36dp"
             android:layout_marginBottom="6dp"
@@ -86,16 +89,16 @@
             android:inputType="textEmailAddress"
             android:paddingStart="15dp"
             android:shadowColor="#FAF3F3"
-            app:layout_constraintBottom_toTopOf="@+id/EmailField"
+            app:layout_constraintBottom_toTopOf="@+id/register_email_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView3"
+            app:layout_constraintTop_toBottomOf="@+id/register_logo_image_view"
             app:layout_constraintVertical_bias="1.0"
             tools:layout_constraintCircleRadius="50dp" />
 
         <EditText
-            android:id="@+id/PasswordField"
+            android:id="@+id/register_password_edit_text"
             android:layout_width="204dp"
             android:layout_height="36dp"
             android:layout_marginBottom="6dp"
@@ -105,13 +108,13 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:paddingStart="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/Password2Field"
+            app:layout_constraintBottom_toTopOf="@+id/password_again_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
-            android:id="@+id/Password2Field"
+            android:id="@+id/password_again_edit_text"
             android:layout_width="204dp"
             android:layout_height="36dp"
             android:layout_marginBottom="15dp"
@@ -121,13 +124,13 @@
             android:hint="@string/password_again"
             android:inputType="textPassword"
             android:paddingStart="15dp"
-            app:layout_constraintBottom_toTopOf="@+id/register_sign_up"
+            app:layout_constraintBottom_toTopOf="@+id/register_sign_up_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/register_logo_image_view"
             android:layout_width="92dp"
             android:layout_height="80dp"
             android:contentDescription="TODO"
@@ -140,38 +143,39 @@
             app:srcCompat="@drawable/logo" />
 
         <TextView
-            android:id="@+id/logo_text"
+            android:id="@+id/register_logo_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/homebook"
             android:textColor="#ACA325"
             android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+            app:layout_constraintBottom_toBottomOf="@+id/register_logo_image_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/imageView3"
-            app:layout_constraintTop_toTopOf="@+id/imageView3"
+            app:layout_constraintStart_toEndOf="@+id/register_logo_image_view"
+            app:layout_constraintTop_toTopOf="@+id/register_logo_image_view"
             app:layout_constraintVertical_bias="0.479" />
 
         <TextView
-            android:id="@+id/logo_text4"
+            android:id="@+id/or_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/or"
             android:textColor="#ACA325"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/NameField"
+            app:layout_constraintBottom_toTopOf="@+id/name_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/sign_up_with_facebook_button"
             app:layout_constraintVertical_bias="0.361" />
 
         <Button
-            android:id="@+id/LoginButton"
+            android:id="@+id/register_log_in_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/log_in"
+            android:textAllCaps="false"
             app:backgroundTint="#00FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

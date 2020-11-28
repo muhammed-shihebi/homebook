@@ -33,30 +33,30 @@ public class LoginFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        // Not that RegisterFragment works in a very similar way
+
+        // Hide action bar.
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+
+        // Block landscape orientation.
         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        // Inflate the layout (link this fragment with login_fragment layout).
         loginBinding = DataBindingUtil.inflate(inflater, R.layout.login_fragment, container, false);
 
-
-
-        loginBinding.SignupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerFragment);
-            }
+        // Setting up an on click listener for sign up button.
+        loginBinding.logInSignUpButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_registerFragment);
         });
 
+        loginBinding.logInLogInButton.setOnClickListener(v -> {
+            Navigation.findNavController(v).navigate(R.id.action_loginFragment_to_mainFragment);
+        });
 
-
-
-
-
-
-
-
-
+        // The root must be returned to be displayed on the screen.
+        // Make sure this statement stays at the bottom of onCreate function.
         return loginBinding.getRoot();
     }
 
