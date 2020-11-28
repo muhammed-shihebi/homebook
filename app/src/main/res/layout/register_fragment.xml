@@ -37,6 +37,28 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
+            android:id="@+id/name_edit_text"
+            android:layout_width="204dp"
+            android:layout_height="36dp"
+            android:layout_marginBottom="6dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edit_text"
+            android:ellipsize="none"
+            android:ems="50"
+            android:fadingEdge="horizontal"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:paddingStart="15dp"
+            android:shadowColor="#FAF3F3"
+            app:layout_constraintBottom_toTopOf="@+id/register_email_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_logo_image_view"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_constraintCircleRadius="50dp" />
+
+        <EditText
             android:id="@+id/register_email_edit_text"
             android:layout_width="204dp"
             android:layout_height="36dp"
@@ -56,27 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:layout_constraintCircleRadius="50dp" />
 
-        <EditText
-            android:id="@+id/name_edit_text"
-            android:layout_width="204dp"
-            android:layout_height="36dp"
-            android:layout_marginBottom="6dp"
-            android:autofillHints=""
-            android:background="@drawable/rounded_edit_text"
-            android:ellipsize="none"
-            android:ems="50"
-            android:fadingEdge="horizontal"
-            android:hint="@string/name"
-            android:inputType="textEmailAddress"
-            android:paddingStart="15dp"
-            android:shadowColor="#FAF3F3"
-            app:layout_constraintBottom_toTopOf="@+id/register_email_edit_text"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/register_logo_image_view"
-            app:layout_constraintVertical_bias="1.0"
-            tools:layout_constraintCircleRadius="50dp" />
+
 
         <EditText
             android:id="@+id/register_password_edit_text"

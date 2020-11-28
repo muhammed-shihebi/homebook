@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mabem.homebook.R;
@@ -38,10 +39,19 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+
+
+        if(firebaseAuth.getCurrentUser().getDisplayName() == null){
+            Toast.makeText(requireActivity(), "DisplayName is null", Toast.LENGTH_SHORT).show();
+            MainFragmentArgs args = MainFragmentArgs.fromBundle(getArguments());
+            mainBinding.userName.setText(args.getUserName());
+        }else {
+            mainBinding.userName.setText(firebaseAuth.getCurrentUser().getDisplayName());
+        }
 
 
         mainBinding.signOutButton.setOnClickListener(v -> {

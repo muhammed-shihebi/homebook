@@ -46,5 +46,8 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/mainFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="user_name"
+            app:argType="string" />
     </fragment>
 </navigation>

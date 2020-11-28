@@ -149,7 +149,9 @@ public class LoginFragment extends Fragment {
                         if(task.isSuccessful()){
                             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: The user was logged in successfully.");
                             Log.d(LOGIN_FRAGMENT_TAG, "registerWithEmail: userId: " + firebaseAuth.getCurrentUser().getUid());
-                            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment);
+                            Navigation.findNavController(view)
+                                    .navigate(LoginFragmentDirections
+                                            .actionLoginFragmentToMainFragment(firebaseAuth.getCurrentUser().getDisplayName()));
                         }else{
                             // The user is not logged in (Password or Email are false or no Internet).
                             Log.w(LOGIN_FRAGMENT_TAG, "loginWithEmail: ");

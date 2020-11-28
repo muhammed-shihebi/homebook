@@ -24,7 +24,8 @@
             app:layout_constraintBottom_toTopOf="@+id/forgot_password_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/log_in_with_google_button"
@@ -72,12 +73,12 @@
             android:ems="10"
             android:hint="@string/password"
             android:inputType="textPassword"
-
             android:paddingStart="15dp"
             app:layout_constraintBottom_toTopOf="@+id/remember_checkbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            android:imeOptions="actionDone"/>
 
         <ImageView
             android:id="@+id/log_in_logo_image_view"

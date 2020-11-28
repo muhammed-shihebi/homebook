@@ -2,11 +2,15 @@ package com.mabem.homebook.register_fragment;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,23 +26,33 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.mabem.homebook.Database.Db;
+import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.databinding.RegisterFragmentBinding;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterFragment extends Fragment {
 
     //========================================= Attributes
 
     private static final String REGISTER_FRAGMENT_TAG = "Register Fragment";
+    private static final int RC_SIGN_IN = 385;
+    GoogleSignInClient googleSignInClient;
     private RegisterViewModel mViewModel;
     private RegisterFragmentBinding registerBinding;
     private FirebaseAuth firebaseAuth;
-    private static final int RC_SIGN_IN = 385;
-    GoogleSignInClient googleSignInClient;
 
     //========================================= Methods
 
@@ -62,6 +76,7 @@ public class RegisterFragment extends Fragment {
         });
 
         registerBinding.registerSignUpButton.setOnClickListener(v -> {
+            Util.hideKeyboard(requireActivity());
             registerWithEmail();
         });
 
@@ -77,6 +92,7 @@ public class RegisterFragment extends Fragment {
 
         return registerBinding.getRoot();
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -119,9 +135,12 @@ public class RegisterFragment extends Fragment {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity(), task -> {
                         if (task.isSuccessful()) {
+                            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                             Log.d(REGISTER_FRAGMENT_TAG, "registerWithEmail: Sign in success. A new user is added");
-                            Log.d(REGISTER_FRAGMENT_TAG, "registerWithEmail: userId: " + firebaseAuth.getCurrentUser().getUid());
-                            Navigation.findNavController(requireActivity(), R.id.register_sign_up_button).navigate(R.id.action_registerFragment_to_mainFragment);
+                            Log.d(REGISTER_FRAGMENT_TAG, "registerWithEmail: userId: " + currentUser.getUid());
+                            updateCurrentUser(currentUser, name);
+                            Navigation.findNavController(requireActivity(), R.id.register_sign_up_button)
+                                    .navigate(RegisterFragmentDirections.actionRegisterFragmentToMainFragment(name));
                         } else {
                             Log.w(REGISTER_FRAGMENT_TAG, "registerWithEmail: failure", task.getException());
                             Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
@@ -141,12 +160,28 @@ public class RegisterFragment extends Fragment {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(requireActivity(), task -> {
             if (task.isSuccessful()) {
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 Log.d(REGISTER_FRAGMENT_TAG, "firebaseAuthWithGoogle: Authentication with firebase was successful.");
-                Navigation.findNavController(requireActivity(), R.id.log_in_with_google_button).navigate(R.id.action_loginFragment_to_mainFragment);
+                Log.d(REGISTER_FRAGMENT_TAG, "firebaseAuthWithGoogle: userId: " + currentUser.getUid());
+                Navigation.findNavController(requireActivity(), R.id.log_in_with_google_button)
+                        .navigate(RegisterFragmentDirections.actionRegisterFragmentToMainFragment(currentUser.getDisplayName()));
             } else {
                 Log.w(REGISTER_FRAGMENT_TAG, "signInWithCredential:failure", task.getException());
                 Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //========================================= se
+    private void updateCurrentUser(FirebaseUser user, String name) {
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                .setDisplayName(name)
+                .build();
+        user.updateProfile(profileUpdates)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(REGISTER_FRAGMENT_TAG, "User profile updated.");
+                    }
+                });
     }
 }
