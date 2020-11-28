@@ -17,25 +17,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
 import com.mabem.homebook.databinding.LoginFragmentBinding;
-
-import java.util.Objects;
-import java.util.zip.Inflater;
 
 public class LoginFragment extends Fragment {
 
@@ -44,7 +39,7 @@ public class LoginFragment extends Fragment {
     private LoginViewModel mViewModel;
     private LoginFragmentBinding loginBinding;
     private FirebaseAuth firebaseAuth;
-    private String LOGIN_FRAGMENT_TAG = "Login Fragment";
+    private static final String LOGIN_FRAGMENT_TAG = "Login Fragment";
     private static final int RC_SIGN_IN = 385;
     GoogleSignInClient googleSignInClient;
 
@@ -59,7 +54,6 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Not that RegisterFragment works in a very similar way
-
         // Initialize Firebase auth
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -88,11 +82,14 @@ public class LoginFragment extends Fragment {
             loginWithGoogle();
         });
 
+
+        // Initialize Google sign in client
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso);
+
         // The root must be returned to be displayed on the screen.
         // Make sure this statement stays at the bottom of onCreate function.
         return loginBinding.getRoot();
@@ -142,18 +139,21 @@ public class LoginFragment extends Fragment {
 
     public void loginWithEmail(View view){
         String email = loginBinding.logInEmailEditText.getText().toString().trim();
-        String password = loginBinding.logInPasswordEditText.getText().toString().trim();
-        if(email.isEmpty() && password.isEmpty()){
+        String password = loginBinding.logInPasswordEditText.getText().toString();
+        if(email.isEmpty() || password.isEmpty()){
             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: Email or Password were empty.");
+            Toast.makeText(requireActivity(), "Please enter a Password and an Email.", Toast.LENGTH_SHORT).show();
         }else{
-            final boolean[] returnValue = {false};
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity(), task -> {
                         if(task.isSuccessful()){
                             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: The user was logged in successfully.");
+                            Log.d(LOGIN_FRAGMENT_TAG, "registerWithEmail: userId: " + firebaseAuth.getCurrentUser().getUid());
                             Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_mainFragment);
                         }else{
-                            Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: The user is not logged in (Password or Email are false or no Internet)");
+                            // The user is not logged in (Password or Email are false or no Internet).
+                            Log.w(LOGIN_FRAGMENT_TAG, "loginWithEmail: ");
+                            Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -173,7 +173,8 @@ public class LoginFragment extends Fragment {
                 Log.d(LOGIN_FRAGMENT_TAG, "firebaseAuthWithGoogle: Authentication with firebase was successful.");
                 Navigation.findNavController(requireActivity(), R.id.log_in_with_google_button).navigate(R.id.action_loginFragment_to_mainFragment);
             } else {
-                Log.w(LOGIN_FRAGMENT_TAG, "signInWithCredential:failure", task.getException());
+                Log.w(LOGIN_FRAGMENT_TAG, "signInWithCredential: failure", task.getException());
+                Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -26,33 +26,19 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
+        <com.google.android.gms.common.SignInButton
             android:id="@+id/log_in_with_google_button"
             android:layout_width="220dp"
             android:layout_height="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:text="@string/login_with_google"
             android:textAllCaps="false"
             app:backgroundTint="#857C23"
             app:cornerRadius="50dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/forgot_password_button" />
-
-        <Button
-            android:id="@+id/log_in_with_facebook_button"
-            android:layout_width="220dp"
-            android:layout_height="40dp"
-            android:text="@string/log_in_with_facebook"
-            android:textAllCaps="false"
-            app:backgroundTint="#857C23"
-            app:cornerRadius="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.502"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/log_in_with_google_button"
-            app:layout_constraintVertical_bias="0.0" />
 
         <EditText
             android:id="@+id/log_in_email_edit_text"
