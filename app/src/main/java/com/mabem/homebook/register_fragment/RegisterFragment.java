@@ -44,6 +44,7 @@ public class RegisterFragment extends Fragment {
     private RegisterViewModel mViewModel;
     private RegisterFragmentBinding registerBinding;
     private FirebaseAuth firebaseAuth;
+    private View view ;
 
     //========================================= Methods
 
@@ -72,7 +73,7 @@ public class RegisterFragment extends Fragment {
         });
 
         registerBinding.signUpWithGoogleButton.setOnClickListener(v -> {
-            signUpWithGoogle();
+            signUpWithGoogle(v);
         });
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -152,8 +153,9 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    private void signUpWithGoogle() {
+    private void signUpWithGoogle(View view) {
         // We have to sign out from the last client to make the user chose every time.
+        this.view = view;
         googleSignInClient.signOut();
         Intent signInIntent = googleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -166,8 +168,7 @@ public class RegisterFragment extends Fragment {
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 Log.d(REGISTER_FRAGMENT_TAG, "firebaseAuthWithGoogle: Authentication with firebase was successful.");
                 Log.d(REGISTER_FRAGMENT_TAG, "firebaseAuthWithGoogle: userId: " + currentUser.getUid());
-                Navigation.findNavController(requireActivity(), R.id.log_in_with_google_button)
-                        .navigate(RegisterFragmentDirections.actionRegisterFragmentToMainFragment(currentUser.getDisplayName()));
+                Navigation.findNavController(view).navigate(RegisterFragmentDirections.actionRegisterFragmentToMainFragment(currentUser.getDisplayName()));
             } else {
                 Log.w(REGISTER_FRAGMENT_TAG, "signInWithCredential:failure", task.getException());
                 Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();

@@ -27,6 +27,7 @@ public class MainFragment extends Fragment {
     private MainViewModel mViewModel;
     private MainFragmentBinding mainBinding;
     private FirebaseAuth firebaseAuth;
+
     //========================================= Functions
 
     public static MainFragment newInstance() {

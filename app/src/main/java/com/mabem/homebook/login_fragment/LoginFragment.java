@@ -30,6 +30,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mabem.homebook.R;
 import com.mabem.homebook.databinding.LoginFragmentBinding;
 
@@ -217,5 +218,4 @@ public class LoginFragment extends Fragment {
                     });
         }
     }
-
 }
