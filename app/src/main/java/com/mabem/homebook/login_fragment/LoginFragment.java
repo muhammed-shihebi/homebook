@@ -156,6 +156,7 @@ public class LoginFragment extends Fragment {
         String email = loginBinding.logInEmailEditText.getText().toString().trim();
         String password = loginBinding.logInPasswordEditText.getText().toString();
         if (email.isEmpty() || password.isEmpty()) {
+            loginBinding.logInProgressBar.setVisibility(View.GONE);
             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: Email or Password were empty.");
             Toast.makeText(requireActivity(), "Please enter a Password and an Email.", Toast.LENGTH_SHORT).show();
         } else {

@@ -127,8 +127,10 @@ public class RegisterFragment extends Fragment {
         String name = registerBinding.nameEditText.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty() || password2.isEmpty() || name.isEmpty()) {
+            registerBinding.registerProgressBar.setVisibility(View.GONE);
             Toast.makeText(requireActivity(), "Please fill out all the blanks.", Toast.LENGTH_SHORT).show();
         } else if (!password.equals(password2)) {
+            registerBinding.registerProgressBar.setVisibility(View.GONE);
             Toast.makeText(requireActivity(), "The given passwords don't match. ", Toast.LENGTH_SHORT).show();
         } else {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
