@@ -1,21 +1,19 @@
 package com.mabem.homebook.main_fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.mabem.homebook.R;
@@ -25,10 +23,10 @@ public class MainFragment extends Fragment {
 
     //========================================= Attribute
 
+    private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
     private MainViewModel mViewModel;
     private MainFragmentBinding mainBinding;
     private FirebaseAuth firebaseAuth;
-    private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
     //========================================= Functions
 
     public static MainFragment newInstance() {
@@ -45,11 +43,11 @@ public class MainFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
 
-        if(firebaseAuth.getCurrentUser().getDisplayName() == null){
+        if (firebaseAuth.getCurrentUser().getDisplayName() == null) {
             Toast.makeText(requireActivity(), "DisplayName is null", Toast.LENGTH_SHORT).show();
             MainFragmentArgs args = MainFragmentArgs.fromBundle(getArguments());
             mainBinding.userName.setText(args.getUserName());
-        }else {
+        } else {
             mainBinding.userName.setText(firebaseAuth.getCurrentUser().getDisplayName());
         }
 

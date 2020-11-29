@@ -4,15 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,22 +24,15 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.mabem.homebook.Database.Db;
-import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.databinding.RegisterFragmentBinding;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class RegisterFragment extends Fragment {
 
@@ -131,6 +120,7 @@ public class RegisterFragment extends Fragment {
 
     //========================================= Help Functions
     private void registerWithEmail() {
+        registerBinding.registerProgressBar.setVisibility(View.VISIBLE);
         String email = registerBinding.registerEmailEditText.getText().toString().trim();
         String password = registerBinding.registerPasswordEditText.getText().toString();
         String password2 = registerBinding.passwordAgainEditText.getText().toString();
@@ -144,6 +134,7 @@ public class RegisterFragment extends Fragment {
             firebaseAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(requireActivity(), task -> {
                         if (task.isSuccessful()) {
+                            registerBinding.registerProgressBar.setVisibility(View.GONE);
                             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                             Log.d(REGISTER_FRAGMENT_TAG, "registerWithEmail: Sign in success. A new user is added");
                             Log.d(REGISTER_FRAGMENT_TAG, "registerWithEmail: userId: " + currentUser.getUid());
@@ -151,6 +142,7 @@ public class RegisterFragment extends Fragment {
                             Navigation.findNavController(requireActivity(), R.id.register_sign_up_button)
                                     .navigate(RegisterFragmentDirections.actionRegisterFragmentToMainFragment(name));
                         } else {
+                            registerBinding.registerProgressBar.setVisibility(View.GONE);
                             Log.w(REGISTER_FRAGMENT_TAG, "registerWithEmail: failure", task.getException());
                             Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }

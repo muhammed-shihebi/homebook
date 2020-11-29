@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +24,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +81,10 @@ public class LoginFragment extends Fragment {
 
         loginBinding.logInWithGoogleButton.setOnClickListener(v -> {
             loginWithGoogle();
+        });
+
+        loginBinding.forgotPasswordButton.setOnClickListener(v -> {
+            forgotPassword();
         });
 
 
@@ -148,6 +152,7 @@ public class LoginFragment extends Fragment {
     //========================================= Help Methods
 
     public void loginWithEmail(View view) {
+        loginBinding.logInProgressBar.setVisibility(View.VISIBLE);
         String email = loginBinding.logInEmailEditText.getText().toString().trim();
         String password = loginBinding.logInPasswordEditText.getText().toString();
         if (email.isEmpty() || password.isEmpty()) {
@@ -159,11 +164,13 @@ public class LoginFragment extends Fragment {
                         if (task.isSuccessful()) {
                             Log.i(LOGIN_FRAGMENT_TAG, "loginWithEmail: The user was logged in successfully.");
                             Log.d(LOGIN_FRAGMENT_TAG, "registerWithEmail: userId: " + firebaseAuth.getCurrentUser().getUid());
+                            loginBinding.logInProgressBar.setVisibility(View.GONE);
                             Navigation.findNavController(view)
                                     .navigate(LoginFragmentDirections
                                             .actionLoginFragmentToMainFragment(firebaseAuth.getCurrentUser().getDisplayName()));
                         } else {
                             // The user is not logged in (Password or Email are false or no Internet).
+                            loginBinding.logInProgressBar.setVisibility(View.GONE);
                             Log.w(LOGIN_FRAGMENT_TAG, "loginWithEmail: ");
                             Toast.makeText(requireActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
                         }
@@ -190,4 +197,24 @@ public class LoginFragment extends Fragment {
             }
         });
     }
+
+    private void forgotPassword() {
+        String email = loginBinding.logInEmailEditText.getText().toString().trim();
+        System.out.println(email);
+        if(email.isEmpty()){
+            Toast.makeText(requireActivity(), "Please enter you Email first", Toast.LENGTH_SHORT).show();
+        }else{
+            firebaseAuth.sendPasswordResetEmail(email)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Log.d(LOGIN_FRAGMENT_TAG, "Email sent.");
+                            Toast.makeText(requireActivity(), "An Email was sent to you to reset your password.", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Log.w(LOGIN_FRAGMENT_TAG, "Unable to send email to reset password.");
+                            Toast.makeText(requireActivity(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
 }

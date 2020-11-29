@@ -29,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
         boolean rememberMe = sharedPref.getBoolean(getString(R.string.saved_remember_me_preference), defaultValue);
         if (!rememberMe) {
             new CountDownTimer(300000, 1000) {
-                public void onTick(long millisUntilFinished) {}
+                public void onTick(long millisUntilFinished) {
+                }
+
                 public void onFinish() {
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                     if (firebaseAuth.getCurrentUser() != null) {
