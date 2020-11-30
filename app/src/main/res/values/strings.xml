@@ -9,6 +9,7 @@
     <string name="homebook">HOMEBOOK</string>
     <string name="log_in">Log in</string>
     <string name="remember_me">Remember me</string>
+    <string name="App_logo">App logo</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="welcome">Welcome</string>
     <string name="login_with_google">Log in with Google</string>

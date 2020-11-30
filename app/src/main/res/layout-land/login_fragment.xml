@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/login_background"
+        android:background="@drawable/login_background_landscape"
         tools:context=".login_fragment.LoginFragment">
 
 
@@ -53,6 +53,7 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             app:layout_constraintBottom_toTopOf="@+id/log_in_password_edit_text"
             app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +75,7 @@
             android:imeOptions="actionDone"
             android:inputType="textPassword"
             android:paddingStart="15dp"
+            android:paddingEnd="15dp"
             app:layout_constraintBottom_toTopOf="@+id/remember_checkbox"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.499"
@@ -83,7 +85,7 @@
             android:id="@+id/log_in_logo_image_view"
             android:layout_width="92dp"
             android:layout_height="80dp"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/App_logo"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.05"
