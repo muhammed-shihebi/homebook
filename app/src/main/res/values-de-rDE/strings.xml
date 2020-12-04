@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HomeBook</string>
+    <string name="sign_up">Registrieren</string>
+    <string name="name">Name</string>
+    <string name="log_in">Anmelden</string>
+    <string name="email">Email-Adresse</string>
+    <string name="password">Kennwort</string>
+    <string name="password_again">Kennwort nochmal</string>
+    <string name="homebook">HOMEBOOK</string>
+    <string name="remember_me">Erinnere Mich</string>
+    <string name="App_logo">App Logo</string>
+    <string name="forgot_password">Kennwort vergessen</string>
+    <string name="welcome">Herzlich Willkommen</string>
+    <string name="login_with_google">Mit Google Anmelden</string>
+    <string name="log_in_with_facebook">Mit Facebook Anmelden</string>
+    <string name="or">Oder</string>
+    <string name="sign_out">Abmelden</string>
+    <string name="sign_up_with_google">Mit Google Registrieren</string>
+    <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
+</resources>
