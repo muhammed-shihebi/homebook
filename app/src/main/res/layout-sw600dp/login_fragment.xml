@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/login_background"
+        tools:context=".login_fragment.LoginFragment">
+
+
+        <Button
+            android:id="@+id/log_in_log_in_button"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/log_in"
+            android:textAllCaps="false"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/forgot_password_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/log_in_with_google_button"
+            android:layout_width="220dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/login_with_google"
+            android:textAllCaps="false"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/forgot_password_button" />
+
+        <EditText
+            android:id="@+id/log_in_email_edit_text"
+            android:layout_width="360dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="6dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edit_text"
+            android:ellipsize="none"
+            android:ems="50"
+            android:fadingEdge="horizontal"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:shadowColor="#FAF3F3"
+            app:layout_constraintBottom_toTopOf="@+id/log_in_password_edit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0"
+            tools:layout_constraintCircleRadius="50dp" />
+
+        <EditText
+            android:id="@+id/log_in_password_edit_text"
+            android:layout_width="360dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="12dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edit_text"
+            android:ems="10"
+            android:hint="@string/password"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/remember_checkbox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/log_in_logo_image_view"
+            android:layout_width="92dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/App_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.106"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.046"
+            app:srcCompat="@drawable/logo" />
+
+        <CheckBox
+            android:id="@+id/remember_checkbox"
+            android:layout_width="160dp"
+            android:layout_height="52dp"
+            android:layout_marginBottom="16dp"
+
+            android:text="@string/remember_me"
+            android:textColor="#FFFFFF"
+            app:buttonTint="#FFFFFF"
+            app:layout_constraintBottom_toTopOf="@+id/log_in_log_in_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.372"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/log_in_logo_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/homebook"
+            android:textColor="#ACA325"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/log_in_logo_image_view"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/log_in_logo_image_view"
+            app:layout_constraintTop_toTopOf="@+id/log_in_logo_image_view" />
+
+        <Button
+            android:id="@+id/forgot_password_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forgot_password"
+            android:textAllCaps="false"
+            app:backgroundTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.622"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.772" />
+
+        <Button
+            android:id="@+id/log_in_sign_up_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            app:backgroundTint="#00FFFFFF"
+            app:iconTint="#00FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/forgot_password_button"
+            app:layout_constraintEnd_toStartOf="@+id/forgot_password_button"
+            app:layout_constraintHorizontal_bias="0.724"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/forgot_password_button"
+            app:layout_constraintVertical_bias="0.0"
+            app:rippleColor="#00FFFFFF" />
+
+        <ProgressBar
+            android:id="@+id/log_in_progress_bar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
