@@ -1,8 +1,8 @@
 package com.mabem.homebook.Model;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.text.DateFormat;
 
 public class Receipt {
     private String id = "";
@@ -36,9 +36,9 @@ public class Receipt {
 
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Receipt r = (Receipt) o;
-        return ( id.equals(r.id) && name.equals(r.name) && date.equals(r.date) );
+        return (id.equals(r.id) && name.equals(r.name) && date.equals(r.date));
     }
 }

@@ -30,9 +30,9 @@ public class Item {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Item i = (Item) o;
-        return ( id.equals(i.id) && name.equals(i.name) && price == i.price);
+        return (id.equals(i.id) && name.equals(i.name) && price == i.price);
     }
 }

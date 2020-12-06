@@ -1,6 +1,5 @@
 package com.mabem.homebook.Model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Home {
@@ -42,7 +41,7 @@ public class Home {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Home home = (Home) o;
-        return ( id.equals(home.id) && code.equals(home.code));
+        return (id.equals(home.id) && code.equals(home.code));
     }
 
 }

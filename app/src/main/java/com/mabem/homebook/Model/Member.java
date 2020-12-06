@@ -1,4 +1,5 @@
 package com.mabem.homebook.Model;
+
 import java.util.HashMap;
 
 public class Member extends User {
@@ -15,9 +16,9 @@ public class Member extends User {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Member m = (Member) o;
-        return ( this.getId().equals(m.getId()) && getHome_role().equals(m.getHome_role()) );
+        return (this.getId().equals(m.getId()) && getHome_role().equals(m.getHome_role()));
     }
 }

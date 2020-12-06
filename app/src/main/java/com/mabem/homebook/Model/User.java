@@ -1,6 +1,8 @@
 package com.mabem.homebook.Model;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private String id = "";
     private String name = "";
     private String emailAddress = "";
@@ -12,6 +14,13 @@ public class User {
         this.name = name;
         this.emailAddress = emailAddress;
         this.password = password;
+        this.imageURL = imageURL;
+    }
+
+    public User(String id, String name, String emailAddress, String imageURL) {
+        this.id = id;
+        this.name = name;
+        this.emailAddress = emailAddress;
         this.imageURL = imageURL;
     }
 
@@ -36,7 +45,7 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         User u = (User) o;
         return id.equals(u.id);

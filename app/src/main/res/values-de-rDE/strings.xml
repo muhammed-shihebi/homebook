@@ -18,4 +18,9 @@
     <string name="sign_out">Abmelden</string>
     <string name="sign_up_with_google">Mit Google Registrieren</string>
     <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
+    <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>
+    <string name="please_enter_email_message">Bitte geben Sie zuerst Ihre E-Mail-Adresse ein</string>
+    <string name="email_was_sent_message">"Eine E-Mail wurde an Sie gesendet, um Ihr Kennwort zurücksetzen zu können. "</string>
+    <string name="please_fill_blanks_message">Bitte füllen Sie alle Lücken aus.</string>
+    <string name="passwords_not_match_message">Die eingegebenen Kennwörter stimmen nicht überein.</string>
 </resources>
