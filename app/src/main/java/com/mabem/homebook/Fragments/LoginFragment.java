@@ -70,6 +70,12 @@ public class LoginFragment extends Fragment {
             }
         });
 
+        authViewModel.getResultMessage().observe(requireActivity(), message->{
+            if(message != null){
+                Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // CurrentUser will change according to the state of the currentUser in FirebaseAuth.
         // When a log in or sign up this this state will change and the following code will be executed.
         loginBinding.logInLogInButton.setOnClickListener(v -> {

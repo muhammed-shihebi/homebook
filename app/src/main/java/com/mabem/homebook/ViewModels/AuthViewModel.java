@@ -10,17 +10,23 @@ import com.mabem.homebook.Model.User;
 public class AuthViewModel extends AndroidViewModel {
     private final Database database;
     private final MutableLiveData<User> currentUser;
+    private final MutableLiveData<String> resultMessage;
 
     public AuthViewModel(@NonNull Application application) {
         super(application);
         database = new Database(application);
         currentUser = database.getCurrentUser();
+        resultMessage = database.getResultMessage();
     }
 
     //========================================= Getters
 
     public MutableLiveData<User> getCurrentUser(){
         return currentUser;
+    }
+
+    public MutableLiveData<String> getResultMessage() {
+        return resultMessage;
     }
 
     //========================================= Methods

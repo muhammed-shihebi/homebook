@@ -2,7 +2,6 @@ package com.mabem.homebook.Database;
 
 import android.app.Application;
 import android.net.Uri;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -26,11 +25,13 @@ public class Database {
     private final FirebaseAuth firebaseAuth;
     private final MutableLiveData<User> currentUser;
     private final Application application;
+    private final MutableLiveData<String> resultMessage;
 
     public Database(Application application) {
         this.application = application;
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = new MutableLiveData<>();
+        resultMessage = new MutableLiveData<>();
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         User user = makeUser(firebaseUser);
@@ -39,6 +40,10 @@ public class Database {
 
     public MutableLiveData<User> getCurrentUser() {
         return currentUser;
+    }
+
+    public MutableLiveData<String> getResultMessage(){
+        return resultMessage;
     }
 
     //========================================= Log in/Sign up Methods
@@ -51,7 +56,7 @@ public class Database {
                         User user = makeUser(firebaseUser);
                         currentUser.postValue(user);
                     } else {
-                        Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        resultMessage.postValue(task.getException().getLocalizedMessage());
                         currentUser.postValue(null);
                     }
                 });
@@ -67,17 +72,19 @@ public class Database {
                                 .setDisplayName(name)
                                 .setPhotoUri(Uri.parse(""))
                                 .build();
-                        firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task2 -> {
-                            if (task2.isSuccessful()) {
-                                User user = makeUser(firebaseUser);
-                                currentUser.postValue(user);
-                            } else {
-                                Toast.makeText(application, task2.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                currentUser.postValue(null);
-                            }
-                        });
+                        if(firebaseUser != null ){
+                            firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task2 -> {
+                                if (task2.isSuccessful()) {
+                                    User user = makeUser(firebaseUser);
+                                    currentUser.postValue(user);
+                                } else {
+                                    resultMessage.postValue(task2.getException().getLocalizedMessage());
+                                    currentUser.postValue(null);
+                                }
+                            });
+                        }
                     } else {
-                        Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        resultMessage.postValue(task.getException().getLocalizedMessage());
                         currentUser.postValue(null);
                     }
                 });
@@ -95,7 +102,7 @@ public class Database {
                 User user = makeUser(firebaseAuth.getCurrentUser());
                 currentUser.postValue(user);
             } else {
-                Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                resultMessage.postValue(task.getException().getLocalizedMessage());
                 currentUser.postValue(null);
             }
         });
@@ -105,9 +112,9 @@ public class Database {
         firebaseAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(application, R.string.email_was_sent_message, Toast.LENGTH_SHORT).show();
+                        resultMessage.postValue(application.getResources().getString(R.string.email_was_sent_message));
                     } else {
-                        Toast.makeText(application, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                        resultMessage.postValue(task.getException().getLocalizedMessage());
                     }
                 });
     }

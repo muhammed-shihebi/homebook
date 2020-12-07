@@ -58,6 +58,12 @@ public class SignUpFragment extends Fragment {
             }
         });
 
+        authViewModel.getResultMessage().observe(requireActivity(), message->{
+            if(message != null){
+                Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         signUpBinding.signUpSignUpButton.setOnClickListener(v -> {
             signUpWithEmail();
         });
