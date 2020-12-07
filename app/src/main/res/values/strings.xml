@@ -25,6 +25,9 @@
     <string name="passwords_not_match_message">The given passwords don\'t match.</string>
 
     <string name="saved_remember_me_preference" translatable="false">remember_me</string>
+    <string name="no_internet_message">No Internet</string>
+    <string name="please_connect_to_the_internet_message">Please connect to the Internet and try again.</string>
+    <string name="ok_button">OK</string>
 
     <bool name="remember_me_default_value">false</bool>
 </resources>

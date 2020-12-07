@@ -48,10 +48,9 @@ public class SplashFragment extends Fragment {
                                 requireActivity(),
                                 R.id.splash_homebook_text_view
                         ).navigate(R.id.action_splashFragment_to_mainFragment);
-
-
                     }
-                    // If there is not user, navigate to login screen.
+
+                    // If there is no user, navigate to Login screen.
                     else {
                         Navigation.findNavController(
                                 requireActivity(),
@@ -60,19 +59,18 @@ public class SplashFragment extends Fragment {
                     }
                 });
             } else {
-                // If there is not Internet, a popup window will show up and after that the program will end.
+
+                // If there is no Internet, a popup window will show up and after that the program will end.
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getContext());
                 // set title
-                alertDialogBuilder.setTitle("No Internet");
+                alertDialogBuilder.setTitle(R.string.no_internet_message);
                 // set dialog message
                 alertDialogBuilder
-                        .setMessage("Please connect to the Internet and try again.")
+                        .setMessage(R.string.please_connect_to_the_internet_message)
                         .setCancelable(false)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // if this button is clicked, close the activity.
-                                getActivity().finish();
-                            }
+                        .setPositiveButton(R.string.ok_button, (dialog, id) -> {
+                            // if this button is clicked, close the activity.
+                            getActivity().finish();
                         });
                 // create alert dialog.
                 alertDialogBuilder.create().show();
