@@ -9,7 +9,7 @@
     <string name="homebook">HOMEBOOK</string>
     <string name="log_in">Log in</string>
     <string name="remember_me">Remember me</string>
-    <string name="App_logo">App logo</string>
+    <string name="App_logo">App Logo</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="welcome">Welcome</string>
     <string name="login_with_google">Log in with Google</string>
@@ -18,8 +18,16 @@
     <string name="sign_up_with_google">Sign up with Google</string>
     <string name="sign_up_with_facebook">Sign up with Facebook</string>
     <string name="sign_out">Sign out</string>
+    <string name="enter_email_password_message">Please enter a Password and an Email.</string>
+    <string name="please_enter_email_message">Please enter your Email first.</string>
+    <string name="email_was_sent_message">An Email was sent to you to reset your password.</string>
+    <string name="please_fill_blanks_message">Please fill out all the blanks.</string>
+    <string name="passwords_not_match_message">The given passwords don\'t match.</string>
 
-<!--    Don't change these keys when you translate the app [Nur] -->
-    <string name="saved_remember_me_preference">remember_me</string>
+    <string name="saved_remember_me_preference" translatable="false">remember_me</string>
+    <string name="no_internet_message">No Internet</string>
+    <string name="please_connect_to_the_internet_message">Please connect to the Internet and try again.</string>
+    <string name="ok_button">OK</string>
+
     <bool name="remember_me_default_value">false</bool>
 </resources>

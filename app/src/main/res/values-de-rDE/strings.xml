@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">HomeBook</string>
+    <string name="sign_up">Registrieren</string>
+    <string name="name">Name</string>
+    <string name="log_in">Anmelden</string>
+    <string name="email">Email-Adresse</string>
+    <string name="password">Kennwort</string>
+    <string name="password_again">Kennwort nochmal</string>
+    <string name="homebook">HOMEBOOK</string>
+    <string name="remember_me">Erinnere Mich</string>
+    <string name="App_logo">App Logo</string>
+    <string name="forgot_password">Kennwort vergessen</string>
+    <string name="welcome">Herzlich Willkommen</string>
+    <string name="login_with_google">Mit Google Anmelden</string>
+    <string name="log_in_with_facebook">Mit Facebook Anmelden</string>
+    <string name="or">Oder</string>
+    <string name="sign_out">Abmelden</string>
+    <string name="sign_up_with_google">Mit Google Registrieren</string>
+    <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
+    <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>
+    <string name="please_enter_email_message">Bitte geben Sie zuerst Ihre E-Mail-Adresse ein</string>
+    <string name="email_was_sent_message">"Eine E-Mail wurde an Sie gesendet, um Ihr Kennwort zurücksetzen zu können. "</string>
+    <string name="please_fill_blanks_message">Bitte füllen Sie alle Lücken aus.</string>
+    <string name="passwords_not_match_message">Die eingegebenen Kennwörter stimmen nicht überein.</string>
+    <string name="no_internet_message">Kein Internet</string>
+    <string name="please_connect_to_the_internet_message">Bitte stellen Sie eine Verbindung zum Internet her und versuchen Sie es erneut.</string>
+    <string name="ok_button">OK</string>
+</resources>

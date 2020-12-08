@@ -1,10 +1,14 @@
 package com.mabem.homebook.Utils;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-public class Util{
+import com.mabem.homebook.R;
+
+public class Util {
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -14,5 +18,12 @@ public class Util{
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void saveRememberMePreference(Activity activity, boolean isChecked) {
+        SharedPreferences sharedPref = activity.getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putBoolean(activity.getResources().getString(R.string.saved_remember_me_preference), isChecked);
+        editor.apply();
     }
 }
