@@ -40,8 +40,11 @@ public class SplashFragment extends Fragment {
 
                 // If there is Internet, check if there is a logged in user.
                 authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-                authViewModel.getCurrentUser().observe(requireActivity(), user -> {
 
+                // change the current user state
+                authViewModel.updateCurrentUser();
+
+                authViewModel.getCurrentUser().observe(requireActivity(), user -> {
                     // If there is a user, navigate to Welcome Screen
                     if (user != null) {
                         Navigation.findNavController(
@@ -49,7 +52,6 @@ public class SplashFragment extends Fragment {
                                 R.id.splash_homebook_text_view
                         ).navigate(R.id.action_splashFragment_to_mainFragment);
                     }
-
                     // If there is no user, navigate to Login screen.
                     else {
                         Navigation.findNavController(

@@ -59,14 +59,14 @@ public class LoginFragment extends Fragment {
         //========================================= Listeners
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.updateCurrentUser();
         authViewModel.getCurrentUser().observe(requireActivity(), user -> {
+            loginBinding.progressBar.setVisibility(View.GONE);
             if (user != null) {
                 Navigation.findNavController(
                         requireActivity(),
                         R.id.log_in_log_in_button
                 ).navigate(R.id.action_loginFragment_to_mainFragment);
-            } else {
-                loginBinding.progressBar.setVisibility(View.GONE);
             }
         });
 

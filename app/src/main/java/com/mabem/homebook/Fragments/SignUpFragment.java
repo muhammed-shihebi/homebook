@@ -47,14 +47,14 @@ public class SignUpFragment extends Fragment {
 
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
+        authViewModel.updateCurrentUser();
         authViewModel.getCurrentUser().observe(requireActivity(), user -> {
+            signUpBinding.progressBar2.setVisibility(View.GONE);
             if (user != null) {
                 Navigation.findNavController(
                         requireActivity(),
                         R.id.sign_up_logo_image_view
                 ).navigate(R.id.action_signUpFragment_to_mainFragment);
-            } else {
-                signUpBinding.progressBar2.setVisibility(View.GONE);
             }
         });
 

@@ -14,7 +14,7 @@ public class AuthViewModel extends AndroidViewModel {
 
     public AuthViewModel(@NonNull Application application) {
         super(application);
-        database = new Database(application);
+        database = Database.getInstance(application);
         currentUser = database.getCurrentUser();
         resultMessage = database.getResultMessage();
     }
@@ -45,5 +45,9 @@ public class AuthViewModel extends AndroidViewModel {
 
     public void forgotPassword(String email) {
         database.forgotPassword(email);
+    }
+
+    public void updateCurrentUser(){
+        database.updateCurrentUser();
     }
 }

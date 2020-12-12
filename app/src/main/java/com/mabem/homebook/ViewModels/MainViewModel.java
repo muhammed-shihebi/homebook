@@ -16,7 +16,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        database = new Database(application);
+        database = Database.getInstance(application);
         currentUser = database.getCurrentUser();
     }
     public MutableLiveData<User> getCurrentUser(){
@@ -25,5 +25,9 @@ public class MainViewModel extends AndroidViewModel {
 
     public void signOut(){
         database.signOut();
+    }
+
+    public void updateCurrentUser(){
+        database.updateCurrentUser();
     }
 }

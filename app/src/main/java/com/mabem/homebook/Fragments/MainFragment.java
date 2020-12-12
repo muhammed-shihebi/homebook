@@ -34,6 +34,7 @@ public class MainFragment extends Fragment {
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
 
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        mainViewModel.updateCurrentUser();
         mainViewModel.getCurrentUser().observe(requireActivity(), user -> {
             if (user == null) {
                 Navigation.findNavController(

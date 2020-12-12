@@ -1,5 +1,6 @@
 package com.mabem.homebook.Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Home {
@@ -8,6 +9,9 @@ public class Home {
     private String code = "";
     private boolean visibility = true; //True -> Public, False -> Private
     private HashMap<Member, Boolean> member_role = new HashMap<Member, Boolean>(); //Role: False -> Normal Member, True -> Admin
+
+    private ArrayList<Reminder> reminders;
+    private ArrayList<Receipt> receipts;
 
     public Home(String id, String name, String code, boolean visibility, HashMap<Member, Boolean> member_role) {
         this.id = id;

@@ -28,17 +28,16 @@ public class MainActivity extends AppCompatActivity {
 
         // If the user didn't check remember me, he/she will be logged out.
 
-        database = new Database(getApplication());
+        database = Database.getInstance(getApplication());
+        database.updateCurrentUser();
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         boolean defaultValue = getResources().getBoolean(R.bool.remember_me_default_value);
         boolean rememberMe = sharedPref.getBoolean(getString(R.string.saved_remember_me_preference), defaultValue);
         if (!rememberMe) {
             Log.i(MAIN_ACTIVITY_TAG, "onStop: The user will be logged out.");
             new CountDownTimer(TIME_BEFORE_SIGN_OUT, 1000) {
-
                 public void onTick(long millisUntilFinished) {
                 }
-
                 public void onFinish() {
 
                     // This will log out the user and end the activity.

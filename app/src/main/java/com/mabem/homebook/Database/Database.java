@@ -2,6 +2,7 @@ package com.mabem.homebook.Database;
 
 import android.app.Application;
 import android.net.Uri;
+import android.provider.ContactsContract;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -10,8 +11,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
+
+import java.util.Date;
 
 public class Database {
     public static final String usersCollection = "users";
@@ -21,22 +28,32 @@ public class Database {
     public static final String userId = "userId";
     public static final String ImageURL = "ImageURL";
     public static final String DATABASE_TAG = "Database";
+    private static Database instance;
 
-    private final FirebaseAuth firebaseAuth;
-    private final MutableLiveData<User> currentUser;
     private final Application application;
-    private final MutableLiveData<String> resultMessage;
+    private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+    private final MutableLiveData<User> currentUser = new MutableLiveData<>();
+    private final MutableLiveData<String> resultMessage = new MutableLiveData<>();
 
-    public Database(Application application) {
+    private Database(Application application) {
         this.application = application;
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = new MutableLiveData<>();
-        resultMessage = new MutableLiveData<>();
+    }
 
+    public static Database getInstance(Application application){
+        if(instance == null){
+            return new Database(application);
+        }else{
+            return instance;
+        }
+    }
+
+    public void updateCurrentUser(){
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         User user = makeUser(firebaseUser);
         currentUser.postValue(user);
     }
+
+    //========================================= Getters
 
     public MutableLiveData<User> getCurrentUser() {
         return currentUser;
@@ -119,6 +136,64 @@ public class Database {
                 });
     }
 
+    //========================================= Reminder Functions
+
+    public void getAllReminders(Home home){
+
+    }
+
+    public void setReminder(Home home, Reminder newReminder){
+
+    }
+
+    public void deleteReminder(Home home, Reminder newReminder){}
+
+    public void updateReminder(Home home, Reminder newReminder){}
+
+    //========================================= Receipt Functions
+
+    public void getAllReceipts(Home home){
+
+    }
+
+    public void addReceipt(Home home, Member member){}
+
+    public void deleteReceipt(Home home){}
+
+    public void updateReceipt(Home home, Receipt receipt){}
+
+    //========================================= Admin Functions
+
+    public void declineRequestToJoin(Home home, User user){}
+
+    public void acceptRequestToJoin(Home home, User user){}
+
+    public void removeMemberFromHome(Home home, Member member){}
+
+    public void inviteUser(Home home, String userEmail){}
+
+    public void deleteHome(Home home){}
+
+    public void updateHome(Home home){}
+
+    public void makeAdmin(Home home, Member member){}
+
+    //========================================= Member Functions
+
+    public void leaveHome(Home home, Member member){}
+
+    public void getStatistics(Home home, Date date){}
+
+    //========================================= User Functions
+
+    public void sendRequestToJoinHome(String homeId, User user){}
+
+    public void updateUser(User user){}
+
+    public void searchHome(String homeId){}
+
+    public void createHome(String name, User user){}
+
     //========================================= Helper Functions
 
     public User makeUser(FirebaseUser firebaseUser) {
@@ -141,7 +216,5 @@ public class Database {
         }
         return null;
     }
-
-
 }
 
