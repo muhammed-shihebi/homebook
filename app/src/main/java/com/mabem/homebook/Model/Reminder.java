@@ -1,24 +1,24 @@
 package com.mabem.homebook.Model;
 
 import java.util.Calendar;
-
-enum Frequency {
-    Never,
-    Daily,
-    Weekly,
-    Monthly
-}
-
+import java.util.Date;
 public class Reminder {
+
+    public static final String NEVER = "Never";
+    public static final String DAILY = "Daily";
+    public static final String WEEKLY = "Weekly";
+    public static final String MONTHLY = "MONTHLY";
+
+
     private String id = "";
     private String name = "";
-    private Calendar date;
-    private Frequency frequency;
+    private Date date;
+    private String frequency;
 
-    public Reminder(String id, String name, Frequency frequency, int year, int month, int day, int hour, int minute) {
+    public Reminder(String id, String name, String frequency, Date date) {
         this.id = id;
         this.name = name;
-        this.date.set(year, month, day, hour, minute);
+        this.date = date;
         this.frequency = frequency;
     }
 
@@ -30,11 +30,11 @@ public class Reminder {
         return name;
     }
 
-    public Calendar getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public Frequency getFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
