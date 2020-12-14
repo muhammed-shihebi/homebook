@@ -7,7 +7,7 @@ public class Reminder {
     public static final String NEVER = "Never";
     public static final String DAILY = "Daily";
     public static final String WEEKLY = "Weekly";
-    public static final String MONTHLY = "MONTHLY";
+    public static final String MONTHLY = "Monthly";
 
 
     private String id = "";

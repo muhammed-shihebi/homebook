@@ -39,5 +39,11 @@
     <string name="please_connect_to_the_internet_message">Please connect to the Internet and try again.</string>
     <string name="ok_button">OK</string>
 
+    <string name="reminder_set">Set Reminder</string>
+    <string name="set">Set</string>
+    <string name="cancel">Cancel</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+
     <bool name="remember_me_default_value">false</bool>
 </resources>
