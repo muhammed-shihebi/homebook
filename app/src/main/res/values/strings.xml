@@ -17,6 +17,9 @@
     <string name="profile">Profile</string>
     <string name="language">Language</string>
     <string name="about">About</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="profile_photo">Change Profile Photo</string>
+    <string name="save">Save</string>
     <string name="log_in_with_facebook">Log in with Facebook</string>
     <string name="or">OR</string>
     <string name="sign_up_with_google">Sign up with Google</string>
