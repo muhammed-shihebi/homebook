@@ -71,14 +71,14 @@
         android:text="@string/edit_profile"
         android:textColor="#ACA325"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/log_in_logo_image_view2"
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/log_in_logo_image_view2"
-        app:layout_constraintTop_toTopOf="@+id/log_in_logo_image_view2" />
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/logo" />
 
     <ImageView
-        android:id="@+id/log_in_logo_image_view2"
+        android:id="@+id/logo"
         android:layout_width="92dp"
         android:layout_height="80dp"
         android:contentDescription="@string/App_logo"
@@ -91,7 +91,7 @@
         app:srcCompat="@drawable/logo" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/profile_photo"
         android:layout_width="87dp"
         android:layout_height="77dp"
         android:contentDescription="@string/profile_photo"
@@ -99,21 +99,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.246"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/log_in_logo_image_view2"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.136"
         app:srcCompat="@drawable/default_profile_photo" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/change_photo_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/profile_photo"
         android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.241"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintStart_toEndOf="@+id/profile_photo"
+        app:layout_constraintTop_toTopOf="@+id/profile_photo" />
 
     <TextView
         android:id="@+id/textView2"

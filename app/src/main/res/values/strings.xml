@@ -20,6 +20,9 @@
     <string name="edit_profile">Edit Profile</string>
     <string name="profile_photo">Change Profile Photo</string>
     <string name="save">Save</string>
+    <string name="create">Create</string>
+    <string name="private_checkbox">Private</string>
+    <string name="create_home">Create New Home</string>
     <string name="log_in_with_facebook">Log in with Facebook</string>
     <string name="or">OR</string>
     <string name="sign_up_with_google">Sign up with Google</string>

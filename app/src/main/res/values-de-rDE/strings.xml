@@ -23,6 +23,9 @@
     <string name="edit_profile">Profil Bearbeitung</string>
     <string name="profile_photo">Profilbild ändern</string>
     <string name="save">Speichern</string>
+    <string name="create">Erstellen</string>
+    <string name="private_checkbox">Privat</string>
+    <string name="create_home">Neue Haus Einfügen</string>
     <string name="sign_up_with_google">Mit Google Registrieren</string>
     <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
     <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>
