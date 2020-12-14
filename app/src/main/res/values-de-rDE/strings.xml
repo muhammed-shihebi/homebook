@@ -13,9 +13,13 @@
     <string name="forgot_password">Kennwort vergessen</string>
     <string name="welcome">Herzlich Willkommen</string>
     <string name="login_with_google">Mit Google Anmelden</string>
+    <string name="title">Title</string>
     <string name="log_in_with_facebook">Mit Facebook Anmelden</string>
     <string name="or">Oder</string>
     <string name="sign_out">Abmelden</string>
+    <string name="profile">Profil</string>
+    <string name="language">Sprache</string>
+    <string name="about">Info</string>
     <string name="sign_up_with_google">Mit Google Registrieren</string>
     <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
     <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>

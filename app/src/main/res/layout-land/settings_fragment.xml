@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/top_bar"></include>
+
+    <Button
+        android:id="@+id/profile_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="699dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="88dp"
+        android:background="@android:color/transparent"
+        android:text="@string/profile"
+        android:textAlignment="viewStart"
+        android:textColor="#292424"
+        app:icon="@android:drawable/editbox_dropdown_dark_frame"
+        app:iconTint="#2B2323"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include" />
+
+    <Button
+        android:id="@+id/language_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="699dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="152dp"
+        android:background="@android:color/transparent"
+        android:text="@string/language"
+        android:textAlignment="viewStart"
+        android:textColor="#292424"
+        app:icon="@android:drawable/editbox_dropdown_dark_frame"
+        app:iconTint="#2B2323"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include" />
+
+    <Button
+        android:id="@+id/about_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="699dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="216dp"
+        android:background="@android:color/transparent"
+        android:text="@string/about"
+        android:textAlignment="viewStart"
+        android:textColor="#292424"
+        app:icon="@android:drawable/editbox_dropdown_dark_frame"
+        app:iconTint="#2B2323"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
