@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2B2F38">
+        android:background="@color/white">
 
         <Button
             android:id="@+id/sign_out_button"

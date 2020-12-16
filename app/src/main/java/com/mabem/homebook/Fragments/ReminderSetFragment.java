@@ -40,7 +40,6 @@ public class ReminderSetFragment extends Fragment implements AdapterView.OnItemS
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         // Inflate the layout (link this fragment with login_fragment layout).
         reminderSetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_remider_set, container, false);

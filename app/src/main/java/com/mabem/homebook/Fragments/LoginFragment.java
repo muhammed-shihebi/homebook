@@ -42,7 +42,7 @@ public class LoginFragment extends Fragment {
         //========================================= Init
 
         // Hide action bar.
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
 
         // Block landscape orientation.
         // getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

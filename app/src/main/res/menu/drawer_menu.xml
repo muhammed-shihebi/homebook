@@ -12,18 +12,19 @@
             android:id="@+id/mainFragment"
             android:icon="@drawable/home_icon"
             android:title="@string/my_homes" />
+        <item
+            android:id="@+id/settingsFragment"
+            android:icon="@drawable/settings_icon"
+            android:title="@string/settings" />
+        <item
+            android:id="@+id/nav_sign_out"
+            android:icon="@drawable/logout_icon"
+            android:title="@string/sign_out" />
+        <item
+            android:id="@+id/aboutFragment"
+            android:icon="@drawable/logo"
+            android:title="About" />
     </group>
-    <item android:title="@string/other">
-        <menu>
-            <item
-                android:id="@+id/settingsFragment"
-                android:icon="@drawable/settings_icon"
-                android:title="@string/settings" />
-            <item
-                android:id="@+id/nav_sign_out"
-                android:icon="@drawable/logout_icon"
-                android:title="@string/sign_out" />
-        </menu>
-    </item>
+
 
 </menu>
