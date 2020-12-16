@@ -1,5 +1,6 @@
 package com.mabem.homebook.Fragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,11 +30,17 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+
+
+//        DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
+
+//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
-
         mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
+
         mainViewModel.updateCurrentUser();
         mainViewModel.getCurrentUser().observe(requireActivity(), user -> {
             if (user == null) {
@@ -45,7 +52,6 @@ public class MainFragment extends Fragment {
                 mainBinding.userName.setText(user.getName());
             }
         });
-
 
         mainBinding.signOutButton.setOnClickListener(v -> {
             mainViewModel.signOut();
