@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -47,7 +48,7 @@
         android:paddingEnd="0dp"
         android:text="@string/edit"
         android:textColor="#ba9031"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/profile_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -57,17 +58,15 @@
 
     <EditText
         android:id="@+id/reminder_set_name_edit_text"
-        android:layout_width="312dp"
-        android:layout_height="44dp"
+        android:layout_width="185dp"
+        android:layout_height="42dp"
         android:autofillHints=""
         android:background="@drawable/rounded_edit_text"
-        android:hint="@string/search"
+        android:hint="@string/enter_home_code"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:shadowColor="#FAF3F3"
         app:layout_constraintBottom_toTopOf="@+id/profile_image"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -77,10 +76,11 @@
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:src="@drawable/search_icon"
         app:layout_constraintBottom_toTopOf="@+id/profile_image"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/reminder_set_name_edit_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">

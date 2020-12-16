@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_notification"
+            android:id="@+id/notificationsFragment"
             android:icon="@drawable/notifications_icon"
-            android:title="@string/notifications">
-        </item>
+            android:title="@string/notifications" />
         <item
-            android:id="@+id/nav_my_homes"
-            android:icon="@drawable/new_home_icon"
-            android:title="@string/my_homes">
-        </item>
+            android:id="@+id/mainFragment"
+            android:icon="@drawable/home_icon"
+            android:title="@string/my_homes" />
     </group>
     <item android:title="@string/other">
         <menu>
             <item
-                android:id="@+id/nav_settings"
+                android:id="@+id/settingsFragment"
                 android:icon="@drawable/settings_icon"
-                android:title="@string/settings">
-            </item>
+                android:title="@string/settings" />
             <item
                 android:id="@+id/nav_sign_out"
                 android:icon="@drawable/logout_icon"
-                android:title="@string/sign_out">
-            </item>
+                android:title="@string/sign_out" />
         </menu>
     </item>
 

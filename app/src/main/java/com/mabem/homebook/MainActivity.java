@@ -27,26 +27,25 @@ public class MainActivity extends AppCompatActivity {
     Database database;
     private DrawerLayout drawerLayout;
     private MainActivityBinding mainActivityBinding;
-    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
         drawerLayout = mainActivityBinding.drawerLayout;
-
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        navController = navHostFragment.getNavController();
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
-        NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
-
-        setContentView(R.layout.main_activity);
+//        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+//        NavController navController = navHostFragment.getNavController();
+//        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+//        NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
+//        super.onSupportNavigateUp();
         // this will replace the up button with the navigation drawer button when we are in the start destination.
-        return navController.navigateUp();
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        return NavigationUI.navigateUp(navController, drawerLayout) || super.onSupportNavigateUp();
     }
 
     @Override

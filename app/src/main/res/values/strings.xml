@@ -51,6 +51,7 @@
     <string name="user">User</string>
     <string name="edit">Edit</string>
     <string name="search">Search</string>
+    <string name="enter_home_code">Enter Home-Code</string>
 
     <bool name="remember_me_default_value">false</bool>
 </resources>
