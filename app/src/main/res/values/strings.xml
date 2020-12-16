@@ -48,6 +48,9 @@
     <string name="other">Other</string>
     <string name="my_homes">My Homes</string>
     <string name="settings">Settings</string>
+    <string name="user">User</string>
+    <string name="edit">Edit</string>
+    <string name="search">Search</string>
 
     <bool name="remember_me_default_value">false</bool>
 </resources>

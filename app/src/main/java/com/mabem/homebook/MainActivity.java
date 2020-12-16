@@ -5,21 +5,48 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.navigation.NavigationView;
 import com.mabem.homebook.Database.Database;
+import com.mabem.homebook.databinding.MainActivityBinding;
+import com.mabem.homebook.databinding.MainFragmentBinding;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final int TIME_BEFORE_SIGN_OUT = 1000; // 1 Second
     private static final String MAIN_ACTIVITY_TAG = "MainActivity";
     Database database;
+    private DrawerLayout drawerLayout;
+    private MainActivityBinding mainActivityBinding;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
+        drawerLayout = mainActivityBinding.drawerLayout;
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
+        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+        NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
+
         setContentView(R.layout.main_activity);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        // this will replace the up button with the navigation drawer button when we are in the start destination.
+        return navController.navigateUp();
     }
 
     @Override
