@@ -16,7 +16,6 @@ public class Home {
     public ArrayList<Reminder> getReminders() {
         return reminders;
     }
-
     public ArrayList<Receipt> getReceipts() {
         return receipts;
     }

@@ -8,7 +8,7 @@
 
     <include
         android:id="@+id/include"
-        layout="@layout/top_bar"></include>
+        layout="@layout/top_bar" />
 
     <Button
         android:id="@+id/profile_button"

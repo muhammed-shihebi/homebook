@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_notification"
+            android:icon="@drawable/notifications_icon"
+            android:title="@string/notifications">
+        </item>
+        <item
+            android:id="@+id/nav_my_homes"
+            android:icon="@drawable/new_home_icon"
+            android:title="@string/my_homes">
+        </item>
+    </group>
+    <item android:title="@string/other">
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/settings_icon"
+                android:title="@string/settings">
+            </item>
+            <item
+                android:id="@+id/nav_sign_out"
+                android:icon="@drawable/logout_icon"
+                android:title="@string/sign_out">
+            </item>
+        </menu>
+    </item>
+
+</menu>

@@ -44,6 +44,10 @@
     <string name="cancel">Cancel</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="notifications">Notifications</string>
+    <string name="other">Other</string>
+    <string name="my_homes">My Homes</string>
+    <string name="settings">Settings</string>
 
     <bool name="remember_me_default_value">false</bool>
 </resources>
