@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Fragments.ReminderSetFragment"
+        tools:context=".Fragments.Main.Home.Reminder.ReminderSetFragment"
         android:background="@drawable/add_reminder_background">
 
         <ImageView

@@ -5,13 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -19,20 +13,12 @@ import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.navigation.NavigationView;
-import com.mabem.homebook.Database.Database;
-import com.mabem.homebook.Fragments.AboutFragment;
 import com.mabem.homebook.ViewModels.MainViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
-import com.mabem.homebook.databinding.MainFragmentBinding;
-
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -66,10 +52,10 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.aboutFragment, R.id.mainFragment)
+                R.id.notificationsFragment, R.id.mainFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
-//        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
+        // NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
 

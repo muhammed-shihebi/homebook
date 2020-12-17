@@ -1,4 +1,4 @@
-package com.mabem.homebook.Fragments;
+package com.mabem.homebook.Fragments.Main.Home.Reminder;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -8,7 +8,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 
@@ -18,9 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.mabem.homebook.R;

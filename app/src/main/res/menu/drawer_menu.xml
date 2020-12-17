@@ -12,6 +12,10 @@
             android:id="@+id/mainFragment"
             android:icon="@drawable/home_icon"
             android:title="@string/my_homes" />
+        <item
+            android:id="@+id/addNewHomeFragment"
+            android:icon="@drawable/new_home_icon"
+            android:title="@string/add_new_home" />
 
     </group>
     <item android:title="@string/other">

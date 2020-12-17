@@ -1,6 +1,5 @@
-package com.mabem.homebook.Fragments;
+package com.mabem.homebook.Fragments.Main;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

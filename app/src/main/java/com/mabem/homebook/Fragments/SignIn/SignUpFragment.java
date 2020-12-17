@@ -1,4 +1,4 @@
-package com.mabem.homebook.Fragments;
+package com.mabem.homebook.Fragments.SignIn;
 
 import android.content.Intent;
 import android.os.Bundle;
