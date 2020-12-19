@@ -6,7 +6,7 @@
     android:gravity="start|end">
 
     <TextView
-        android:id="@+id/member_name"
+        android:id="@+id/item_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"

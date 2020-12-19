@@ -7,7 +7,7 @@
     android:background="@drawable/create_home_background">
 
     <EditText
-        android:id="@+id/home_name"
+        android:id="@+id/receipt_name"
         android:layout_width="205dp"
         android:layout_height="39dp"
         android:autofillHints=""
@@ -59,11 +59,11 @@
         android:text="@string/private_checkbox"
         android:textColor="#FFFFFF"
         app:buttonTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/home_name"
+        app:layout_constraintBottom_toBottomOf="@+id/receipt_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.229"
-        app:layout_constraintStart_toEndOf="@+id/home_name"
-        app:layout_constraintTop_toTopOf="@+id/home_name"
+        app:layout_constraintStart_toEndOf="@+id/receipt_name"
+        app:layout_constraintTop_toTopOf="@+id/receipt_name"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/leave_home_button"
+        android:id="@+id/delete_receipt_button"
         android:layout_width="143dp"
         android:layout_height="48dp"
         android:layout_marginBottom="44dp"
@@ -136,7 +136,7 @@
         android:layout_height="wrap_content"
         android:text="@string/name"
         android:textColor="#8C8C8C"
-        app:layout_constraintBottom_toTopOf="@+id/home_name"
+        app:layout_constraintBottom_toTopOf="@+id/receipt_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.114"
         app:layout_constraintStart_toStartOf="parent"
@@ -166,7 +166,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.127"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_name"
+        app:layout_constraintTop_toBottomOf="@+id/receipt_name"
         app:layout_constraintVertical_bias="0.709" />
 
     <ScrollView
@@ -178,7 +178,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_name"
+        app:layout_constraintTop_toBottomOf="@+id/receipt_name"
         app:layout_constraintVertical_bias="0.328">
 
         <LinearLayout

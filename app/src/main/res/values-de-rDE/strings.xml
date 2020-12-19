@@ -32,6 +32,7 @@
     <string name="invite">Einladen</string>
     <string name="delete_home">Wohnung Löschen</string>
     <string name="leave_home">Wohnung Verlassen</string>
+    <string name="add_receipt">Rechnung Hinzufügen</string>
     <string name="notifications">Benachritigungen</string>
     <string name="other">Anders</string>
     <string name="my_homes">Meine Wohnungen</string>
@@ -58,4 +59,12 @@
     <string name="cancel">Abbrechen</string>
     <string name="date">Datum</string>
     <string name="time">Uhr</string>
+    <string name="items">Waren</string>
+    <string name="item">Ware</string>
+    <string name="add_item">Ware Hinzufügen</string>
+    <string name="total">Gesamtbetrag: </string>
+    <string name="delete_receipt">Rechnung Löschen</string>
+    <string name="price">Preis</string>
+
+
 </resources>

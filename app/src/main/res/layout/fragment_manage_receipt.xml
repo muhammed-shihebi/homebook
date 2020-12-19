@@ -1,14 +1,262 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Main.Home.Receipt.ManageReceiptFragment">
+    android:background="@drawable/add_receipt_backgound">
 
-    <!-- TODO: Update blank fragment layout -->
+    <Button
+        android:id="@+id/receipt_date"
+        android:layout_width="179dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="48dp"
+        android:background="@drawable/rounded_edit_text"
+        android:text="@string/date"
+        android:textAlignment="textStart"
+        android:textAllCaps="false"
+        android:textColor="#70000000"
+        app:backgroundTint="#FFFFFF"
+        app:icon="@drawable/calendar_icon"
+        app:iconGravity="end"
+        app:iconTint="#2B2B2B"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintStart_toEndOf="@+id/receipt_name" />
+
+    <Button
+        android:id="@+id/delete_receipt_button"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="36dp"
+        android:text="@string/delete_receipt"
+        android:textAllCaps="false"
+        app:backgroundTint="#85232C"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="92dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/App_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/logo" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/add_receipt"
+        android:textColor="#ACA325"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/logo" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/add_item_name"
+        android:layout_width="187dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="420dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_edit_text"
+        android:ellipsize="none"
+        android:ems="50"
+        android:fadingEdge="horizontal"
+        android:hint="@string/item"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:shadowColor="#FAF3F3"
+        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.963"
+        tools:ignore="TextFields"
+        tools:layout_constraintCircleRadius="50dp" />
+
+    <EditText
+        android:id="@+id/add_item_price"
+        android:layout_width="94dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="420dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_edit_text"
+        android:ellipsize="none"
+        android:ems="50"
+        android:fadingEdge="horizontal"
+        android:hint="@string/price"
+        android:inputType="numberDecimal"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:shadowColor="#FAF3F3"
+        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.731"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.963"
+        tools:ignore="TextFields"
+        tools:layout_constraintCircleRadius="50dp" />
+
+    <Button
+        android:id="@+id/save_receipt_button"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="84dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        app:backgroundTint="#857C23"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/name"
+        android:textColor="#8C8C8C"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/items"
+        android:textColor="#8C8C8C"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.156"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:layout_marginBottom="11dp"
+        android:text="@string/add_item"
+        android:textColor="#8C8C8C"
+        app:layout_constraintBottom_toTopOf="@+id/add_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="346dp"
+        android:layout_height="229dp"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/delete_receipt_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.43">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/members_list"
+                android:layout_width="322dp"
+                android:layout_height="227dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                tools:listitem="@layout/receipt_item_menu_item" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/receipt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/name"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/add_item_button"
+        android:layout_width="41dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="32dp"
+        android:src="@drawable/add_receipt_icon"
+        app:layout_constraintBottom_toTopOf="@+id/save_receipt_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/add_item_price"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.628" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="30dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/money_icon"
+        app:layout_constraintBottom_toTopOf="@+id/add_item_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="38dp"
+        android:text="@string/total"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/add_item_price"
+        app:layout_constraintEnd_toStartOf="@+id/total_price"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <TextView
+        android:id="@+id/total_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="38dp"
+        android:text="0.00"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/add_item_price"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

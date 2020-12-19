@@ -7,7 +7,7 @@
     android:background="@drawable/create_home_background">
 
     <Button
-        android:id="@+id/leave_home_button"
+        android:id="@+id/delete_receipt_button"
         android:layout_width="143dp"
         android:layout_height="48dp"
         android:layout_marginBottom="172dp"
@@ -70,7 +70,7 @@
         android:layout_width="346dp"
         android:layout_height="229dp"
         android:background="@drawable/rounded_edit_text"
-        app:layout_constraintBottom_toTopOf="@+id/leave_home_button"
+        app:layout_constraintBottom_toTopOf="@+id/delete_receipt_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/home_name"
+        android:id="@+id/receipt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
