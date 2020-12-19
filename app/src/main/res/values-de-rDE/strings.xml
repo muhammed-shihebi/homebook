@@ -31,6 +31,7 @@
     <string name="invite_member">Neues Mitglied Einladen</string>
     <string name="invite">Einladen</string>
     <string name="delete_home">Wohnung Löschen</string>
+    <string name="leave_home">Wohnung Verlassen</string>
     <string name="notifications">Benachritigungen</string>
     <string name="other">Anders</string>
     <string name="my_homes">Meine Wohnungen</string>
@@ -41,6 +42,7 @@
     <string name="enter_home_code">Wohnung-Code Eingeben</string>
     <string name="add_new_home">Neue Wohnung Hinzufügen</string>
     <string name="admin">Admin</string>
+    <string name="home_info">Wohnung Info</string>
     <string name="sign_up_with_google">Mit Google Registrieren</string>
     <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
     <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>

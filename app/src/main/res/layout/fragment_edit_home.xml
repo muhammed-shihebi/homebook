@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/delete_home_button"
+        android:id="@+id/leave_home_button"
         android:layout_width="143dp"
         android:layout_height="48dp"
         android:layout_marginBottom="44dp"

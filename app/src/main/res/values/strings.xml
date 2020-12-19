@@ -58,6 +58,8 @@
     <string name="user">User</string>
     <string name="edit">Edit</string>
     <string name="admin">Admin</string>
+    <string name="home_info">Home Info</string>
+    <string name="leave_home">Leave Home</string>
     <string name="search">Search</string>
     <string name="enter_home_code">Enter Home-Code</string>
 
