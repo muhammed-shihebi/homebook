@@ -8,8 +8,8 @@
 
     <EditText
         android:id="@+id/home_name"
-        android:layout_width="180dp"
-        android:layout_height="42dp"
+        android:layout_width="205dp"
+        android:layout_height="39dp"
         android:autofillHints=""
         android:background="@drawable/rounded_edit_text"
         android:ellipsize="none"
@@ -22,7 +22,7 @@
         android:shadowColor="#FAF3F3"
         app:layout_constraintBottom_toTopOf="@+id/save_home_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintHorizontal_bias="0.165"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
         app:layout_constraintVertical_bias="0.113"
@@ -60,7 +60,7 @@
         app:buttonTint="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="@+id/home_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintHorizontal_bias="0.229"
         app:layout_constraintStart_toEndOf="@+id/home_name"
         app:layout_constraintTop_toTopOf="@+id/home_name"
         app:layout_constraintVertical_bias="0.0" />
@@ -188,7 +188,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/members_list"
                 android:layout_width="322dp"
-                android:layout_height="227dp" />
+                android:layout_height="227dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                tools:listitem="@layout/home_member_menu_item" />
         </LinearLayout>
     </ScrollView>
 

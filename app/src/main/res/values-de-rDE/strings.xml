@@ -40,6 +40,7 @@
     <string name="search">Suchen</string>
     <string name="enter_home_code">Wohnung-Code Eingeben</string>
     <string name="add_new_home">Neue Wohnung Hinzufügen</string>
+    <string name="admin">Admin</string>
     <string name="sign_up_with_google">Mit Google Registrieren</string>
     <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
     <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>

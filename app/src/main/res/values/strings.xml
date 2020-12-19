@@ -57,6 +57,7 @@
     <string name="settings">Settings</string>
     <string name="user">User</string>
     <string name="edit">Edit</string>
+    <string name="admin">Admin</string>
     <string name="search">Search</string>
     <string name="enter_home_code">Enter Home-Code</string>
 
