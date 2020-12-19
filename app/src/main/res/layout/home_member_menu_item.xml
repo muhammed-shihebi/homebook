@@ -4,7 +4,7 @@
     android:id="@+id/admin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="start|left|end">
+    android:gravity="start|end">
 
     <TextView
         android:id="@+id/member_name"
@@ -26,6 +26,7 @@
         android:layout_width="40dp"
         android:layout_height="23dp"
         android:layout_weight="1"
+        android:contentDescription="@string/delete_home"
         app:srcCompat="@drawable/delete_icon" />
 
 </LinearLayout>
