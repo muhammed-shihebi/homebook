@@ -1,14 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Main.Home.editHomeFragment">
+    android:background="@drawable/create_home_background">
 
-    <!-- TODO: Update blank fragment layout -->
+    <EditText
+        android:id="@+id/home_name"
+        android:layout_width="180dp"
+        android:layout_height="42dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_edit_text"
+        android:ellipsize="none"
+        android:ems="50"
+        android:fadingEdge="horizontal"
+        android:hint="@string/name"
+        android:inputType="textPersonName"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:shadowColor="#FAF3F3"
+        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.113"
+        tools:layout_constraintCircleRadius="50dp" />
+
+    <EditText
+        android:id="@+id/invite_email"
+        android:layout_width="232dp"
+        android:layout_height="39dp"
+        android:autofillHints=""
+        android:background="@drawable/rounded_edit_text"
+        android:ellipsize="none"
+        android:ems="50"
+        android:fadingEdge="horizontal"
+        android:hint="@string/email"
+        android:inputType="@string/email"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:shadowColor="#FAF3F3"
+        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.963"
+        tools:layout_constraintCircleRadius="50dp" />
+
+    <CheckBox
+        android:id="@+id/private_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:text="@string/private_checkbox"
+        android:textColor="#FFFFFF"
+        app:buttonTint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/home_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toEndOf="@+id/home_name"
+        app:layout_constraintTop_toTopOf="@+id/home_name"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/save_home_button"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="92dp"
+        android:text="@string/save"
+        android:textAllCaps="false"
+        app:backgroundTint="#857C23"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/delete_home_button"
+        android:layout_width="143dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="44dp"
+        android:text="@string/delete_home"
+        android:textAllCaps="false"
+        app:backgroundTint="#85232C"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/invite_button"
+        android:layout_width="76dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="156dp"
+        android:text="@string/invite"
+        android:textAllCaps="false"
+        app:backgroundTint="#857C23"
+        app:cornerRadius="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.862"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="92dp"
+        android:layout_height="80dp"
+        android:contentDescription="@string/App_logo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.046"
+        app:srcCompat="@drawable/logo" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/edit_home"
+        android:textColor="#ACA325"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/logo"
+        app:layout_constraintStart_toEndOf="@+id/logo"
+        app:layout_constraintTop_toTopOf="@+id/logo" />
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textColor="#8C8C8C"
+        app:layout_constraintBottom_toTopOf="@+id/home_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.114"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintVertical_bias="0.612" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/invite_member"
+        android:textColor="#8C8C8C"
+        app:layout_constraintBottom_toTopOf="@+id/invite_email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.155"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:layout_constraintVertical_bias="0.911" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/members"
+        android:textColor="#8C8C8C"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.127"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_name"
+        app:layout_constraintVertical_bias="0.709" />
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="346dp"
+        android:layout_height="229dp"
+        android:background="@drawable/rounded_edit_text"
+        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_name"
+        app:layout_constraintVertical_bias="0.328">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/members_list"
+                android:layout_width="322dp"
+                android:layout_height="227dp" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

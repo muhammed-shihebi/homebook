@@ -25,7 +25,12 @@
     <string name="save">Speichern</string>
     <string name="create">Erstellen</string>
     <string name="private_checkbox">Privat</string>
-    <string name="create_home">Neue Haus Einfügen</string>
+    <string name="create_home">Neue Wohnung Einfügen</string>
+    <string name="edit_home">Wohnung Bearbeiten</string>
+    <string name="members">Mitglieder</string>
+    <string name="invite_member">Neues Mitglied Einladen</string>
+    <string name="invite">Einladen</string>
+    <string name="delete_home">Wohnung Löschen</string>
     <string name="sign_up_with_google">Mit Google Registrieren</string>
     <string name="sign_up_with_facebook">Mit Facebook Registrieren</string>
     <string name="enter_email_password_message">Bitte geben Sie ein Kennwort und eine E-Mail ein.</string>
