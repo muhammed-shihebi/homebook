@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,20 +13,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.google.android.material.navigation.NavigationView;
-import com.mabem.homebook.Model.User;
-import com.mabem.homebook.ViewModels.MainViewModel;
+import com.mabem.homebook.ViewModels.MainActivityViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private MainActivityBinding mainActivityBinding;
     private Toolbar toolbar;
-    private MainViewModel mainViewModel;
+    private MainActivityViewModel mainActivityViewModel;
     private NavController navController;
 
     @Override
@@ -51,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         //========================================= Init ViewModel
 
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        mainViewModel.updateCurrentUser();
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mainActivityViewModel.updateCurrentUser();
 
         //========================================= Set up the toolbar and the navigation drawer
         toolbar = mainActivityBinding.toolbar;
@@ -71,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         //========================================= Handle sign out butten
 
         mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
-            mainViewModel.signOut();
+            mainActivityViewModel.signOut();
             return false;
         });
 
@@ -87,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.close();
         });
 
-        mainViewModel.getCurrentUser().observe(this, user -> {
+        mainActivityViewModel.getCurrentUser().observe(this, user -> {
             if(user != null){
                 userName.setText(user.getName());
             }
@@ -129,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
                     // This will log out the user and end the activity.
                     // If the user tries to open the app again a new activity will be created again.
-                    mainViewModel.signOut();
+                    mainActivityViewModel.signOut();
                     finish();
                 }
             }.start();

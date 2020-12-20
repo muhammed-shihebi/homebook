@@ -132,10 +132,12 @@ public class Database {
                     .whereEqualTo(MEMBER_ID, currentUser.getValue().getId())
                     .get()
                     .addOnCompleteListener(task -> {
+                        Log.i(TAG, "updateCurrentMember: "  + currentUser.getValue().getId());
                         if(task.isSuccessful()){
                             HashMap<Home, Boolean> home_role = new HashMap<>();
                             for(QueryDocumentSnapshot document: task.getResult()){
                                 String homeName = document.getString(HOME_NAME);
+
                                 String homeId = document.getString(HOME_ID); // different then HOME_CODE
                                 boolean role = document.getBoolean(MEMBER_ROLE);
                                 Home home = new Home(homeId, homeName);
@@ -520,9 +522,8 @@ public class Database {
 
     public void createHome(String homeName, Boolean isPrivate){
         if(currentMember != null){
-
             // create a unique code for the home
-            String homeCode = UUID.randomUUID().toString();
+            String homeCode = UUID.randomUUID().toString().split("-")[0];
 
             Map<String, Object> data = new HashMap<>();
             data.put(HOME_NAME, homeName);

@@ -10,11 +10,11 @@ import androidx.lifecycle.ViewModel;
 import com.mabem.homebook.Database.Database;
 import com.mabem.homebook.Model.User;
 
-public class MainViewModel extends AndroidViewModel {
+public class MainActivityViewModel extends AndroidViewModel {
     private final Database database;
     private final MutableLiveData<User> currentUser;
 
-    public MainViewModel(@NonNull Application application) {
+    public MainActivityViewModel(@NonNull Application application) {
         super(application);
         database = Database.getInstance(application);
         currentUser = database.getCurrentUser();

@@ -35,7 +35,6 @@ public class SettingsFragment extends Fragment {
             Navigation.findNavController(v).navigate(R.id.changeLanguageFragment);
         });
 
-
         settingsBinding.aboutButton.setOnClickListener(v ->{
             Navigation.findNavController(v).navigate(R.id.aboutFragment);
         });

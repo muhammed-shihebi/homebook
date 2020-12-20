@@ -62,10 +62,8 @@ public class LoginFragment extends Fragment {
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
-            Log.i("Login", "onCreateView: ");
             loginBinding.progressBar.setVisibility(View.GONE);
             if (user != null) {
-                Log.i("this is the user", "onCreateView: " + user);
                 Navigation.findNavController(
                         requireActivity(),
                         R.id.log_in_log_in_button
