@@ -22,6 +22,12 @@ public class Reminder {
         this.frequency = frequency;
     }
 
+    public Reminder(String name, Date date, String frequency) {
+        this.name = name;
+        this.date = date;
+        this.frequency = frequency;
+    }
+
     public String getId() {
         return id;
     }

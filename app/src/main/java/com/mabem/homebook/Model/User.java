@@ -24,6 +24,11 @@ public class User implements Serializable {
         this.imageURL = imageURL;
     }
 
+    public User (String name, String id){
+        this.name = name;
+        this.id = id;
+    }
+
     public String getId() {
         return id;
     }

@@ -16,6 +16,10 @@ public class Member extends User {
         this.home_role = home_role;
     }
 
+    public Member(String name, String id){
+        super(name, id);
+    }
+
     public HashMap<Home, Boolean> getHome_role() {
         return home_role;
     }

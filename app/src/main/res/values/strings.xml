@@ -80,4 +80,7 @@
     <string name="add_new_home">Add new Home</string>
     <string name="new_home_created_successfully">New Home was successfully created.</string>
     <string name="please_enter_name_for_home_message">Please Enter a Name for the new Home.</string>
+    <string name="new_reminder_added_message">The new Reminder Was added Successfully</string>
+    <string name="reminder_deleted_message">Reminder successfully deleted!</string>
+    <string name="reminder_updated_message">Reminder successfully updated!</string>
 </resources>

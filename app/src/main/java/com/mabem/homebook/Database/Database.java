@@ -17,7 +17,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
@@ -77,7 +76,6 @@ public class Database {
     private final MutableLiveData<Reminder> currentReminder = new MutableLiveData<>();
 
 
-
     private Database(Application application) {
         this.application = application;
     }
@@ -86,12 +84,13 @@ public class Database {
      * Takes an application and checks if there is an initialized object of the database.
      * If there is an object of the database, it will be returned.
      * If not, a new instance is initialized and returned.
+     *
      * @param application
      * @return An instance of the database object.
      */
 
-    public static Database getInstance(Application application){
-        if(instance == null){
+    public static Database getInstance(Application application) {
+        if (instance == null) {
             instance = new Database(application);
         }
         return instance;
@@ -100,10 +99,10 @@ public class Database {
     //========================================= Updates
 
     /*
-    * These methods should be used when trying to access data right after navigation to a new fragment
-    * without being invoked by explicit action.
-    * After calling these methods the MutableLiveData will be modified and all observes will be notified about the change.
-    * */
+     * These methods should be used when trying to access data right after navigation to a new fragment
+     * without being invoked by explicit action.
+     * After calling these methods the MutableLiveData will be modified and all observes will be notified about the change.
+     * */
 
 
     /**
@@ -112,7 +111,7 @@ public class Database {
      * If not, the value of the current user will be null.
      */
 
-    public void updateCurrentUser(){
+    public void updateCurrentUser() {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         User user = makeUser(firebaseUser);
         currentUser.postValue(user);
@@ -124,18 +123,15 @@ public class Database {
      * If not, currentMember will be null.
      */
 
-    public void updateCurrentMember(){
-        if(currentUser.getValue() == null){
-            currentMember.postValue(null);
-        }else {
+    public void updateCurrentMember() {
+        if (currentUser.getValue() != null) {
             firestore.collection(HOME_USER_COLLECTION)
                     .whereEqualTo(MEMBER_ID, currentUser.getValue().getId())
                     .get()
                     .addOnCompleteListener(task -> {
-                        Log.i(TAG, "updateCurrentMember: "  + currentUser.getValue().getId());
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             HashMap<Home, Boolean> home_role = new HashMap<>();
-                            for(QueryDocumentSnapshot document: task.getResult()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 String homeName = document.getString(HOME_NAME);
 
                                 String homeId = document.getString(HOME_ID); // different then HOME_CODE
@@ -145,9 +141,8 @@ public class Database {
                             }
                             Member member = new Member(currentUser.getValue(), home_role);
                             currentMember.postValue(member);
-                        }else {
+                        } else {
                             resultMessage.postValue(task.getException().getLocalizedMessage());
-                            currentMember.postValue(null);
                         }
                     });
         }
@@ -157,70 +152,70 @@ public class Database {
      * Try to get the home associated with @param homeId.
      * If successful, currentHome will be updated with the associated Receipts.
      * If not, currentHome will be null.
+     *
      * @param homeId homeId to get form the database.
      */
 
-    public void updateCurrentHome(String homeId){
-        firestore.collection(HOME_COLLECTION).document(homeId)
-                .get()
-                .addOnCompleteListener(task -> {
-                    if(task.isSuccessful()){
-                        DocumentSnapshot document = task.getResult();
-                        if(document.exists()){
-                            firestore.collection(HOME_COLLECTION)
-                                    .document(document.getId())
-                                    .collection(RECEIPT_COLLECTION)
-                                    .get()
-                                    .addOnCompleteListener(task1 -> {
-                                        if(task1.isSuccessful()){
-                                            ArrayList<Receipt> receipts = new ArrayList<>();
-                                            for(QueryDocumentSnapshot document1: task1.getResult()){
-                                                Receipt receipt = new Receipt(
-                                                        document1.getId(),
-                                                        document1.getString(RECEIPT_NAME),
-                                                        document1.getDate(RECEIPT_DATE),
-                                                        document1.getString(RECEIPT_MEMBER_NAME));
-                                                receipts.add(receipt);
+    public void updateCurrentHome(String homeId) {
+        if (currentMember != null) {
+            firestore.collection(HOME_COLLECTION).document(homeId)
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                firestore.collection(HOME_COLLECTION)
+                                        .document(document.getId())
+                                        .collection(RECEIPT_COLLECTION)
+                                        .get()
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful()) {
+                                                ArrayList<Receipt> receipts = new ArrayList<>();
+                                                for (QueryDocumentSnapshot document1 : task1.getResult()) {
+                                                    Receipt receipt = new Receipt(
+                                                            document1.getId(),
+                                                            document1.getString(RECEIPT_NAME),
+                                                            document1.getDate(RECEIPT_DATE),
+                                                            document1.getString(RECEIPT_MEMBER_NAME));
+                                                    receipts.add(receipt);
+                                                }
+                                                Home home = new Home(
+                                                        document.getId(),
+                                                        document.getString(HOME_NAME),
+                                                        document.getString(HOME_CODE),
+                                                        document.getBoolean(HOME_VISIBILITY),
+                                                        receipts
+                                                );
+                                                currentHome.postValue(home);
+                                            } else {
+                                                resultMessage.postValue(task1.getException().getMessage());
                                             }
-                                            Home home = new Home(
-                                                    document.getId(),
-                                                    document.getString(HOME_NAME),
-                                                    document.getString(HOME_CODE),
-                                                    document.getBoolean(HOME_VISIBILITY),
-                                                    receipts
-                                            );
-                                            currentHome.postValue(home);
-                                        }else{
-                                            currentHome.postValue(null);
-                                            resultMessage.postValue(task1.getException().getMessage());
-                                        }
-                                    });
+                                        });
+                            }
+                        } else {
+                            resultMessage.postValue(task.getException().getMessage());
                         }
-                    }else{
-                        currentHome.postValue(null);
-                        resultMessage.postValue(task.getException().getMessage());
-                    }
-                });
+                    });
+        }
     }
 
     /**
      * Try to get the receipt associated with @param receiptId.
      * If successful, currentReceipt will be updated with receipt data.
      * If not, currentReceipt will be null.
+     *
      * @param receiptId receiptId to get from the database.
      */
 
-    public void updateCurrentReceipt(String receiptId){
-        if(currentHome == null){
-            currentReceipt.postValue(null);
-        }else{
+    public void updateCurrentReceipt(String receiptId) {
+        if (currentHome != null) {
             firestore.collection(HOME_COLLECTION)
                     .document(currentHome.getValue().getId())
                     .collection(RECEIPT_COLLECTION)
                     .document(receiptId)
                     .get()
                     .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             Receipt receipt = new Receipt(
                                     document.getId(),
@@ -229,8 +224,7 @@ public class Database {
                                     document.getString(RECEIPT_MEMBER_NAME)
                             );
                             currentReceipt.postValue(receipt);
-                        }else {
-                            currentReceipt.postValue(null);
+                        } else {
                             resultMessage.postValue(task.getException().getMessage());
 
                         }
@@ -242,20 +236,19 @@ public class Database {
      * Try to get the reminder associated with @param reminderId.
      * If successful, currentReminder will be updated with reminder data.
      * If not, currentReminder will be null.
+     *
      * @param reminderId reminderId to get from the database.
      */
 
-    public void updateCurrentReminder(String reminderId){
-        if(currentHome == null){
-            currentReminder.postValue(null);
-        }else{
+    public void updateCurrentReminder(String reminderId) {
+        if (currentHome != null) {
             firestore.collection(HOME_COLLECTION)
                     .document(currentHome.getValue().getId())
                     .collection(REMINDER_COLLECTION)
                     .document(reminderId)
                     .get()
                     .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             Reminder reminder = new Reminder(
                                     document.getId(),
@@ -264,8 +257,7 @@ public class Database {
                                     document.getDate(REMINDER_DATE)
                             );
                             currentReminder.postValue(reminder);
-                        }else {
-                            currentReminder.postValue(null);
+                        } else {
                             resultMessage.postValue(task.getException().getMessage());
                         }
                     });
@@ -278,18 +270,16 @@ public class Database {
      * If not, currentHome will not be changed.
      */
 
-    public void updateHomeWithReminders(){
-        if(currentHome.getValue() == null){
-            currentHome.postValue(null);
-        }else{
+    public void updateHomeWithReminders() {
+        if (currentHome.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
                     .document(currentHome.getValue().getId())
                     .collection(REMINDER_COLLECTION)
                     .get()
                     .addOnCompleteListener(task -> {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             ArrayList<Reminder> reminders = new ArrayList<>();
-                            for(QueryDocumentSnapshot document: task.getResult()){
+                            for (QueryDocumentSnapshot document : task.getResult()) {
                                 Reminder reminder = new Reminder(
                                         document.getId(),
                                         document.getString(REMINDER_NAME),
@@ -301,8 +291,7 @@ public class Database {
                             Home home = currentHome.getValue();
                             home.setReminders(reminders);
                             currentHome.postValue(home);
-                        }else {
-                            currentHome.postValue(currentHome.getValue());
+                        } else {
                             resultMessage.postValue(task.getException().getMessage());
                         }
                     });
@@ -315,8 +304,29 @@ public class Database {
      * If not, currentHome will be null.
      */
 
-    public void updateHomeWithMembers(){
-        // Todo get all members when user want to see the members of home
+    public void updateHomeWithMembers() {
+        if (currentMember.getValue() != null && currentHome.getValue() != null) {
+            firestore.collection(HOME_USER_COLLECTION)
+                    .whereEqualTo(HOME_ID, currentHome.getValue().getId())
+                    .get()
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            HashMap<Member, Boolean> memberRole = new HashMap<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                String memberName = document.getString(MEMBER_NAME);
+                                String memberId = document.getString(MEMBER_ID); // different then HOME_CODE
+                                boolean role = document.getBoolean(MEMBER_ROLE);
+                                Member member = new Member(memberName, memberId);
+                                memberRole.put(member, role);
+                            }
+                            Home home = currentHome.getValue();
+                            home.setMember_role(memberRole);
+                            currentHome.postValue(home);
+                        } else {
+                            resultMessage.postValue(task.getException().getLocalizedMessage());
+                        }
+                    });
+        }
     }
 
     //========================================= Getters
@@ -325,15 +335,15 @@ public class Database {
         return currentUser;
     }
 
-    public MutableLiveData<String> getResultMessage(){
+    public MutableLiveData<String> getResultMessage() {
         return resultMessage;
     }
 
-    public MutableLiveData<Member> getCurrentMember(){
+    public MutableLiveData<Member> getCurrentMember() {
         return currentMember;
     }
 
-    public MutableLiveData<Home> getCurrentHome(){
+    public MutableLiveData<Home> getCurrentHome() {
         return currentHome;
     }
 
@@ -367,7 +377,7 @@ public class Database {
                                 .setDisplayName(name)
                                 .setPhotoUri(Uri.parse(""))
                                 .build();
-                        if(firebaseUser != null ){
+                        if (firebaseUser != null) {
                             firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task2 -> {
                                 if (task2.isSuccessful()) {
                                     User user = makeUser(firebaseUser);
@@ -416,73 +426,148 @@ public class Database {
 
     //========================================= Reminder Functions
 
-    public void setReminder(Home home, Reminder newReminder){
+    public void setReminder(Reminder newReminder) {
+        if(currentHome.getValue() != null){
 
+            Map<String, Object> data = new HashMap<>();
+            data.put(REMINDER_DATE, newReminder.getDate());
+            data.put(REMINDER_FREQUENCY, newReminder.getFrequency());
+            data.put(REMINDER_NAME, newReminder.getName());
+
+            firestore.collection(HOME_COLLECTION)
+                    .document(currentHome.getValue().getId())
+                    .collection(REMINDER_COLLECTION)
+                    .add(data)
+                    .addOnSuccessListener(documentReference -> {
+                        updateHomeWithReminders();
+                        resultMessage.postValue(application.getString(R.string.new_reminder_added_message));
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "Error adding document", e);
+                    });
+        }
     }
 
-    public void deleteReminder(Home home, Reminder newReminder){}
+    public void deleteReminder(String reminderId) {
+        if(currentHome.getValue() != null){
+            firestore.collection(HOME_COLLECTION)
+                    .document(currentHome.getValue().getId())
+                    .collection(REMINDER_COLLECTION)
+                    .document(reminderId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "Reminder successfully deleted!");
+                        resultMessage.postValue(application.getString(R.string.reminder_deleted_message));
+                    })
 
-    public void updateReminder(Home home, Reminder newReminder){}
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "Error deleting document", e);
+                    });
+
+        }
+    }
+
+    public void updateReminder(Reminder updatedReminder) {
+        Map<String, Object> data = new HashMap<>();
+        data.put(REMINDER_DATE, updatedReminder.getDate());
+        data.put(REMINDER_FREQUENCY, updatedReminder.getFrequency());
+        data.put(REMINDER_NAME, updatedReminder.getName());
+
+        if(currentHome.getValue() != null){
+            firestore.collection(HOME_COLLECTION)
+                    .document(currentHome.getValue().getId())
+                    .collection(REMINDER_COLLECTION)
+                    .document(updatedReminder.getId())
+                    .update(data)
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        resultMessage.postValue(application.getString(R.string.reminder_updated_message));
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.w(TAG, "Error updating document", e);
+                        resultMessage.postValue(e.getMessage());
+                    });
+        }
+    }
 
     //========================================= Receipt Functions
 
-    public void addReceipt(Home home, Member member){}
+    public void addReceipt(Receipt receipt) {
+        if(currentHome.getValue() != null && currentMember.getValue() != null){
 
-    public void deleteReceipt(Home home){}
+        }
+    }
 
-    public void updateReceipt(Home home, Receipt receipt){}
+    public void deleteReceipt(Home home) {
+    }
+
+    public void updateReceipt(Home home, Receipt receipt) {
+    }
 
     //========================================= Admin Functions
 
-    public void declineRequestToJoin(Home home, User user){}
+    public void declineRequestToJoin(Home home, User user) {
+    }
 
-    public void acceptRequestToJoin(Home home, User user){}
+    public void acceptRequestToJoin(Home home, User user) {
+    }
 
-    public void removeMemberFromHome(Home home, Member member){}
+    public void removeMemberFromHome(Home home, Member member) {
+    }
 
-    public void inviteUser(Home home, String userEmail){}
+    public void inviteUser(Home home, String userEmail) {
+    }
 
-    public void deleteHome(Home home){}
+    public void deleteHome(Home home) {
+    }
 
-    public void updateHome(Home home){}
+    public void updateHome(Home home) {
+    }
 
-    public void makeAdmin(Home home, Member member){}
+    public void makeAdmin(Home home, Member member) {
+    }
 
     //========================================= Member Functions
 
-    public void leaveHome(Home home, Member member){}
+    public void leaveHome(Home home, Member member) {
+    }
 
-    public void getStatistics(Home home, Date date){}
+    public void getStatistics(Home home, Date date) {
+    }
 
     //========================================= User Functions
 
-    public void sendRequestToJoinHome(String homeId, User user){}
+    public void sendRequestToJoinHome(String homeId, User user) {
+    }
 
     /**
      * Try to update the information of the currently logged in user.
      * If successful, information of the user are updated including the names in Receipts collections.
      * If unsuccessful, information are not updated and resultMessage is updated.
+     *
      * @param user
      */
 
-    public void updateUser(User user){
+    public void updateUser(User user) {
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest
                 .Builder()
                 .setDisplayName(user.getName())
                 .setPhotoUri(Uri.parse(user.getImageURL()))
                 .build();
-        if(firebaseUser != null){
+        if (firebaseUser != null) {
             firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     firebaseUser.updateEmail(user.getEmailAddress()).addOnCompleteListener(task2 -> {
-                        if(task2.isSuccessful()){
+                        if (task2.isSuccessful()) {
 
                             firestore.collectionGroup(RECEIPT_COLLECTION)
                                     .whereEqualTo(MEMBER_ID, firebaseUser.getUid())
                                     .get()
                                     .addOnSuccessListener(queryDocumentSnapshots -> {
-                                        for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                                             queryDocumentSnapshot
                                                     .getReference()
                                                     .update(MEMBER_NAME, user.getName())
@@ -499,7 +584,7 @@ public class Database {
                                     .addOnFailureListener(e -> {
                                         resultMessage.postValue(e.getMessage());
                                     });
-                        }else {
+                        } else {
                             resultMessage.postValue(task2.getException().getMessage());
                         }
                     });
@@ -510,18 +595,20 @@ public class Database {
         }
     }
 
-    public void searchHome(String homeId){}
+    public void searchHome(String homeId) {
+    }
 
     /**
      * Try to create a new Home associated with the currentMember.
      * If successful, a new Home for the currentMember is created.
      * The currentMember will be automatically the admin of this Home.
-     * @param homeName name of the home to be created.
+     *
+     * @param homeName  name of the home to be created.
      * @param isPrivate visibility: true for private, false for public.
      */
 
-    public void createHome(String homeName, Boolean isPrivate){
-        if(currentMember != null){
+    public void createHome(String homeName, Boolean isPrivate) {
+        if (currentMember != null) {
             // create a unique code for the home
             String homeCode = UUID.randomUUID().toString().split("-")[0];
 
@@ -555,9 +642,6 @@ public class Database {
                         resultMessage.postValue(e.getMessage());
                         Log.w(TAG, "Error adding document", e);
                     });
-        }else{
-            currentMember.postValue(null);
-            Log.w(TAG, "createHome: the currentMember is null");
         }
     }
 

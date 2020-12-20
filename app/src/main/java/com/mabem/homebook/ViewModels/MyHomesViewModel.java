@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Database.Database;
@@ -17,6 +18,8 @@ public class MyHomesViewModel extends AndroidViewModel {
     private final Database database;
     private final MutableLiveData<Member> currentMember;
     private final MutableLiveData<String> resultMessage;
+
+    private boolean shouldShowResultMessage = false;
 
     public MyHomesViewModel(@NonNull Application application) {
         super(application);
@@ -40,4 +43,11 @@ public class MyHomesViewModel extends AndroidViewModel {
         database.createHome(homeName, isPrivate);
     }
 
+    public boolean getShouldShowResultMessage() {
+        return shouldShowResultMessage;
+    }
+
+    public void setShouldShowResultMessage(boolean shouldShowResultMessage) {
+        this.shouldShowResultMessage = shouldShowResultMessage;
+    }
 }

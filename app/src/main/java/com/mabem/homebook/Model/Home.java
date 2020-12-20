@@ -26,6 +26,10 @@ public class Home {
         this.receipts = receipts;
     }
 
+    public void setMember_role(HashMap<Member, Boolean> member_role) {
+        this.member_role = member_role;
+    }
+
     public void setReminders(ArrayList<Reminder> reminders) {
         this.reminders = reminders;
     }

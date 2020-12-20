@@ -42,13 +42,19 @@ public class AddNewHomeFragment extends Fragment {
                 Toast.makeText(requireContext(), R.string.please_enter_name_for_home_message, Toast.LENGTH_SHORT).show();
             }else{
                 myHomesViewModel.addNewHome(homeName, isPrivate);
+                myHomesViewModel.setShouldShowResultMessage(true);
             }
         });
 
         myHomesViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-            Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
+            if(myHomesViewModel.getShouldShowResultMessage()){
+                Toast.makeText(requireContext(), myHomesViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+            }
+            myHomesViewModel.setShouldShowResultMessage(false);
         });
 
         return createHomeBinding.getRoot();
     }
+
+
 }
