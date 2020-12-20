@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+ <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -11,23 +11,19 @@
         android:label="@string/my_homes"
         tools:layout="@layout/main_fragment">
         <action
-            android:id="@+id/action_mainFragment_to_loginFragment"
-            app:popUpTo="@id/mainFragment"
-            app:popUpToInclusive="true" />
-        <action
             android:id="@+id/action_mainFragment_to_notificationFragment"
             app:destination="@id/notificationsFragment" />
         <action
             android:id="@+id/action_mainFragment_to_feedFragment"
             app:destination="@id/feedFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_addNewHausFragment"
+            android:id="@+id/action_mainFragment_to_addNewHomeFragment"
             app:destination="@id/addNewHomeFragment" />
         <action
             android:id="@+id/action_mainFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
-            android:id="@+id/action_mainFragment_to_placeholder9"
+            android:id="@+id/action_mainFragment_to_editProfileFragment"
             app:destination="@id/editProfileFragment" />
     </fragment>
 
@@ -64,7 +60,6 @@
         <action
             android:id="@+id/action_remindersFragment_to_addReminderFragment"
             app:destination="@id/reminderSetFragment" />
-
     </fragment>
 
     <fragment
@@ -77,7 +72,7 @@
         android:id="@+id/addNewHomeFragment"
         android:name="com.mabem.homebook.Fragments.Main.AddNewHomeFragment"
         android:label="Add New Home"
-        tools:layout="@layout/fragment_add_new_home" />
+        tools:layout="@layout/fragment_create_home" />
 
     <fragment
         android:id="@+id/editHomeFragment"
@@ -160,7 +155,7 @@
         <action
             android:id="@+id/action_signUpFragment_to_mainFragment"
             app:destination="@id/mainFragment"
-            app:popUpTo="@id/loginFragment"
+            app:popUpTo="@id/signUpFragment"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -181,6 +176,9 @@
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_changeLanguageFragment"
+            app:destination="@id/changeLanguageFragment" />
     </fragment>
 
     <fragment
@@ -188,5 +186,10 @@
         android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment"
         android:label="Receipt Info"
         tools:layout="@layout/fragment_receipt_info" />
+    <fragment
+        android:id="@+id/changeLanguageFragment"
+        android:name="com.mabem.homebook.Fragments.Main.ChangeLanguageFragment"
+        android:label="fragment_change_language"
+        tools:layout="@layout/fragment_change_language" />
 
 </navigation>

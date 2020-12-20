@@ -2,6 +2,7 @@ package com.mabem.homebook.Fragments.SignIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,13 +43,13 @@ public class SignUpFragment extends Fragment {
         // getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         signUpBinding = DataBindingUtil.inflate(inflater, R.layout.sign_up_fragment, container, false);
-        signUpBinding.setLifecycleOwner(this);
+
         Util.saveRememberMePreference(requireActivity(), false);
 
-
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        authViewModel.updateCurrentUser();
-        authViewModel.getCurrentUser().observe(requireActivity(), user -> {
+
+        authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
+            Log.i("SignUp", "onCreateView: ");
             signUpBinding.progressBar2.setVisibility(View.GONE);
             if (user != null) {
                 Navigation.findNavController(
@@ -58,7 +59,7 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-        authViewModel.getResultMessage().observe(requireActivity(), message->{
+        authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message->{
             if(message != null){
                 Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
             }

@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.mabem.homebook.R;
@@ -43,23 +45,14 @@ public class SplashFragment extends Fragment {
                 // If there is Internet, check if there is a logged in user.
                 authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
-                // change the current user state
-                authViewModel.updateCurrentUser();
-
-                authViewModel.getCurrentUser().observe(requireActivity(), user -> {
-                    // If there is a user, navigate to Welcome Screen
+                authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
                     if (user != null) {
-                        Navigation.findNavController(
-                                requireActivity(),
-                                R.id.splash_homebook_text_view
-                        ).navigate(R.id.action_splashFragment_to_mainFragment);
+                        NavController navController = Navigation.findNavController(requireActivity(),  R.id.splash_homebook_text_view);
+                        navController.navigate(R.id.action_splashFragment_to_mainFragment);
                     }
-                    // If there is no user, navigate to Login screen.
                     else {
-                        Navigation.findNavController(
-                                requireActivity(),
-                                R.id.splash_homebook_text_view
-                        ).navigate(R.id.action_splashFragment_to_loginFragment);
+                        NavController navController = Navigation.findNavController(requireActivity(),  R.id.splash_homebook_text_view);
+                        navController.navigate(R.id.action_splashFragment_to_loginFragment);
                     }
                 });
             } else {

@@ -2,6 +2,7 @@ package com.mabem.homebook.Fragments.SignIn;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,10 +60,12 @@ public class LoginFragment extends Fragment {
         //========================================= Listeners
 
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-        authViewModel.updateCurrentUser();
-        authViewModel.getCurrentUser().observe(requireActivity(), user -> {
+
+        authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
+            Log.i("Login", "onCreateView: ");
             loginBinding.progressBar.setVisibility(View.GONE);
             if (user != null) {
+                Log.i("this is the user", "onCreateView: " + user);
                 Navigation.findNavController(
                         requireActivity(),
                         R.id.log_in_log_in_button
@@ -70,7 +73,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        authViewModel.getResultMessage().observe(requireActivity(), message->{
+        authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message->{
             if(message != null){
                 Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
             }

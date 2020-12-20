@@ -22,39 +22,17 @@ public class MainFragment extends Fragment {
     //========================================= Attribute
 
     private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
-    private MainViewModel mainViewModel;
+//    private MainViewModel mainViewModel;
     private MainFragmentBinding mainBinding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-
-
-//        DrawerLayout drawerLayout = getActivity().findViewById(R.id.drawer_layout);
-
-//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
-        mainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
-        mainViewModel.updateCurrentUser();
-        mainViewModel.getCurrentUser().observe(requireActivity(), user -> {
-            if (user == null) {
-                Navigation.findNavController(
-                        requireActivity(),
-                        R.id.welcome_view_text
-                ).navigate(R.id.action_mainFragment_to_loginFragment);
-            } else {
-                mainBinding.userName.setText(user.getName());
-            }
-        });
-
-        mainBinding.signOutButton.setOnClickListener(v -> {
-            mainViewModel.signOut();
-        });
 
         return mainBinding.getRoot();
     }

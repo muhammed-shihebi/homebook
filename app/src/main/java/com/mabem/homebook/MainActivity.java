@@ -11,12 +11,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.navigation.NavigationView;
+import com.mabem.homebook.Model.User;
 import com.mabem.homebook.ViewModels.MainViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
 
@@ -45,14 +49,13 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.updateCurrentUser();
 
         //========================================= Set up the toolbar and the navigation drawer
-
         toolbar = mainActivityBinding.toolbar;
         setSupportActionBar(toolbar);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.notificationsFragment, R.id.mainFragment)
+                 R.id.mainFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
         // NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
@@ -61,11 +64,15 @@ public class MainActivity extends AppCompatActivity {
 
         //=========================================
 
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if(destination.getId() == R.id.loginFragment){
-                mainViewModel.signOut();
-            }
+        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
+            mainViewModel.signOut();
+            return false;
         });
+
+//        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+//            if(destination.getId() != R.id.mainFragment){
+//            }
+//        });
     }
 
     @Override
@@ -82,9 +89,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
         // If the user didn't check remember me, he/she will be logged out.
-        mainViewModel.updateCurrentUser();
+
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         boolean defaultValue = getResources().getBoolean(R.bool.remember_me_default_value);
         boolean rememberMe = sharedPref.getBoolean(getString(R.string.saved_remember_me_preference), defaultValue);
@@ -97,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
                     // This will log out the user and end the activity.
                     // If the user tries to open the app again a new activity will be created again.
-
                     mainViewModel.signOut();
                     finish();
                 }
