@@ -60,6 +60,8 @@
     <string name="date">Datum</string>
     <string name="time">Uhr</string>
     <string name="items">Waren</string>
+    <string name="details">Details</string>
+    <string name="is_added">ist Hinzugefügt</string>
     <string name="item">Ware</string>
     <string name="add_item">Ware Hinzufügen</string>
     <string name="total">Gesamtbetrag: </string>
