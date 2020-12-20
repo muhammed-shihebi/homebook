@@ -68,6 +68,7 @@
     <string name="total">Total: </string>
     <string name="price">Price</string>
     <string name="details">Details</string>
+    <string name="is_added">is Added</string>
     <string name="delete_receipt">Delete Receipt</string>
     <string name="add_receipt">Add Receipt</string>
     <bool name="remember_me_default_value">false</bool>
