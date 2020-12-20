@@ -22,7 +22,7 @@ public class MainFragment extends Fragment {
     //========================================= Attribute
 
     private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
-//    private MainViewModel mainViewModel;
+
     private MainFragmentBinding mainBinding;
 
     @Override

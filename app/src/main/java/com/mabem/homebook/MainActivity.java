@@ -5,6 +5,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -23,6 +27,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.mabem.homebook.Model.User;
 import com.mabem.homebook.ViewModels.MainViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,12 +68,32 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
 
-        //=========================================
+        //========================================= Handle sign out butten
 
         mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
             mainViewModel.signOut();
             return false;
         });
+
+        //========================================= Set up header
+
+        View header = mainActivityBinding.navView.getHeaderView(0);
+        TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
+        TextView userName = header.findViewById(R.id.user_name);
+
+
+        editProfileTextView.setOnClickListener(v -> {
+            navController.navigate(R.id.editProfileFragment);
+            drawerLayout.close();
+        });
+
+        mainViewModel.getCurrentUser().observe(this, user -> {
+            if(user != null){
+                userName.setText(user.getName());
+            }
+        });
+
+
 
 //        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
 //            if(destination.getId() != R.id.mainFragment){
