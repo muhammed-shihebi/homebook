@@ -36,7 +36,7 @@
             app:layout_constraintTop_toTopOf="@+id/reminder_set_logo_image_view" />
 
         <EditText
-            android:id="@+id/reminder_set_name_edit_text"
+            android:id="@+id/search_edit_text"
             android:layout_width="242dp"
             android:layout_height="42dp"
             android:layout_marginTop="240dp"
@@ -76,7 +76,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reminder_set_name_edit_text"
+            app:layout_constraintTop_toBottomOf="@+id/search_edit_text"
             app:strokeColor="#000000" />
 
         <Button

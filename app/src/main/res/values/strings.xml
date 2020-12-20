@@ -74,4 +74,5 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_home">Add new Home</string>
+    <string name="new_home_created_successfully">New Home was successfully created.</string>
 </resources>

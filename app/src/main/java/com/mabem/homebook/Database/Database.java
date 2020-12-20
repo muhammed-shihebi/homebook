@@ -2,12 +2,13 @@ package com.mabem.homebook.Database;
 
 import android.app.Application;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,19 +28,22 @@ import com.mabem.homebook.R;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class Database {
 
     //========================================= Home_User Collection
     public static final String HOME_USER_COLLECTION = "home_user";
-    public static final String USER_ID = "user_id";
-    public static final String USER_NAME = "user_name";
-    public static final String ROLE = "role";
+    public static final String MEMBER_ID = "member_id";
+    public static final String MEMBER_NAME = "member_name";
+    public static final String MEMBER_ROLE = "member_role";
     public static final String HOME_ID = "home_id";
     //========================================= Home Collection
     public static final String HOME_COLLECTION = "home";
     public static final String HOME_VISIBILITY = "visibility";
     public static final String HOME_NAME = "home_name";
+    public static final String HOME_CODE = "home_code";
     //========================================= Receipt Collection
     public static final String RECEIPT_COLLECTION = "receipt";
     public static final String RECEIPT_TOTAL = "total";
@@ -55,6 +59,8 @@ public class Database {
     public static final String REMINDER_DATE = "date";
     public static final String REMINDER_FREQUENCY = "frequency";
     public static final String REMINDER_NAME = "name";
+
+    private static final String TAG = "Database";
 
 
     private static Database instance;
@@ -76,12 +82,19 @@ public class Database {
         this.application = application;
     }
 
+    /**
+     * Takes an application and checks if there is an initialized object of the database.
+     * If there is an object of the database, it will be returned.
+     * If not, a new instance is initialized and returned.
+     * @param application
+     * @return An instance of the database object.
+     */
+
     public static Database getInstance(Application application){
         if(instance == null){
-            return new Database(application);
-        }else{
-            return instance;
+            instance = new Database(application);
         }
+        return instance;
     }
 
     //========================================= Updates
@@ -92,26 +105,39 @@ public class Database {
     * After calling these methods the MutableLiveData will be modified and all observes will be notified about the change.
     * */
 
+
+    /**
+     * updateCurrentUser will check if there is a logged in user.
+     * If so, a new user is made and the live data currentUser will be updated.
+     * If not, the value of the current user will be null.
+     */
+
     public void updateCurrentUser(){
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         User user = makeUser(firebaseUser);
         currentUser.postValue(user);
     }
 
+    /**
+     * updateCurrentUser will check if there is a logged in user.
+     * If so, a new Member with all of his Homes as homeName and homeId will be created.
+     * If not, currentMember will be null.
+     */
+
     public void updateCurrentMember(){
         if(currentUser.getValue() == null){
             currentMember.postValue(null);
         }else {
             firestore.collection(HOME_USER_COLLECTION)
-                    .whereEqualTo(USER_ID, currentUser.getValue().getId())
+                    .whereEqualTo(MEMBER_ID, currentUser.getValue().getId())
                     .get()
                     .addOnCompleteListener(task -> {
                         if(task.isSuccessful()){
                             HashMap<Home, Boolean> home_role = new HashMap<>();
                             for(QueryDocumentSnapshot document: task.getResult()){
                                 String homeName = document.getString(HOME_NAME);
-                                String homeId = document.getString(HOME_ID);
-                                boolean role = document.getBoolean(ROLE);
+                                String homeId = document.getString(HOME_ID); // different then HOME_CODE
+                                boolean role = document.getBoolean(MEMBER_ROLE);
                                 Home home = new Home(homeId, homeName);
                                 home_role.put(home, role);
                             }
@@ -124,6 +150,13 @@ public class Database {
                     });
         }
     }
+
+    /**
+     * Try to get the home associated with @param homeId.
+     * If successful, currentHome will be updated with the associated Receipts.
+     * If not, currentHome will be null.
+     * @param homeId homeId to get form the database.
+     */
 
     public void updateCurrentHome(String homeId){
         firestore.collection(HOME_COLLECTION).document(homeId)
@@ -150,6 +183,7 @@ public class Database {
                                             Home home = new Home(
                                                     document.getId(),
                                                     document.getString(HOME_NAME),
+                                                    document.getString(HOME_CODE),
                                                     document.getBoolean(HOME_VISIBILITY),
                                                     receipts
                                             );
@@ -166,6 +200,13 @@ public class Database {
                     }
                 });
     }
+
+    /**
+     * Try to get the receipt associated with @param receiptId.
+     * If successful, currentReceipt will be updated with receipt data.
+     * If not, currentReceipt will be null.
+     * @param receiptId receiptId to get from the database.
+     */
 
     public void updateCurrentReceipt(String receiptId){
         if(currentHome == null){
@@ -195,9 +236,16 @@ public class Database {
         }
     }
 
+    /**
+     * Try to get the reminder associated with @param reminderId.
+     * If successful, currentReminder will be updated with reminder data.
+     * If not, currentReminder will be null.
+     * @param reminderId reminderId to get from the database.
+     */
+
     public void updateCurrentReminder(String reminderId){
         if(currentHome == null){
-            currentReceipt.postValue(null);
+            currentReminder.postValue(null);
         }else{
             firestore.collection(HOME_COLLECTION)
                     .document(currentHome.getValue().getId())
@@ -221,6 +269,12 @@ public class Database {
                     });
         }
     }
+
+    /**
+     * Try to get the reminders associated with the currentHome.
+     * If successful, currentHome will be updated with the associated reminders.
+     * If not, currentHome will not be changed.
+     */
 
     public void updateHomeWithReminders(){
         if(currentHome.getValue() == null){
@@ -252,6 +306,12 @@ public class Database {
                     });
         }
     }
+
+    /**
+     * Try to get the members associated with the currentHome.
+     * If successful, currentHome will be updated with the associated members.
+     * If not, currentHome will be null.
+     */
 
     public void updateHomeWithMembers(){
         // Todo get all members when user want to see the members of home
@@ -396,11 +456,109 @@ public class Database {
 
     public void sendRequestToJoinHome(String homeId, User user){}
 
-    public void updateUser(User user){}
+    /**
+     * Try to update the information of the currently logged in user.
+     * If successful, information of the user are updated including the names in Receipts collections.
+     * If unsuccessful, information are not updated and resultMessage is updated.
+     * @param user
+     */
+
+    public void updateUser(User user){
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest
+                .Builder()
+                .setDisplayName(user.getName())
+                .setPhotoUri(Uri.parse(user.getImageURL()))
+                .build();
+        if(firebaseUser != null){
+            firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    firebaseUser.updateEmail(user.getEmailAddress()).addOnCompleteListener(task2 -> {
+                        if(task2.isSuccessful()){
+
+                            firestore.collectionGroup(RECEIPT_COLLECTION)
+                                    .whereEqualTo(MEMBER_ID, firebaseUser.getUid())
+                                    .get()
+                                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                                        for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                                            queryDocumentSnapshot
+                                                    .getReference()
+                                                    .update(MEMBER_NAME, user.getName())
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        User newUser = makeUser(firebaseUser);
+                                                        currentUser.postValue(newUser);
+                                                        updateCurrentMember();
+                                                    })
+                                                    .addOnFailureListener(e -> {
+                                                        resultMessage.postValue(e.getMessage());
+                                                    });
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        resultMessage.postValue(e.getMessage());
+                                    });
+                        }else {
+                            resultMessage.postValue(task2.getException().getMessage());
+                        }
+                    });
+                } else {
+                    resultMessage.postValue(task.getException().getLocalizedMessage());
+                }
+            });
+        }
+    }
 
     public void searchHome(String homeId){}
 
-    public void createHome(String name, User user){}
+    /**
+     * Try to create a new Home associated with the currentMember.
+     * If successful, a new Home for the currentMember is created.
+     * The currentMember will be automatically the admin of this Home.
+     * @param homeName name of the home to be created.
+     * @param isPrivate visibility: true for private, false for public.
+     */
+
+    public void createHome(String homeName, Boolean isPrivate){
+        if(currentMember != null){
+
+            // create a unique code for the home
+            String homeCode = UUID.randomUUID().toString();
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(HOME_NAME, homeName);
+            data.put(HOME_VISIBILITY, isPrivate);
+            data.put(HOME_CODE, homeCode);
+
+            firestore.collection(HOME_COLLECTION)
+                    .add(data)
+                    .addOnSuccessListener(documentReference -> {
+                        Map<String, Object> home_user_data = new HashMap<>();
+                        home_user_data.put(HOME_ID, documentReference.getId());
+                        home_user_data.put(HOME_NAME, homeName);
+                        home_user_data.put(MEMBER_ROLE, true);
+                        home_user_data.put(MEMBER_ID, currentMember.getValue().getId());
+                        home_user_data.put(MEMBER_NAME, currentMember.getValue().getName());
+
+                        firestore.collection(HOME_USER_COLLECTION)
+                                .add(home_user_data)
+                                .addOnSuccessListener(documentReference1 -> {
+                                    updateCurrentMember();
+                                    resultMessage.postValue(application.getString(R.string.new_home_created_successfully));
+                                })
+                                .addOnFailureListener(e -> {
+                                    resultMessage.postValue(e.getMessage());
+                                    Log.w(TAG, "Error adding document", e);
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "Error adding document", e);
+                    });
+        }else{
+            currentMember.postValue(null);
+            Log.w(TAG, "createHome: the currentMember is null");
+        }
+    }
 
     //========================================= Helper Functions
 

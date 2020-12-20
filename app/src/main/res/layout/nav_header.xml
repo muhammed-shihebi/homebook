@@ -27,13 +27,13 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/user_name2"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@string/user"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -42,6 +42,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/header_edit_profile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="16dp"
@@ -53,11 +54,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_name2"
+        app:layout_constraintTop_toBottomOf="@+id/user_name"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/reminder_set_name_edit_text"
+        android:id="@+id/search_edit_text"
         android:layout_width="185dp"
         android:layout_height="42dp"
         android:layout_marginStart="2dp"
@@ -82,7 +83,7 @@
         app:layout_constraintBottom_toTopOf="@+id/profile_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/reminder_set_name_edit_text"
+        app:layout_constraintStart_toEndOf="@+id/search_edit_text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.833">
 

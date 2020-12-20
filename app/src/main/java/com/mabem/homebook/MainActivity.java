@@ -5,20 +5,30 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.android.material.navigation.NavigationView;
+import com.mabem.homebook.Model.User;
 import com.mabem.homebook.ViewModels.MainViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
+
+import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,27 +55,50 @@ public class MainActivity extends AppCompatActivity {
         mainViewModel.updateCurrentUser();
 
         //========================================= Set up the toolbar and the navigation drawer
-
         toolbar = mainActivityBinding.toolbar;
         setSupportActionBar(toolbar);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.notificationsFragment, R.id.mainFragment)
+                 R.id.mainFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
         // NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
 
-        //=========================================
+        //========================================= Handle sign out butten
 
-        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-            if(destination.getId() == R.id.loginFragment){
-                mainViewModel.signOut();
+        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
+            mainViewModel.signOut();
+            return false;
+        });
+
+        //========================================= Set up header
+
+        View header = mainActivityBinding.navView.getHeaderView(0);
+        TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
+        TextView userName = header.findViewById(R.id.user_name);
+
+
+        editProfileTextView.setOnClickListener(v -> {
+            navController.navigate(R.id.editProfileFragment);
+            drawerLayout.close();
+        });
+
+        mainViewModel.getCurrentUser().observe(this, user -> {
+            if(user != null){
+                userName.setText(user.getName());
             }
         });
+
+
+
+//        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+//            if(destination.getId() != R.id.mainFragment){
+//            }
+//        });
     }
 
     @Override
@@ -82,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
         // If the user didn't check remember me, he/she will be logged out.
-        mainViewModel.updateCurrentUser();
+
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         boolean defaultValue = getResources().getBoolean(R.bool.remember_me_default_value);
         boolean rememberMe = sharedPref.getBoolean(getString(R.string.saved_remember_me_preference), defaultValue);
@@ -97,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
                     // This will log out the user and end the activity.
                     // If the user tries to open the app again a new activity will be created again.
-
                     mainViewModel.signOut();
                     finish();
                 }

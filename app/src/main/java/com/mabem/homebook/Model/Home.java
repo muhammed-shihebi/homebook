@@ -13,29 +13,15 @@ public class Home {
     private ArrayList<Reminder> reminders;
     private ArrayList<Receipt> receipts;
 
-    public ArrayList<Reminder> getReminders() {
-        return reminders;
-    }
-    public ArrayList<Receipt> getReceipts() {
-        return receipts;
-    }
-
-
-    public Home(String id, String name, String code, boolean visibility, HashMap<Member, Boolean> member_role) {
-        this.id = id;
-        this.name = name;
-        this.code = code;
-        this.visibility = visibility;
-        this.member_role = member_role;
-    }
-
     public Home(String id, String name){
         this.id = id;
         this.name = name;
     }
-    public Home(String id, String name, boolean visibility, ArrayList<Receipt> receipts){
+
+    public Home(String id, String name, String code, boolean visibility, ArrayList<Receipt> receipts){
         this.id = id;
         this.name = name;
+        this.code = code;
         this.visibility = visibility;
         this.receipts = receipts;
     }
@@ -62,6 +48,14 @@ public class Home {
 
     public HashMap<Member, Boolean> getMember_role() {
         return member_role;
+    }
+
+    public ArrayList<Reminder> getReminders() {
+        return reminders;
+    }
+
+    public ArrayList<Receipt> getReceipts() {
+        return receipts;
     }
 
     @Override
