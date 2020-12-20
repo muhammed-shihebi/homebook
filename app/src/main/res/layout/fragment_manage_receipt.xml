@@ -23,7 +23,7 @@
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toEndOf="@+id/receipt_name" />
+        app:layout_constraintStart_toEndOf="@+id/user_name" />
 
     <Button
         android:id="@+id/delete_receipt_button"
@@ -192,7 +192,7 @@
     </ScrollView>
 
     <TextView
-        android:id="@+id/receipt_name"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"

@@ -61,7 +61,10 @@
     <string name="time">Uhr</string>
     <string name="items">Waren</string>
     <string name="details">Details</string>
+    <string name="accept">Akzeptieren</string>
+    <string name="decline">Ablehnen</string>
     <string name="is_added">ist Hinzugefügt</string>
+    <string name="join_request">will eintreten in </string>
     <string name="item">Ware</string>
     <string name="add_item">Ware Hinzufügen</string>
     <string name="total">Gesamtbetrag: </string>

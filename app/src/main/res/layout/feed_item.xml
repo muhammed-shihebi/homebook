@@ -93,7 +93,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/receipt_name"
+        android:id="@+id/user_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -108,8 +108,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/is_added"
-        app:layout_constraintBottom_toBottomOf="@+id/receipt_name"
-        app:layout_constraintStart_toEndOf="@+id/receipt_name"
-        app:layout_constraintTop_toTopOf="@+id/receipt_name" />
+        app:layout_constraintBottom_toBottomOf="@+id/user_name"
+        app:layout_constraintStart_toEndOf="@+id/user_name"
+        app:layout_constraintTop_toTopOf="@+id/user_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

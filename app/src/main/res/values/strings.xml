@@ -67,10 +67,13 @@
     <string name="add_item">Add Item</string>
     <string name="total">Total: </string>
     <string name="price">Price</string>
+    <string name="accept">Accept</string>
+    <string name="decline">Decline</string>
     <string name="details">Details</string>
     <string name="is_added">is Added</string>
     <string name="delete_receipt">Delete Receipt</string>
     <string name="add_receipt">Add Receipt</string>
+    <string name="join_request">wants to enter </string>
     <bool name="remember_me_default_value">false</bool>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
