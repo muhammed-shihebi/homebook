@@ -85,4 +85,5 @@
     <string name="reminder_updated_message">Reminder successfully updated!</string>
     <string name="new_receipt_added_message">A new Receipt was added successfully!</string>
     <string name="receipt_updated_message">Receipt updated successfully!</string>
+    <string name="home_deleted_message">Home was deleted successfully</string>
 </resources>
