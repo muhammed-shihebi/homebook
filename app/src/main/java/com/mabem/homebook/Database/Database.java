@@ -15,14 +15,19 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -48,9 +53,8 @@ public class Database {
     public static final String RECEIPT_TOTAL = "total";
     public static final String RECEIPT_NAME = "name";
     public static final String RECEIPT_DATE = "date";
-    public static final String RECEIPT_MEMBER_ID = "member_id";
-    public static final String RECEIPT_MEMBER_NAME = "member_name";
     //========================================= Item Collection
+    public static final String ITEM_COLLECTION = "item";
     public static final String ITEM_NAME = "name";
     public static final String ITEM_PRICE = "price";
     //========================================= Reminder Collection
@@ -176,7 +180,9 @@ public class Database {
                                                             document1.getId(),
                                                             document1.getString(RECEIPT_NAME),
                                                             document1.getDate(RECEIPT_DATE),
-                                                            document1.getString(RECEIPT_MEMBER_NAME));
+                                                            document1.getString(MEMBER_NAME),
+                                                            document1.getString(MEMBER_ID)
+                                                    );
                                                     receipts.add(receipt);
                                                 }
                                                 Home home = new Home(
@@ -214,19 +220,42 @@ public class Database {
                     .collection(RECEIPT_COLLECTION)
                     .document(receiptId)
                     .get()
+
+
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
-                            Receipt receipt = new Receipt(
-                                    document.getId(),
-                                    document.getString(RECEIPT_NAME),
-                                    document.getDate(RECEIPT_DATE),
-                                    document.getString(RECEIPT_MEMBER_NAME)
-                            );
-                            currentReceipt.postValue(receipt);
+
+                            firestore.document(document.getReference().getPath())
+                                    .collection(ITEM_COLLECTION)
+                                    .get()
+                                    .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                                        ArrayList<Item> items = new ArrayList<>();
+
+                                        for(QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                                            double itemPrice = queryDocumentSnapshot.getDouble(ITEM_PRICE);
+                                            String itemName = queryDocumentSnapshot.getString(ITEM_NAME);
+                                            String itemId = queryDocumentSnapshot.getId();
+                                            items.add(new Item(itemId, itemName, itemPrice));
+                                        }
+
+                                        Receipt receipt = new Receipt(
+                                                document.getId(),
+                                                document.getString(RECEIPT_NAME),
+                                                document.getDate(RECEIPT_DATE),
+                                                document.getString(MEMBER_NAME),
+                                                document.getString(MEMBER_ID)
+                                        );
+                                        currentReceipt.postValue(receipt);
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        resultMessage.postValue(e.getMessage());
+                                        Log.w(TAG, "Error getting items collection", e);
+                                    });
                         } else {
                             resultMessage.postValue(task.getException().getMessage());
-
+                            Log.w(TAG, "Error getting Receipt", task.getException());
                         }
                     });
         }
@@ -439,7 +468,6 @@ public class Database {
                     .collection(REMINDER_COLLECTION)
                     .add(data)
                     .addOnSuccessListener(documentReference -> {
-                        updateHomeWithReminders();
                         resultMessage.postValue(application.getString(R.string.new_reminder_added_message));
                     })
                     .addOnFailureListener(e -> {
@@ -482,7 +510,7 @@ public class Database {
                     .document(updatedReminder.getId())
                     .update(data)
                     .addOnSuccessListener(aVoid -> {
-                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        Log.d(TAG, "Reminder successfully updated!");
                         resultMessage.postValue(application.getString(R.string.reminder_updated_message));
                     })
                     .addOnFailureListener(e -> {
@@ -497,13 +525,110 @@ public class Database {
     public void addReceipt(Receipt receipt) {
         if(currentHome.getValue() != null && currentMember.getValue() != null){
 
+            Map<String, Object> data = new HashMap<>();
+            data.put(RECEIPT_DATE, receipt.getDate());
+            data.put(MEMBER_ID, currentMember.getValue().getId());
+            data.put(MEMBER_NAME, currentMember.getValue().getName());
+            data.put(RECEIPT_NAME, receipt.getName());
+
+            double total = 0.0;
+
+            for(Item item : receipt.getItems()){
+                total += item.getPrice();
+            }
+
+            data.put(RECEIPT_TOTAL, total);
+
+            firestore.collection(HOME_COLLECTION)
+                    .document(currentHome.getValue().getId())
+                    .collection(RECEIPT_COLLECTION)
+                    .add(data)
+                    .addOnSuccessListener(documentReference -> {
+                        for(Item item : receipt.getItems()){
+                            Map<String, Object> itemMap = new HashMap<>();
+                            itemMap.put(ITEM_NAME, item.getName());
+                            itemMap.put(ITEM_PRICE, item.getPrice());
+                            documentReference.collection(ITEM_COLLECTION)
+                                    .add(item);
+                        }
+                        resultMessage.postValue(application.getString(R.string.new_receipt_added_message));
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "Error adding document", e);
+                    });
         }
     }
 
-    public void deleteReceipt(Home home) {
+    public void deleteReceipt(String receiptId) {
+        if(currentHome.getValue() != null){
+            firestore.collection(HOME_COLLECTION)
+                    .document(currentHome.getValue().getId())
+                    .collection(RECEIPT_COLLECTION)
+                    .document(receiptId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        Log.d(TAG, "Receipt successfully deleted!");
+                        resultMessage.postValue("Receipt successfully deleted!");
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "Error deleting document", e);
+                    });
+
+        }
     }
 
-    public void updateReceipt(Home home, Receipt receipt) {
+    public void updateReceipt(Receipt updatedReceipt) {
+        if(currentHome.getValue() != null){
+        Map<String, Object> data = new HashMap<>();
+        data.put(RECEIPT_DATE, updatedReceipt.getDate());
+        data.put(MEMBER_ID, updatedReceipt.getMemberId());
+        data.put(MEMBER_NAME, updatedReceipt.getMemberName());
+        data.put(RECEIPT_NAME, updatedReceipt.getName());
+
+        double total = 0.0;
+
+        for(Item item : updatedReceipt.getItems()){
+            total += item.getPrice();
+        }
+
+        data.put(RECEIPT_TOTAL, total);
+
+            firestore.collection(HOME_COLLECTION)
+                    .document(currentHome.getValue().getId())
+                    .collection(RECEIPT_COLLECTION)
+                    .document(updatedReceipt.getId())
+                    .update(data)
+                    .addOnSuccessListener(aVoid -> {
+
+                        for(Item item : updatedReceipt.getItems()){
+                            Map<String, Object> newItem = new HashMap<>();
+                            newItem.put(ITEM_NAME, item.getName());
+                            newItem.put(ITEM_PRICE, item.getPrice());
+
+                            firestore.collection(HOME_COLLECTION)
+                                    .document(currentHome.getValue().getId())
+                                    .collection(RECEIPT_COLLECTION)
+                                    .document(updatedReceipt.getId())
+                                    .collection(ITEM_COLLECTION)
+                                    .document(item.getId())
+                                    .update(newItem)
+                                    .addOnSuccessListener(aVoid1 -> {
+                                        Log.d(TAG, "Receipt successfully updated!");
+                                        resultMessage.postValue(application.getString(R.string.receipt_updated_message));
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.w(TAG, "Error updating item collection", e);
+                                        resultMessage.postValue(e.getMessage());
+                                    });
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.w(TAG, "Error updating receipt Collection", e);
+                        resultMessage.postValue(e.getMessage());
+                    });
+        }
     }
 
     //========================================= Admin Functions
@@ -539,8 +664,7 @@ public class Database {
 
     //========================================= User Functions
 
-    public void sendRequestToJoinHome(String homeId, User user) {
-    }
+    public void sendRequestToJoinHome(String homeId, User user) {}
 
     /**
      * Try to update the information of the currently logged in user.
@@ -595,8 +719,7 @@ public class Database {
         }
     }
 
-    public void searchHome(String homeId) {
-    }
+    public void searchHome(String homeId) {}
 
     /**
      * Try to create a new Home associated with the currentMember.
@@ -630,7 +753,6 @@ public class Database {
                         firestore.collection(HOME_USER_COLLECTION)
                                 .add(home_user_data)
                                 .addOnSuccessListener(documentReference1 -> {
-                                    updateCurrentMember();
                                     resultMessage.postValue(application.getString(R.string.new_home_created_successfully));
                                 })
                                 .addOnFailureListener(e -> {

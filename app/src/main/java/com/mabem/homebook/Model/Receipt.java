@@ -9,14 +9,16 @@ public class Receipt {
     private Date date;
     private ArrayList<Item> items;
     private String memberName;
+    private String memberId;
 
-    public Receipt(String id, String name, Date date, String userName) {
+
+    public Receipt(String id, String name, Date date, String memberName, String memberId) {
         this.id = id;
         this.name = name;
-//        Calendar calendar = Calendar.getInstance();
-//        this.date = DateFormat.getDateInstance().format(calendar.getTime());
         this.date = date;
         items = new ArrayList<Item>();
+        this.memberId = memberId;
+        this.memberName = memberName;
     }
 
     public String getId() {
@@ -37,6 +39,10 @@ public class Receipt {
 
     public String getMemberName() {
         return memberName;
+    }
+
+    public String getMemberId() {
+        return memberId;
     }
 
 

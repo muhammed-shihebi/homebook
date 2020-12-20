@@ -3,14 +3,17 @@ package com.mabem.homebook.Model;
 public class Item {
     private String id = "";
     private String name = "";
-    private float price = 0f;
-    private Receipt receipt;
+    private double price = 0;
 
-    public Item(String id, String name, float price, Receipt receipt) {
+    public Item(String id, String name, double price) {
         this.id = id;
         this.name = name;
         this.price = price;
-        this.receipt = receipt;
+    }
+
+    public Item(String name, double price) {
+        this.name = name;
+        this.price = price;
     }
 
     public String getId() {
@@ -21,13 +24,10 @@ public class Item {
         return name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public Receipt getReceipt() {
-        return receipt;
-    }
 
     @Override
     public boolean equals(Object o) {
