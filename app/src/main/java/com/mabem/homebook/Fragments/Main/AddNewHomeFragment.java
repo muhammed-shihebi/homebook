@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.R;
 import com.mabem.homebook.ViewModels.MyHomesViewModel;
 import com.mabem.homebook.databinding.FragmentCreateHomeBinding;
