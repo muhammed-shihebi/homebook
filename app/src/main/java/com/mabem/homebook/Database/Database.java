@@ -4,12 +4,14 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,6 +21,11 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.mabem.homebook.Fragments.Main.EditProfileFragment;
+import com.mabem.homebook.MainActivity;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Member;
@@ -69,6 +76,8 @@ public class Database {
     private final Application application;
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageReference = storage.getReference();
 
     private final MutableLiveData<User> currentUser = new MutableLiveData<>();
     private final MutableLiveData<String> resultMessage = new MutableLiveData<>();
@@ -730,13 +739,13 @@ public class Database {
         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest
                 .Builder()
                 .setDisplayName(user.getName())
-                .setPhotoUri(Uri.parse(user.getImageURL()))
+                .setPhotoUri(Uri.parse(user.getImageURI()))
                 .build();
         if (firebaseUser != null) {
             firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     firebaseUser.updateEmail(user.getEmailAddress()).addOnCompleteListener(task2 -> {
-                        if (task2.isSuccessful()) {
+                        /*if (task2.isSuccessful()) {
 
                             firestore.collectionGroup(RECEIPT_COLLECTION)
                                     .whereEqualTo(MEMBER_ID, firebaseUser.getUid())
@@ -747,9 +756,11 @@ public class Database {
                                                     .getReference()
                                                     .update(MEMBER_NAME, user.getName())
                                                     .addOnSuccessListener(aVoid -> {
+                                                        */
                                                         User newUser = makeUser(firebaseUser);
                                                         currentUser.postValue(newUser);
                                                         updateCurrentMember();
+                                                        resultMessage.postValue(application.getString(R.string.profile_updated_successfully));/*
                                                     })
                                                     .addOnFailureListener(e -> {
                                                         resultMessage.postValue(e.getMessage());
@@ -761,7 +772,8 @@ public class Database {
                                     });
                         } else {
                             resultMessage.postValue(task2.getException().getMessage());
-                        }
+                        }*/
+
                     });
                 } else {
                     resultMessage.postValue(task.getException().getLocalizedMessage());
@@ -861,4 +873,6 @@ public class Database {
         }
         return null;
     }
+
+
 }

@@ -7,7 +7,7 @@
     android:background="@drawable/create_home_background">
 
     <EditText
-        android:id="@+id/receipt_name"
+        android:id="@+id/home_name"
         android:layout_width="242dp"
         android:layout_height="42dp"
         android:layout_marginTop="344dp"
@@ -41,7 +41,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.238"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receipt_name"
+        app:layout_constraintTop_toBottomOf="@+id/home_name"
         app:layout_constraintVertical_bias="0.222" />
 
     <Button

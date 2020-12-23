@@ -1,143 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#2B2F38">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/profile_name"
-        android:layout_width="242dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="344dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_edit_text"
-        android:ellipsize="none"
-        android:ems="50"
-        android:fadingEdge="horizontal"
-        android:hint="@string/name"
-        android:inputType="textPersonName"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:shadowColor="#FAF3F3"
-        app:layout_constraintBottom_toTopOf="@+id/profile_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.259"
-        tools:layout_constraintCircleRadius="50dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#2B2F38">
 
-    <EditText
-        android:id="@+id/profile_email"
-        android:layout_width="242dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="440dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_edit_text"
-        android:ellipsize="none"
-        android:ems="50"
-        android:fadingEdge="horizontal"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:shadowColor="#FAF3F3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.473"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintCircleRadius="50dp" />
+        <EditText
+            android:id="@+id/profile_name"
+            android:layout_width="242dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="344dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edit_text"
+            android:ellipsize="none"
+            android:ems="50"
+            android:fadingEdge="horizontal"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:shadowColor="#FAF3F3"
+            app:layout_constraintBottom_toTopOf="@+id/profile_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.259"
+            tools:layout_constraintCircleRadius="50dp" />
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="109dp"
-        android:layout_height="64dp"
-        android:text="@string/save"
-        android:textAllCaps="false"
-        app:backgroundTint="#857C23"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_email"
-        app:layout_constraintVertical_bias="0.351" />
+        <EditText
+            android:id="@+id/profile_email"
+            android:layout_width="242dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="440dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edit_text"
+            android:ellipsize="none"
+            android:ems="50"
+            android:fadingEdge="horizontal"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:shadowColor="#FAF3F3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.473"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_constraintCircleRadius="50dp" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_profile"
-        android:textColor="#ACA325"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toTopOf="@+id/logo" />
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="109dp"
+            android:layout_height="64dp"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_email"
+            app:layout_constraintVertical_bias="0.351" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="92dp"
-        android:layout_height="80dp"
-        android:contentDescription="@string/App_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.106"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046"
-        app:srcCompat="@drawable/logo" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/edit_profile"
+            android:textColor="#ACA325"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/logo"
+            app:layout_constraintTop_toTopOf="@+id/logo" />
 
-    <ImageView
-        android:id="@+id/profile_photo"
-        android:layout_width="87dp"
-        android:layout_height="77dp"
-        android:contentDescription="@string/profile_photo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.246"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.136"
-        app:srcCompat="@drawable/default_profile_photo" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="92dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/App_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.106"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.046"
+            app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/change_photo_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/profile_photo"
-        android:textColor="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_photo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.241"
-        app:layout_constraintStart_toEndOf="@+id/profile_photo"
-        app:layout_constraintTop_toTopOf="@+id/profile_photo" />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.246"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            app:layout_constraintVertical_bias="0.136"
+            app:cardCornerRadius="50dp">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:text="@string/name"
-        android:textColor="#8C8C8C"
-        app:layout_constraintBottom_toTopOf="@+id/profile_name"
-        app:layout_constraintEnd_toEndOf="@+id/profile_name"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="@+id/profile_name" />
+            <ImageView
+                android:id="@+id/profile_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/profile_photo"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/default_profile_photo" />
+        </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:text="@string/email"
-        android:textColor="#8C8C8C"
-        app:layout_constraintBottom_toTopOf="@+id/profile_email"
-        app:layout_constraintEnd_toEndOf="@+id/profile_email"
-        app:layout_constraintHorizontal_bias="0.053"
-        app:layout_constraintStart_toStartOf="@+id/profile_email" />
+        <TextView
+            android:id="@+id/change_photo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/profile_photo"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/card"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.241"
+            app:layout_constraintStart_toEndOf="@+id/card"
+            app:layout_constraintTop_toTopOf="@+id/card" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/name"
+            android:textColor="#8C8C8C"
+            app:layout_constraintBottom_toTopOf="@+id/profile_name"
+            app:layout_constraintEnd_toEndOf="@+id/profile_name"
+            app:layout_constraintHorizontal_bias="0.043"
+            app:layout_constraintStart_toStartOf="@+id/profile_name" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:text="@string/email"
+            android:textColor="#8C8C8C"
+            app:layout_constraintBottom_toTopOf="@+id/profile_email"
+            app:layout_constraintEnd_toEndOf="@+id/profile_email"
+            app:layout_constraintHorizontal_bias="0.053"
+            app:layout_constraintStart_toStartOf="@+id/profile_email" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

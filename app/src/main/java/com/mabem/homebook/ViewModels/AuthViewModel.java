@@ -47,7 +47,17 @@ public class AuthViewModel extends AndroidViewModel {
         database.forgotPassword(email);
     }
 
+    public void changePassword() {
+        String email = currentUser.getValue().getEmailAddress();
+        database.forgotPassword(email);
+    }
+
+
     public void updateCurrentUser(){
         database.updateCurrentUser();
+    }
+
+    public void updateUser(User u){
+        database.updateUser(u);
     }
 }

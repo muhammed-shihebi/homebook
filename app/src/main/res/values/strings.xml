@@ -74,8 +74,9 @@
     <string name="delete_receipt">Delete Receipt</string>
     <string name="add_receipt">Add Receipt</string>
     <string name="join_request">wants to enter </string>
+    <string name="change_password">Change Password</string>
     <bool name="remember_me_default_value">false</bool>
-    <!-- TODO: Remove or change this placeholder text -->
+   <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_home">Add new Home</string>
     <string name="new_home_created_successfully">New Home was successfully created.</string>
@@ -86,4 +87,12 @@
     <string name="new_receipt_added_message">A new Receipt was added successfully!</string>
     <string name="receipt_updated_message">Receipt updated successfully!</string>
     <string name="home_deleted_message">Home was deleted successfully</string>
+
+
+    <string name="profile_edit_enter_name">Please Enter a valid Name</string>
+    <string name="profile_edit_enter_email">Please Enter a valid Email Address</string>
+    <string name="profile_updated_successfully">Your Profile has been successfully updated.</string>
+
+
+
 </resources>

@@ -96,7 +96,11 @@
         android:id="@+id/editProfileFragment"
         android:name="com.mabem.homebook.Fragments.Main.EditProfileFragment"
         android:label="Edit Profile"
-        tools:layout="@layout/fragment_edit_profile" />
+        tools:layout="@layout/fragment_edit_profile" >
+        <action
+            android:id="@+id/action_editProfileFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/statisticFragment"

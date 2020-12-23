@@ -34,6 +34,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
@@ -47,7 +48,8 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
-        // Google
+    implementation 'com.google.firebase:firebase-storage:19.2.1'
+    // Google
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     // Navigation

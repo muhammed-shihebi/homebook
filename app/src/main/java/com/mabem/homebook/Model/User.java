@@ -1,5 +1,7 @@
 package com.mabem.homebook.Model;
 
+import android.net.Uri;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -7,21 +9,21 @@ public class User implements Serializable {
     private String name = "";
     private String emailAddress = "";
     private String password = "";
-    private String imageURL = "";
+    private String imageURI;
 
     public User(String id, String name, String emailAddress, String password, String imageURL) {
         this.id = id;
         this.name = name;
         this.emailAddress = emailAddress;
         this.password = password;
-        this.imageURL = imageURL;
+        this.imageURI = imageURI;
     }
 
-    public User(String id, String name, String emailAddress, String imageURL) {
+    public User(String id, String name, String emailAddress, String imageURI) {
         this.id = id;
         this.name = name;
         this.emailAddress = emailAddress;
-        this.imageURL = imageURL;
+        this.imageURI = imageURI;
     }
 
     public User (String name, String id){
@@ -45,8 +47,20 @@ public class User implements Serializable {
         return password;
     }
 
-    public String getImageURL() {
-        return imageURL;
+    public String getImageURI() {
+        return imageURI;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public void setImageURI(String imageURI) {
+        this.imageURI = imageURI;
     }
 
     @Override

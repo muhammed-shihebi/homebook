@@ -70,6 +70,7 @@
     <string name="total">Gesamtbetrag: </string>
     <string name="delete_receipt">Rechnung Löschen</string>
     <string name="price">Preis</string>
+    <string name="change_password">Kennwort Aktualisieren</string>
 
 
 </resources>
