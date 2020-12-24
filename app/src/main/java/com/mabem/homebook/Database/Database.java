@@ -3,15 +3,12 @@ package com.mabem.homebook.Database;
 import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.MultiAutoCompleteTextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,16 +21,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.mabem.homebook.Fragments.Main.EditProfileFragment;
-import com.mabem.homebook.MainActivity;
+import com.mabem.homebook.Model.AdminNotification;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.Model.User;
+import com.mabem.homebook.Model.UserNotification;
 import com.mabem.homebook.R;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -58,7 +56,6 @@ public class Database {
     public static final String RECEIPT_TOTAL = "total";
     public static final String RECEIPT_NAME = "name";
     public static final String RECEIPT_DATE = "date";
-
     //========================================= Item Collection
     public static final String ITEM_COLLECTION = "item";
     public static final String ITEM_NAME = "name";
@@ -68,8 +65,23 @@ public class Database {
     public static final String REMINDER_DATE = "date";
     public static final String REMINDER_FREQUENCY = "frequency";
     public static final String REMINDER_NAME = "name";
+    //========================================= Admin Notification Collection
+    public static final String NOTIFICATION_TYPE = "type";
+    public static final String NOTIFICATION_COLLECTION = "notification";
+    public static final String USER_ID = "user_id";
+    private static final String USER_NAME = "user_name";
+    //========================================= User Notification Collection
+    public static final String USER_NOTIFICATION_COLLECTION = "user_notification";
+
+    //========================================= Storage
+    public static final String PROFILE_IMAGES = "profile_images";
+
+
+
+
 
     private static final String TAG = "Database";
+
 
 
     private static Database instance;
@@ -77,8 +89,7 @@ public class Database {
     private final Application application;
     private final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-    private FirebaseStorage storage = FirebaseStorage.getInstance();
-    private StorageReference storageReference = storage.getReference();
+    private final StorageReference imageStorageRef = FirebaseStorage.getInstance().getReference(PROFILE_IMAGES);
 
     private final MutableLiveData<User> currentUser = new MutableLiveData<>();
     private final MutableLiveData<String> resultMessage = new MutableLiveData<>();
@@ -144,15 +155,55 @@ public class Database {
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             HashMap<Home, Boolean> home_role = new HashMap<>();
+                            ArrayList<AdminNotification> adminNotifications = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 String homeName = document.getString(HOME_NAME);
-
                                 String homeId = document.getString(HOME_ID); // different then HOME_CODE
                                 Boolean role = document.getBoolean(MEMBER_ROLE);
                                 Home home = new Home(homeId, homeName);
                                 home_role.put(home, role);
+                                if(role == Member.ADMIN_ROLE){
+                                    firestore.collection(HOME_COLLECTION)
+                                            .document(homeId)
+                                            .collection(NOTIFICATION_COLLECTION)
+                                            .get()
+                                            .addOnSuccessListener(queryDocumentSnapshots -> {
+                                                for (QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                                                    AdminNotification an = new AdminNotification(
+                                                            queryDocumentSnapshot.getString(USER_ID),
+                                                            homeId,
+                                                            homeName,
+                                                            queryDocumentSnapshot.getString(USER_NAME)
+                                                    );
+                                                    adminNotifications.add(an);
+                                                }
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                resultMessage.postValue(e.getMessage());
+                                                Log.w(TAG, "updateCurrentMember: ", e);
+                                            });
+                                }
                             }
-                            Member member = new Member(currentUser.getValue(), home_role);
+
+                            ArrayList<UserNotification> userNotifications = new ArrayList<>();
+
+                            firestore.collection(USER_NOTIFICATION_COLLECTION)
+                                    .whereEqualTo(USER_ID, currentUser.getValue().getId())
+                                    .get()
+                                    .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots){
+                                            UserNotification un = new UserNotification(
+                                                    queryDocumentSnapshot.getString(HOME_NAME),
+                                                    queryDocumentSnapshot.getBoolean(NOTIFICATION_TYPE)
+                                            );
+                                        }
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        resultMessage.postValue(e.getMessage());
+                                        Log.w(TAG, "updateCurrentMember: ", e);
+                                    });
+                            Member member = new Member(currentUser.getValue(), home_role, adminNotifications, userNotifications);
                             currentMember.postValue(member);
                         } else {
                             resultMessage.postValue(task.getException().getLocalizedMessage());
@@ -189,7 +240,7 @@ public class Database {
                                                             document1.getId(),
                                                             document1.getString(RECEIPT_NAME),
                                                             document1.getDate(RECEIPT_DATE),
-                                                            document1.getString(RECEIPT_TOTAL),
+                                                            document1.getDouble(RECEIPT_TOTAL),
                                                             document1.getString(MEMBER_NAME),
                                                             document1.getString(MEMBER_ID)
                                                     );
@@ -230,8 +281,6 @@ public class Database {
                     .collection(RECEIPT_COLLECTION)
                     .document(receiptId)
                     .get()
-
-
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
@@ -254,7 +303,7 @@ public class Database {
                                                 document.getId(),
                                                 document.getString(RECEIPT_NAME),
                                                 document.getDate(RECEIPT_DATE),
-                                                document.getString(RECEIPT_TOTAL),
+                                                document.getDouble(RECEIPT_TOTAL),
                                                 document.getString(MEMBER_NAME),
                                                 document.getString(MEMBER_ID)
                                         );
@@ -734,52 +783,119 @@ public class Database {
      * If successful, information of the user are updated including the names in Receipts collections.
      * If unsuccessful, information are not updated and resultMessage is updated.
      *
-     * @param user
+     * @param newMember
      */
 
-    public void updateUser(User user) {
+    public void updateMember(Member newMember, Uri localUri) {
+
+        /*
+        To update profile image:
+        1. Delete any images if there is any
+        2. Upload new image and get the URI
+        3. Update the user with the new URI
+         */
+
+        if(localUri != null){ // new Photo >> delete old photo (if there is one) + update new one + update member
+//            Uri image = Uri.fromFile(new File(String.valueOf(localUri)));
+            StorageReference photoRef = imageStorageRef.child(newMember.getId());
+            UploadTask uploadTask =  photoRef.putFile(localUri);
+
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                photoRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            updateMemberWithNewUri(newMember, uri);
+                        })
+                        .addOnFailureListener(e -> {
+                            resultMessage.postValue(e.getMessage());
+//                            Log.w(TAG, "updateMember: ",e);
+                        });
+            }).addOnFailureListener(e -> {
+                resultMessage.postValue(e.getMessage());
+//                Log.w(TAG, "updateMember: ",e);
+            });
+        }else {
+            updateMemberWithNewUri(newMember, null);
+        }
+
+    }
+
+    private void updateMemberWithNewUri(Member newMember, Uri newUri) {
+
+        UserProfileChangeRequest profileUpdates;
+
+        if(newUri != null){
+             profileUpdates = new UserProfileChangeRequest
+                    .Builder()
+                    .setDisplayName(newMember.getName())
+                    .setPhotoUri(newUri)
+                    .build();
+        }else{
+            profileUpdates = new UserProfileChangeRequest
+                    .Builder()
+                    .setDisplayName(newMember.getName())
+                    .build();
+        }
+
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest
-                .Builder()
-                .setDisplayName(user.getName())
-                .setPhotoUri(Uri.parse(user.getImageURI()))
-                .build();
         if (firebaseUser != null) {
             firebaseUser.updateProfile(profileUpdates).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    firebaseUser.updateEmail(user.getEmailAddress()).addOnCompleteListener(task2 -> {
-                        /*if (task2.isSuccessful()) {
+                    firebaseUser.updateEmail(newMember.getEmailAddress()).addOnCompleteListener(task2 -> {
+                        if (task2.isSuccessful()) {
 
                             firestore.collectionGroup(RECEIPT_COLLECTION)
-                                    .whereEqualTo(MEMBER_ID, firebaseUser.getUid())
+                                    .whereEqualTo(MEMBER_ID, newMember.getId())
                                     .get()
                                     .addOnSuccessListener(queryDocumentSnapshots -> {
+                                        int counter = 1;
                                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                                             queryDocumentSnapshot
                                                     .getReference()
-                                                    .update(MEMBER_NAME, user.getName())
-                                                    .addOnSuccessListener(aVoid -> {
-                                                        */
-                                                        User newUser = makeUser(firebaseUser);
-                                                        currentUser.postValue(newUser);
-                                                        updateCurrentMember();
-                                                        resultMessage.postValue(application.getString(R.string.profile_updated_successfully));/*
-                                                    })
+                                                    .update(MEMBER_NAME, newMember.getName())
                                                     .addOnFailureListener(e -> {
                                                         resultMessage.postValue(e.getMessage());
+                                                        Log.w(TAG, "updateMemberWithNewUri: ", e);
                                                     });
                                         }
+
+                                        firestore.collection(HOME_USER_COLLECTION)
+                                                .whereEqualTo(MEMBER_ID, newMember.getId())
+                                                .get()
+                                                .addOnSuccessListener(queryDocumentSnapshots1 -> {
+                                                    for(QueryDocumentSnapshot queryDocumentSnapshot1 : queryDocumentSnapshots1 ){
+                                                        queryDocumentSnapshot1.getReference()
+                                                                .update(MEMBER_NAME, newMember.getName())
+                                                                .addOnFailureListener(e -> {
+                                                                    resultMessage.postValue(e.getMessage());
+                                                                    Log.w(TAG, "updateMemberWithNewUri: ", e);
+                                                                });
+                                                    }
+                                                    if(newUri != null){
+                                                        newMember.setImageURI(newUri);
+                                                    }
+                                                    Log.i(TAG, "updateMemberWithNewUri: New Member posted");
+                                                    currentMember.postValue(newMember);
+                                                    resultMessage.postValue(application.getString(R.string.profile_updated_successfully));
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    resultMessage.postValue(e.getMessage());
+                                                    Log.w(TAG, "updateMemberWithNewUri: ", e);
+                                                }); 
+
                                     })
                                     .addOnFailureListener(e -> {
                                         resultMessage.postValue(e.getMessage());
+                                        Log.w(TAG, "updateMemberWithNewUri: ", e);
                                     });
                         } else {
                             resultMessage.postValue(task2.getException().getMessage());
-                        }*/
+                            Log.w(TAG, "updateMemberWithNewUri: ", task2.getException());
+                        }
 
                     });
                 } else {
                     resultMessage.postValue(task.getException().getLocalizedMessage());
+                    Log.w(TAG, "updateMemberWithNewUri: ", task.getException());
                 }
             });
         }
@@ -863,14 +979,14 @@ public class Database {
                         firebaseUser.getUid(),
                         firebaseUser.getDisplayName(),
                         firebaseUser.getEmail(),
-                        firebaseUser.getPhotoUrl().toString()
+                        firebaseUser.getPhotoUrl()
                 );
             } else {
                 return new User(
                         firebaseUser.getUid(),
                         firebaseUser.getDisplayName(),
                         firebaseUser.getEmail(),
-                        ""
+                        null
                 );
             }
         }

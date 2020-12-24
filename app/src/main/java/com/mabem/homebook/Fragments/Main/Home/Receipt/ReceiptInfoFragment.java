@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,8 @@ import com.mabem.homebook.databinding.FragmentReceiptInfoBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ReceiptInfoFragment extends Fragment {
@@ -47,7 +50,7 @@ public class ReceiptInfoFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         fragmentReceiptInfoBinding.receiptinfoMembername.setText(currentReceipt.getMemberName());
-        fragmentReceiptInfoBinding.receiptinfoTotal.setText(currentReceipt.getTotal());
+        fragmentReceiptInfoBinding.receiptinfoTotal.setText(currentReceipt.getTotal().toString());
         //fragmentReceiptInfoBinding.receiptinfoDate.setText(currentReceipt.getDate().toString());
         //fragmentReceiptInfoBinding.receiptinfoMemberphoto.setImageURI();
 
@@ -61,12 +64,11 @@ public class ReceiptInfoFragment extends Fragment {
                         items.clear();
                         ArrayList<Item> i = r.getItems();
                         for(Item item : i){
+                            Log.w("asdf", "onCreateView: " + item.getPrice());
                             items.add(item);
                         }
                         adapter = new ReceiptinfoAdapter(getContext(), items);
                         fragmentReceiptInfoBinding.receiptinfoItemsList.setAdapter(adapter);
-
-
                     });
                 }
             }

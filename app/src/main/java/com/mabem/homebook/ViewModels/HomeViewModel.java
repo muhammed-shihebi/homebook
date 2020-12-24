@@ -1,6 +1,7 @@
 package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -10,6 +11,7 @@ import com.mabem.homebook.Database.Database;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.User;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -18,6 +20,8 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<Home> currentHome;
     private final MutableLiveData<Receipt> currentReceipt;
     private final MutableLiveData<String> resultMessage;
+
+    private boolean shouldShowResultMessage = false;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -52,6 +56,22 @@ public class HomeViewModel extends AndroidViewModel {
 
     public void updateCurrentReceipt(String id){
         database.updateCurrentReceipt(id);
+    }
+
+    public void updateUser(Member m, Uri localUri){
+        database.updateMember(m, localUri);
+    }
+
+    public boolean getShouldShowResultMessage() {
+        return shouldShowResultMessage;
+    }
+
+    public void setShouldShowResultMessage(boolean shouldShowResultMessage) {
+        this.shouldShowResultMessage = shouldShowResultMessage;
+    }
+
+    public void addNewHome(String homeName, boolean isPrivate){
+        database.createHome(homeName, isPrivate);
     }
 
 }

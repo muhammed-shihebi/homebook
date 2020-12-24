@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/remindersFragment"
+        android:title="Reminders" />
+    <item
+        android:id="@+id/statisticFragment"
+        android:title="Statistics" />
+    <item
+        android:id="@+id/editHomeFragment"
+        android:title="Edit Home" />
+    <item
+        android:id="@+id/homeInfoFragment"
+        android:title="Home Info" />
+</menu>

@@ -8,6 +8,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.mabem.homebook.R;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Util {
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);

@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mabem.homebook.Adapters.MyhomesAdapter;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.R;
-import com.mabem.homebook.ViewModels.MyHomesViewModel;
+import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.MainFragmentBinding;
 
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class MainFragment extends Fragment {
     private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
 
     private MainFragmentBinding mainBinding;
-    private MyHomesViewModel myHomesViewModel;
+    private HomeViewModel HomesViewModel;
     private ArrayList list = new ArrayList();
     private RecyclerView.Adapter adapter;
 
@@ -40,20 +40,15 @@ public class MainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
 
-
-
-
-
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
-        myHomesViewModel = new ViewModelProvider(this).get(MyHomesViewModel.class);
-
+        HomesViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         mainBinding.myHomes.setHasFixedSize(true);
         mainBinding.myHomes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        myHomesViewModel.updateCurrentMember();
+        HomesViewModel.updateCurrentMember();
 
-        myHomesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
+        HomesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
             if(member != null){
                 list.clear();
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
@@ -65,9 +60,6 @@ public class MainFragment extends Fragment {
                 mainBinding.myHomes.setAdapter(adapter);
             }
         });
-
-
-
         return mainBinding.getRoot();
     }
 }

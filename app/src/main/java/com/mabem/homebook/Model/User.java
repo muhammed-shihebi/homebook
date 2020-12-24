@@ -9,9 +9,9 @@ public class User implements Serializable {
     private String name = "";
     private String emailAddress = "";
     private String password = "";
-    private String imageURI;
+    private Uri imageURI;
 
-    public User(String id, String name, String emailAddress, String password, String imageURL) {
+    public User(String id, String name, String emailAddress, String password, Uri imageURI) {
         this.id = id;
         this.name = name;
         this.emailAddress = emailAddress;
@@ -19,7 +19,7 @@ public class User implements Serializable {
         this.imageURI = imageURI;
     }
 
-    public User(String id, String name, String emailAddress, String imageURI) {
+    public User(String id, String name, String emailAddress, Uri imageURI) {
         this.id = id;
         this.name = name;
         this.emailAddress = emailAddress;
@@ -47,7 +47,7 @@ public class User implements Serializable {
         return password;
     }
 
-    public String getImageURI() {
+    public Uri getImageURI() {
         return imageURI;
     }
 
@@ -59,7 +59,7 @@ public class User implements Serializable {
         this.emailAddress = emailAddress;
     }
 
-    public void setImageURI(String imageURI) {
+    public void setImageURI(Uri imageURI) {
         this.imageURI = imageURI;
     }
 

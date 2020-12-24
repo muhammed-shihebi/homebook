@@ -92,7 +92,11 @@
     <string name="profile_edit_enter_name">Please Enter a valid Name</string>
     <string name="profile_edit_enter_email">Please Enter a valid Email Address</string>
     <string name="profile_updated_successfully">Your Profile has been successfully updated.</string>
-
+    <string name="searched_home_dialog_message_1">Is </string>
+    <string name="searched_home_dialog_message_2"> is the Home you are looking for?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="search_result">Search Result</string>
 
 
 </resources>

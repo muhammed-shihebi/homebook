@@ -8,13 +8,13 @@ public class Receipt {
     private String id = "";
     private String name = "";
     private Date date;
-    private String total = "";
+    private Double total = 0.0;
     private ArrayList<Item> items;
     private String memberName;
     private String memberId;
 
 
-    public Receipt(String id, String name, Date date, String total, String memberName, String memberId) {
+    public Receipt(String id, String name, Date date, Double total, String memberName, String memberId) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -48,7 +48,7 @@ public class Receipt {
         return memberId;
     }
 
-    public String getTotal() {
+    public Double getTotal() {
         return total;
     }
 

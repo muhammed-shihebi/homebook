@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.bumptech.glide.Glide;
+import com.mabem.homebook.Fragments.Main.SearchedHomeDialog;
 import com.mabem.homebook.ViewModels.MainActivityViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
 
@@ -60,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
 
-        //========================================= Handle sign out butten
+        //========================================= Handle sign out button
 
         mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
             mainActivityViewModel.signOut();
@@ -72,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
         View header = mainActivityBinding.navView.getHeaderView(0);
         TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
         TextView userName = header.findViewById(R.id.receipt_name);
+        ImageView userImage = header.findViewById(R.id.profile_image);
+        ImageView searchButton = header.findViewById(R.id.search_button);
+        EditText search_edit_text = header.findViewById(R.id.search_edit_text);
 
 
         editProfileTextView.setOnClickListener(v -> {
@@ -79,18 +86,23 @@ public class MainActivity extends AppCompatActivity {
             drawerLayout.close();
         });
 
-        mainActivityViewModel.getCurrentUser().observe(this, user -> {
-            if(user != null){
-                userName.setText(user.getName());
+        mainActivityViewModel.getCurrentMember().observe(this, member -> {
+            if(member != null){
+                userName.setText(member.getName());
+                if(member.getImageURI() != null){
+                    Glide.with(this)
+                            .load(member.getImageURI())
+                            .into(userImage);
+                }
             }
         });
 
+        searchButton.setOnClickListener(v -> {
+            String homeName = search_edit_text.getText().toString().trim();
+            SearchedHomeDialog searchedHomeDialog = new SearchedHomeDialog(homeName);
+            searchedHomeDialog.show(getSupportFragmentManager(), "Test");
+        });
 
-
-//        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-//            if(destination.getId() != R.id.mainFragment){
-//            }
-//        });
     }
 
     @Override

@@ -12,11 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Fragments.Main.Home.Receipt.FeedFragment;
 import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
@@ -42,13 +43,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull FeedAdapter.ViewHolder holder, int position) {
         r = list.get(position);
         holder.receiptName.setText(r.getName().trim());
-        holder.receiptDate.setText(r.getDate().toString());
+
+        DateFormat sdf = DateFormat.getDateInstance();
+
+        holder.receiptDate.setText(sdf.format(r.getDate().getTime()));
 
         //holder.receiptDate.setText(r.getDate().getDay()+"."+r.getDate().getMonth()+"."+r.getDate().getYear());
-        holder.receiptTotal.setText(r.getTotal());
+        holder.receiptTotal.setText(r.getTotal().toString());
         holder.memberName.setText(r.getMemberName());
-        //===== TODO show image of member who added this receipt
+
         //holder.memberPhoto.setImageURI();
+
 
     }
 
@@ -57,7 +62,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         return this.list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private FrameLayout shape;
         private TextView receiptName;
         private TextView receiptDate;
@@ -74,7 +79,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             memberName = itemView.findViewById(R.id.feed_member_name);
             memberPhoto = itemView.findViewById(R.id.feed_member_photo);
 
-            shape.setOnClickListener(v ->{
+            shape.setOnClickListener(v -> {
                 Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
                 ReceiptInfoFragment.setReceipt(r);
             });

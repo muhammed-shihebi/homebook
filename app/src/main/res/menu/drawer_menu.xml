@@ -4,14 +4,15 @@
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/notificationsFragment"
-            android:icon="@drawable/notifications_icon"
-            android:title="@string/notifications" />
+
         <item
             android:id="@+id/mainFragment"
             android:icon="@drawable/home_icon"
             android:title="@string/my_homes" />
+        <item
+            android:id="@+id/notificationsFragment"
+            android:icon="@drawable/notifications_icon"
+            android:title="@string/notifications" />
         <item
             android:id="@+id/addNewHomeFragment"
             android:icon="@drawable/new_home_icon"

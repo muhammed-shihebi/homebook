@@ -57,7 +57,4 @@ public class AuthViewModel extends AndroidViewModel {
         database.updateCurrentUser();
     }
 
-    public void updateUser(User u){
-        database.updateUser(u);
-    }
 }
