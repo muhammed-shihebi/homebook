@@ -58,6 +58,7 @@ public class Database {
     public static final String RECEIPT_TOTAL = "total";
     public static final String RECEIPT_NAME = "name";
     public static final String RECEIPT_DATE = "date";
+
     //========================================= Item Collection
     public static final String ITEM_COLLECTION = "item";
     public static final String ITEM_NAME = "name";
@@ -188,6 +189,7 @@ public class Database {
                                                             document1.getId(),
                                                             document1.getString(RECEIPT_NAME),
                                                             document1.getDate(RECEIPT_DATE),
+                                                            document1.getString(RECEIPT_TOTAL),
                                                             document1.getString(MEMBER_NAME),
                                                             document1.getString(MEMBER_ID)
                                                     );
@@ -252,6 +254,7 @@ public class Database {
                                                 document.getId(),
                                                 document.getString(RECEIPT_NAME),
                                                 document.getDate(RECEIPT_DATE),
+                                                document.getString(RECEIPT_TOTAL),
                                                 document.getString(MEMBER_NAME),
                                                 document.getString(MEMBER_ID)
                                         );

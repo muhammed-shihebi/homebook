@@ -21,7 +21,7 @@
             android:text="@string/profile"
             android:textAlignment="viewStart"
             android:textColor="#292424"
-            app:icon="@android:drawable/editbox_dropdown_dark_frame"
+            app:icon="@drawable/edit_profile_icon"
             app:iconTint="#2B2323"
             app:layout_constraintBottom_toTopOf="@+id/change_password_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -42,12 +42,13 @@
             android:text="@string/change_password"
             android:textAlignment="viewStart"
             android:textColor="#292424"
-            app:icon="@android:drawable/editbox_dropdown_dark_frame"
+            app:icon="@drawable/password_icon"
+            app:iconSize="32dp"
             app:iconTint="#2B2323"
             app:layout_constraintBottom_toTopOf="@+id/language_button"
-            app:layout_constraintTop_toBottomOf="@+id/profile_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_button" />
 
         <Button
             android:id="@+id/language_button"
@@ -61,7 +62,8 @@
             android:textAlignment="viewStart"
             android:textColor="#292424"
 
-            app:icon="@android:drawable/editbox_dropdown_dark_frame"
+            app:icon="@drawable/language_icon"
+            app:iconSize="32dp"
             app:iconTint="#2B2323"
             app:layout_constraintBottom_toTopOf="@+id/about_button"
             app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +81,8 @@
             android:text="@string/about"
             android:textAlignment="viewStart"
             android:textColor="#292424"
-            app:icon="@android:drawable/editbox_dropdown_dark_frame"
+            app:icon="@drawable/about_icon"
+            app:iconSize="32dp"
             app:iconTint="#2B2323"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

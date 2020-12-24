@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.feedFragment"
+        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.FeedFragment"
         android:label="Home Feed"
         tools:layout="@layout/fragment_feed">
         <action

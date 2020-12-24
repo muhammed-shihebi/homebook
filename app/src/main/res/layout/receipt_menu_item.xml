@@ -4,18 +4,17 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/item_name2"
+        android:id="@+id/receiptinfo_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="@string/name" />
 
     <TextView
-        android:id="@+id/item_price2"
-        android:layout_width="4dp"
+        android:id="@+id/receiptinfo_item_price"
+        android:layout_width="5dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:ems="10"
-        android:hint="0.00"
-        android:inputType="numberDecimal" />
+        android:hint="0.00" />
 </LinearLayout>

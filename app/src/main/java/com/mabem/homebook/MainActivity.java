@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         View header = mainActivityBinding.navView.getHeaderView(0);
         TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
-        TextView userName = header.findViewById(R.id.user_name);
+        TextView userName = header.findViewById(R.id.receipt_name);
 
 
         editProfileTextView.setOnClickListener(v -> {

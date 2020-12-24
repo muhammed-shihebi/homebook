@@ -27,7 +27,7 @@
     </ImageView>
 
     <TextView
-        android:id="@+id/user_name"
+        android:id="@+id/receipt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -54,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/profile_image"
-        app:layout_constraintTop_toBottomOf="@+id/user_name"
+        app:layout_constraintTop_toBottomOf="@+id/receipt_name"
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText

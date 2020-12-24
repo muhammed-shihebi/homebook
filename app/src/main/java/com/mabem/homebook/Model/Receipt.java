@@ -1,5 +1,6 @@
 package com.mabem.homebook.Model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,16 +8,18 @@ public class Receipt {
     private String id = "";
     private String name = "";
     private Date date;
+    private String total = "";
     private ArrayList<Item> items;
     private String memberName;
     private String memberId;
 
 
-    public Receipt(String id, String name, Date date, String memberName, String memberId) {
+    public Receipt(String id, String name, Date date, String total, String memberName, String memberId) {
         this.id = id;
         this.name = name;
         this.date = date;
-        items = new ArrayList<Item>();
+        this.total = total;
+        this.items = new ArrayList<Item>();
         this.memberId = memberId;
         this.memberName = memberName;
     }
@@ -45,6 +48,9 @@ public class Receipt {
         return memberId;
     }
 
+    public String getTotal() {
+        return total;
+    }
 
     @Override
     public boolean equals(Object o) {
