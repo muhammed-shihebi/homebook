@@ -47,4 +47,28 @@ public class Member extends User {
         Member m = (Member) o;
         return (this.getId().equals(m.getId()) && getHome_role().equals(m.getHome_role()));
     }
+
+    public void setHomeRole(HashMap<Home, Boolean> home_role) {
+        this.home_role = home_role;
+    }
+
+    public void setAdminNotifications(ArrayList<AdminNotification> adminNotifications) {
+        this.adminNotifications = adminNotifications;
+    }
+
+    public void setUserNotifications(ArrayList<UserNotification> userNotifications) {
+        this.userNotifications = userNotifications;
+    }
+
+
+    public Boolean isThisMemberAdmin(Home currentHome) {
+        for(Home h:  home_role.keySet()){
+            if(h.getId().equals(currentHome.getId()) && home_role.get(h)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

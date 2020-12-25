@@ -8,9 +8,6 @@
         android:id="@+id/statisticFragment"
         android:title="Statistics" />
     <item
-        android:id="@+id/editHomeFragment"
-        android:title="Edit Home" />
-    <item
         android:id="@+id/homeInfoFragment"
         android:title="Home Info" />
 </menu>

@@ -13,6 +13,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.mabem.homebook.Adapters.FeedAdapter;
 import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.ViewModels.HomeViewModel;
@@ -41,6 +43,8 @@ public class FeedFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private static String home_name = "";
     private NavController navController;
+    private Home currentHome;
+    private Member currentMember;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,17 +61,23 @@ public class FeedFragment extends Fragment {
 
         homeViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
             if(member != null){
+                currentMember = member;
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
                 for(Home home : memberHomes.keySet()){
                     if( home.getName().trim().equals(home_name) ){
+
                         homeViewModel.updateCurrentHome(home.getId());
+
                         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
+
+                            currentHome = h;
+
                             list.clear();
                             ArrayList<Receipt> receipts = h.getReceipts();
                             for(Receipt receipt : receipts){
                                 list.add(receipt);
                             }
-                            Collections.sort(list);
+//                            Collections.sort(list);
                             adapter = new FeedAdapter(getContext(), list);
                             fragmentFeedBinding.myReceipts.setAdapter(adapter);
                          });
@@ -96,6 +106,12 @@ public class FeedFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if(item.getItemId() == R.id.homeInfoFragment){
+            if(currentMember.isThisMemberAdmin(currentHome)){
+                navController.navigate(R.id.editHomeFragment);
+                return true;
+            }
+        }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 

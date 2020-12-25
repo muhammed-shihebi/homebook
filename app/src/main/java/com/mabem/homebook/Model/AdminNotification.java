@@ -1,47 +1,47 @@
 package com.mabem.homebook.Model;
 
 public class AdminNotification {
-    private String UserId;
-    private String HomeId;
-    private String HomeName;
-    private String UserName;
+    private String userEmail;
+    private String homeId;
+    private String homeName;
+    private String userName;
 
-    public AdminNotification(String userId, String homeId, String homeName, String userName) {
-        UserId = userId;
-        HomeId = homeId;
-        HomeName = homeName;
-        UserName = userName;
+    public AdminNotification(String userEmail, String homeId, String homeName, String userName) {
+        this.userEmail = userEmail;
+        this.homeId = homeId;
+        this.homeName = homeName;
+        this.userName = userName;
     }
 
-    public String getUserId() {
-        return UserId;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setUserId(String userId) {
-        UserId = userId;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public String getHomeId() {
-        return HomeId;
+        return homeId;
     }
 
     public void setHomeId(String homeId) {
-        HomeId = homeId;
+        this.homeId = homeId;
     }
 
     public String getHomeName() {
-        return HomeName;
+        return homeName;
     }
 
     public void setHomeName(String homeName) {
-        HomeName = homeName;
+        this.homeName = homeName;
     }
 
     public String getUserName() {
-        return UserName;
+        return userName;
     }
 
     public void setUserName(String userName) {
-        UserName = userName;
+        this.userName = userName;
     }
 }

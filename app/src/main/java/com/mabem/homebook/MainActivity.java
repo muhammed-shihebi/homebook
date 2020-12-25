@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         toolbar = mainActivityBinding.toolbar;
         setSupportActionBar(toolbar);
 
+        Log.w("asdfasdf", "onCreate: ");
+
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
@@ -74,9 +76,9 @@ public class MainActivity extends AppCompatActivity {
         //========================================= Set up header
 
         View header = mainActivityBinding.navView.getHeaderView(0);
-        TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
         TextView userName = header.findViewById(R.id.receipt_name);
         ImageView userImage = header.findViewById(R.id.profile_image);
+        TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
         ImageView searchButton = header.findViewById(R.id.search_button);
         EditText search_edit_text = header.findViewById(R.id.search_edit_text);
 

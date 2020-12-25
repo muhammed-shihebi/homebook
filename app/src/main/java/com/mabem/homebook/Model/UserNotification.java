@@ -3,14 +3,15 @@ package com.mabem.homebook.Model;
 public class UserNotification {
 
     // Types
-    public static final Boolean REQUEST_REJECTED = false;
-    public static final Boolean REQUEST_ACCEPTED = true;
+    public static final String TYPE_ACCEPT = "accept";
+    public static final String TYPE_DECLINE = "decline";
+    public static final String TYPE_INVITATION = "invitation";
 
 
     private String homeName;
-    private Boolean typ;
+    private String typ;
 
-    public UserNotification(String homeName, Boolean typ) {
+    public UserNotification(String homeName, String typ) {
         this.homeName = homeName;
         this.typ = typ;
     }
@@ -23,11 +24,11 @@ public class UserNotification {
         this.homeName = homeName;
     }
 
-    public Boolean getTyp() {
+    public String getTyp() {
         return typ;
     }
 
-    public void setTyp(Boolean typ) {
+    public void setTyp(String typ) {
         this.typ = typ;
     }
 }

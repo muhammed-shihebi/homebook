@@ -13,17 +13,12 @@ import com.mabem.homebook.Model.User;
 
 public class MainActivityViewModel extends AndroidViewModel {
     private final Database database;
-    private final MutableLiveData<User> currentUser;
     private final MutableLiveData<Member> currentMember;
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         database = Database.getInstance(application);
-        currentUser = database.getCurrentUser();
         currentMember = database.getCurrentMember();
-    }
-    public MutableLiveData<User> getCurrentUser(){
-        return currentUser;
     }
 
     public MutableLiveData<Member> getCurrentMember(){
