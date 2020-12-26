@@ -10,10 +10,20 @@ public class UserNotification {
 
     private String homeName;
     private String typ;
+    private String homeId;
 
-    public UserNotification(String homeName, String typ) {
+    public String getHomeId() {
+        return homeId;
+    }
+
+    public void setHomeId(String homeId) {
+        this.homeId = homeId;
+    }
+
+    public UserNotification(String homeName, String typ, String homeId) {
         this.homeName = homeName;
         this.typ = typ;
+        this.homeId = homeId;
     }
 
     public String getHomeName() {

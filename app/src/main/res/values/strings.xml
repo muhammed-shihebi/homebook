@@ -99,8 +99,13 @@
     <string name="search_result">Search Result</string>
     <string name="join_request_declined_message">The join request was declined successfully</string>
     <string name="join_request_accepted_message">The join request was accepted successfully</string>
-    <string name="invitaion_sent_message">Invitation sent successfully</string>
+    <string name="invitation_sent_message">Invitation sent successfully</string>
     <string name="member_left_home_message">Member left home successfully</string>
+    <string name="invitation_message">invited you to join their home</string>
+    <string name="join_request_text">wants to join</string>
+    <string name="home_accepted_you_text">accepted your join request</string>
+    <string name="home_declined_you_text">declined your join request</string>
+    <string name="ok">OK</string>
 
 
 </resources>

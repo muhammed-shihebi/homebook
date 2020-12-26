@@ -5,6 +5,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Database.Database;
@@ -33,16 +34,16 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
 
-    public MutableLiveData<Member> getCurrentMember() {
+    public LiveData<Member> getCurrentMember() {
         return currentMember;
     }
-    public MutableLiveData<Home> getCurrentHome() {
+    public LiveData<Home> getCurrentHome() {
         return currentHome;
     }
-    public MutableLiveData<Receipt> getCurrentReceipt() {
+    public LiveData<Receipt> getCurrentReceipt() {
         return currentReceipt;
     }
-    public MutableLiveData<String> getResultMessage() {
+    public LiveData<String> getResultMessage() {
         return resultMessage;
     }
 

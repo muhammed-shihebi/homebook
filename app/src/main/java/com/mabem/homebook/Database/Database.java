@@ -21,6 +21,7 @@ import com.mabem.homebook.Model.AdminNotification;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Notification;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.Model.User;
@@ -28,7 +29,6 @@ import com.mabem.homebook.Model.UserNotification;
 import com.mabem.homebook.R;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -86,6 +86,7 @@ public class Database {
     private final MutableLiveData<Home> currentHome = new MutableLiveData<>();
     private final MutableLiveData<Receipt> currentReceipt = new MutableLiveData<>();
     private final MutableLiveData<Reminder> currentReminder = new MutableLiveData<>();
+    private final MutableLiveData<Notification> currentNotification = new MutableLiveData<>();
     private final MutableLiveData<Home> resultHomeSearch = new MutableLiveData<>();
 
 
@@ -153,64 +154,20 @@ public class Database {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
                         HashMap<Home, Boolean> home_role = new HashMap<>();
-                        ArrayList<AdminNotification> adminNotifications = new ArrayList<>();
+
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String homeName = document.getString(HOME_NAME);
                             String homeId = document.getString(HOME_ID);
                             Boolean role = document.getBoolean(MEMBER_ROLE);
                             Home home = new Home(homeId, homeName);
                             home_role.put(home, role);
-
-                            // 2. If the user is admin in this home, get the notifications of this home.
-
-                            if (role == Member.ADMIN_ROLE) {
-                                firestore.collection(HOME_COLLECTION)
-                                        .document(homeId)
-                                        .collection(NOTIFICATION_COLLECTION)
-                                        .get()
-                                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                                            for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                                AdminNotification an = new AdminNotification(
-                                                        queryDocumentSnapshot.getString(USER_EMAIL),
-                                                        homeId,
-                                                        homeName,
-                                                        queryDocumentSnapshot.getString(USER_NAME)
-                                                );
-                                                adminNotifications.add(an);
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            resultMessage.postValue(e.getMessage());
-                                            Log.w(TAG, "updateCurrentMember: ", e);
-                                        });
-                            }
                         }
 
-                        // 3. Get all the user notifications
+                        // 2. Post the value of the new current member.
 
-                        ArrayList<UserNotification> userNotifications = new ArrayList<>();
-
-                        firestore.collection(USER_NOTIFICATION_COLLECTION)
-                                .whereEqualTo(USER_EMAIL, currentUser.getValue().getEmailAddress())
-                                .get()
-                                .addOnSuccessListener(queryDocumentSnapshots -> {
-
-                                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                        UserNotification un = new UserNotification(
-                                                queryDocumentSnapshot.getString(HOME_NAME),
-                                                queryDocumentSnapshot.getString(NOTIFICATION_TYPE)
-                                        );
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    resultMessage.postValue(e.getMessage());
-                                    Log.w(TAG, "updateCurrentMember: ", e);
-                                });
-
-                        // 4. Post the value of the new current user.
-
-                        Member member = new Member(currentUser.getValue(), home_role, adminNotifications, userNotifications);
+                        Member member = new Member(currentUser.getValue(), home_role);
                         currentMember.postValue(member);
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
@@ -227,68 +184,20 @@ public class Database {
                 .get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
+
                         HashMap<Home, Boolean> home_role = new HashMap<>();
-                        ArrayList<AdminNotification> adminNotifications = new ArrayList<>();
+
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             String homeName = document.getString(HOME_NAME);
                             String homeId = document.getString(HOME_ID);
                             Boolean role = document.getBoolean(MEMBER_ROLE);
                             Home home = new Home(homeId, homeName);
                             home_role.put(home, role);
-
-                            // 2. If the user is admin in this home, get the notifications of this home.
-
-                            if (role == Member.ADMIN_ROLE) {
-                                firestore.collection(HOME_COLLECTION)
-                                        .document(homeId)
-                                        .collection(NOTIFICATION_COLLECTION)
-                                        .get()
-                                        .addOnSuccessListener(queryDocumentSnapshots -> {
-                                            for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                                AdminNotification an = new AdminNotification(
-                                                        queryDocumentSnapshot.getString(USER_EMAIL),
-                                                        homeId,
-                                                        homeName,
-                                                        queryDocumentSnapshot.getString(USER_NAME)
-                                                );
-                                                adminNotifications.add(an);
-                                            }
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            resultMessage.postValue(e.getMessage());
-                                            Log.w(TAG, "updateCurrentMember: ", e);
-                                        });
-                            }
                         }
 
-                        // 3. Get all the user notifications
-
-                        ArrayList<UserNotification> userNotifications = new ArrayList<>();
-
-                        firestore.collection(USER_NOTIFICATION_COLLECTION)
-                                .whereEqualTo(USER_EMAIL, currentMember.getValue().getId())
-                                .get()
-                                .addOnSuccessListener(queryDocumentSnapshots -> {
-
-                                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                        UserNotification un = new UserNotification(
-                                                queryDocumentSnapshot.getString(HOME_NAME),
-                                                queryDocumentSnapshot.getString(NOTIFICATION_TYPE)
-                                        );
-                                    }
-                                })
-                                .addOnFailureListener(e -> {
-                                    resultMessage.postValue(e.getMessage());
-                                    Log.w(TAG, "updateCurrentMember: ", e);
-                                });
-
-                        // 4. Update the current Member with the new values
-
                         currentMember.getValue().setHomeRole(home_role);
-                        currentMember.getValue().setAdminNotifications(adminNotifications);
-                        currentMember.getValue().setUserNotifications(userNotifications);
 
-                        // 5. Post value of the current Member
+                        // 2. Post value of the current Member
 
                         currentMember.postValue(currentMember.getValue());
 
@@ -296,6 +205,77 @@ public class Database {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
                     }
                 });
+    }
+
+    public void updateCurrentNotification(){
+        if(currentMember.getValue() != null){
+
+            Notification notification = new Notification();
+
+            // 1. Get all admin Notification for this user.
+
+            for(Home home: currentMember.getValue().getHome_role().keySet()){
+
+                if(currentMember.getValue().getHome_role().get(home) == Member.ADMIN_ROLE){
+                    firestore.collection(HOME_COLLECTION)
+                            .document(home.getId())
+                            .collection(NOTIFICATION_COLLECTION)
+                            .get()
+                            .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                                ArrayList<AdminNotification> adminNotifications = new ArrayList<>();
+
+                                for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                    AdminNotification an = new AdminNotification(
+                                            queryDocumentSnapshot.getString(USER_EMAIL),
+                                            home.getId(),
+                                            home.getName(),
+                                            queryDocumentSnapshot.getString(USER_NAME)
+                                    );
+                                    adminNotifications.add(an);
+                                }
+
+                                notification.setAdminNotifications(adminNotifications);
+
+
+                                // 2. Get all user Notification for this user.
+
+                                ArrayList<UserNotification> userNotifications = new ArrayList<>();
+
+                                firestore.collection(USER_NOTIFICATION_COLLECTION)
+                                        .whereEqualTo(USER_EMAIL, currentMember.getValue().getEmailAddress())
+                                        .get()
+                                        .addOnSuccessListener(userNotificationsSnapshots -> {
+
+                                            for (QueryDocumentSnapshot userNotificationSnapshot : userNotificationsSnapshots) {
+                                                UserNotification un = new UserNotification(
+                                                        userNotificationSnapshot.getString(HOME_NAME),
+                                                        userNotificationSnapshot.getString(NOTIFICATION_TYPE),
+                                                        userNotificationSnapshot.getString(HOME_ID)
+                                                );
+                                                userNotifications.add(un);
+                                            }
+
+                                            notification.setUserNotifications(userNotifications);
+
+                                            currentNotification.postValue(notification);
+
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            resultMessage.postValue(e.getMessage());
+                                            Log.w(TAG, "updateCurrentMember: ", e);
+                                        });
+
+                            })
+                            .addOnFailureListener(e -> {
+                                resultMessage.postValue(e.getMessage());
+                                Log.w(TAG, "updateCurrentNotification: ", e);
+                            });
+                }
+
+            }
+
+        }
     }
 
     /**
@@ -339,6 +319,7 @@ public class Database {
                                                     );
                                                     receipts.add(receipt);
                                                 }
+
 
                                                 // 3. Create new Home
 
@@ -581,6 +562,12 @@ public class Database {
     public MutableLiveData<Receipt> getCurrentReceipt() {
         return currentReceipt;
     }
+
+    public MutableLiveData<Notification> getCurrentNotification() { return currentNotification; }
+
+    public MutableLiveData<Reminder> getCurrentReminder () { return currentReminder; }
+
+    public MutableLiveData<Home> getResultHomeSearch() {return resultHomeSearch; }
 
     //========================================= Log in/Sign up Methods
 
@@ -857,7 +844,7 @@ public class Database {
 
     //========================================= Admin Functions
 
-    public void declineRequestToJoin(AdminNotification adminNotification) {
+    public void declineJoinRequest(AdminNotification adminNotification) {
 
         // 1. Delete the notification form the home
 
@@ -869,6 +856,7 @@ public class Database {
         data.put(HOME_NAME, adminNotification.getHomeName());
         data.put(NOTIFICATION_TYPE, UserNotification.TYPE_DECLINE);
         data.put(USER_EMAIL, adminNotification.getUserEmail());
+        data.put(HOME_ID, adminNotification.getHomeId());
 
         firestore.collection(USER_NOTIFICATION_COLLECTION)
                 .add(data)
@@ -882,7 +870,7 @@ public class Database {
 
     }
 
-    public void acceptRequestToJoin(AdminNotification adminNotification) {
+    public void acceptJoinRequest(AdminNotification adminNotification) {
 
         // 1. Delete the notification form the home
 
@@ -894,6 +882,7 @@ public class Database {
         data.put(HOME_NAME, adminNotification.getHomeName());
         data.put(NOTIFICATION_TYPE, UserNotification.TYPE_ACCEPT);
         data.put(USER_EMAIL, adminNotification.getUserEmail());
+        data.put(HOME_ID, adminNotification.getHomeId());
 
         firestore.collection(USER_NOTIFICATION_COLLECTION)
                 .add(data)
@@ -948,11 +937,12 @@ public class Database {
             data.put(HOME_NAME, currentHome.getValue().getName());
             data.put(NOTIFICATION_TYPE, UserNotification.TYPE_INVITATION);
             data.put(USER_EMAIL, userEmail);
+            data.put(HOME_ID, currentHome.getValue().getId());
 
             firestore.collection(USER_NOTIFICATION_COLLECTION)
                     .add(data)
                     .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue(application.getString(R.string.invitaion_sent_message));
+                        resultMessage.postValue(application.getString(R.string.invitation_sent_message));
                     })
                     .addOnFailureListener(e -> {
                         resultMessage.postValue(e.getMessage());
@@ -1111,7 +1101,59 @@ public class Database {
         }
     }
 
-    public void getStatistics(Home home, Date date) {
+    public void getStatistics() {
+    }
+
+    public void acceptInvitation(UserNotification userNotification) {
+        // 1. delete notification form user notification collection
+
+        deleteUserNotification(userNotification);
+
+        // 2. add user to home_user collection as member
+
+        if(currentMember.getValue() != null){
+
+            Map<String, Object> data = new HashMap<>();
+            data.put(HOME_ID, userNotification.getHomeId());
+            data.put(HOME_NAME, userNotification.getHomeName());
+            data.put(MEMBER_ID, currentMember.getValue().getId());
+            data.put(MEMBER_NAME, currentMember.getValue().getName());
+            data.put(MEMBER_ROLE, Member.MEMBER_ROLE);
+
+            firestore.collection(HOME_USER_COLLECTION)
+                    .add(data)
+                    .addOnSuccessListener(documentReference -> {
+                        resultMessage.postValue("User added to home successfully");
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "acceptInvitation: ", e);
+                    });
+        }
+    }
+
+    public void declineInvitation(UserNotification userNotification) {
+        // 1. delete notification form user notification collection
+        deleteUserNotification(userNotification);
+    }
+
+    public void deleteUserNotification(UserNotification userNotification) {
+        if (currentMember.getValue() != null) {
+            firestore.collection(USER_NOTIFICATION_COLLECTION)
+                    .whereEqualTo(HOME_ID, userNotification.getHomeId())
+                    .whereEqualTo(USER_EMAIL, currentMember.getValue().getEmailAddress())
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                            queryDocumentSnapshot.getReference().delete();
+                        }
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "deleteUserNotification: ", e);
+                    });
+
+        }
     }
 
     //========================================= User Functions
@@ -1272,7 +1314,7 @@ public class Database {
 
                         Boolean homeVisibility = result.getBoolean(HOME_VISIBILITY);
 
-                        if (homeVisibility != Home.VISIBILITY_PUBLIC) {
+                        if (homeVisibility == Home.VISIBILITY_PRIVATE) {
                             continue;
                         }
 

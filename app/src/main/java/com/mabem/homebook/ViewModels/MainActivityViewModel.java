@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,7 +22,7 @@ public class MainActivityViewModel extends AndroidViewModel {
         currentMember = database.getCurrentMember();
     }
 
-    public MutableLiveData<Member> getCurrentMember(){
+    public LiveData<Member> getCurrentMember(){
         return currentMember;
     }
 

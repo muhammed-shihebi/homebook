@@ -12,13 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
