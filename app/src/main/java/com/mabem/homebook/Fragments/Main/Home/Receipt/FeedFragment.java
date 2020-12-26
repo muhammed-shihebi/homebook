@@ -31,6 +31,7 @@ import com.mabem.homebook.databinding.FragmentFeedBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class FeedFragment extends Fragment {
@@ -41,7 +42,7 @@ public class FeedFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private ArrayList list = new ArrayList();
     private RecyclerView.Adapter adapter;
-    private static String home_name = "";
+    private static String home_id = "";
     private NavController navController;
     private Home currentHome;
     private Member currentMember;
@@ -63,10 +64,10 @@ public class FeedFragment extends Fragment {
             if(member != null){
                 currentMember = member;
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
-                for(Home home : memberHomes.keySet()){
-                    if( home.getName().trim().equals(home_name) ){
-
-                        homeViewModel.updateCurrentHome(home.getId());
+                for(Home h1 : memberHomes.keySet()){
+                    if( h1.getId().equals(home_id) ){
+                        boolean isAdmin = memberHomes.get(h1);
+                        homeViewModel.updateCurrentHome(h1.getId());
 
                         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
 
@@ -77,8 +78,14 @@ public class FeedFragment extends Fragment {
                             for(Receipt receipt : receipts){
                                 list.add(receipt);
                             }
-//                            Collections.sort(list);
-                            adapter = new FeedAdapter(getContext(), list);
+                            Collections.sort(list, new Comparator<Receipt>() {
+                                @Override
+                                public int compare(Receipt o1, Receipt o2) {
+                                    return o1.getDate().compareTo(o2.getDate());
+                                }
+                            });
+
+                            adapter = new FeedAdapter(getContext(), list, isAdmin);
                             fragmentFeedBinding.myReceipts.setAdapter(adapter);
                          });
                     }
@@ -91,6 +98,7 @@ public class FeedFragment extends Fragment {
 
         fragmentFeedBinding.addButton.setOnClickListener(v -> {
             Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_addReceiptFragment);
+
         });
 
         setHasOptionsMenu(true);
@@ -115,11 +123,11 @@ public class FeedFragment extends Fragment {
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }
 
-    public static String getHome_name() {
-        return home_name;
+    public static String getHome_id() {
+        return home_id;
     }
 
-    public static void setHome_name(String home_name2) {
-        home_name = home_name2;
+    public static void setHome_id(String home_id2) {
+        home_id = home_id2;
     }
 }

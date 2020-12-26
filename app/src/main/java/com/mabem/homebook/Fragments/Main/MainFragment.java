@@ -22,6 +22,7 @@ import com.mabem.homebook.databinding.MainFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class MainFragment extends Fragment {
@@ -53,9 +54,15 @@ public class MainFragment extends Fragment {
                 list.clear();
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
                 for(Home home : memberHomes.keySet()){
-                    list.add(home.getName());
+                    list.add(home);
                 }
-                Collections.sort(list);
+                Collections.sort(list, new Comparator<Home>() {
+
+                    @Override
+                    public int compare(Home o1, Home o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 adapter = new MyhomesAdapter(getContext(), list);
                 mainBinding.myHomes.setAdapter(adapter);
             }

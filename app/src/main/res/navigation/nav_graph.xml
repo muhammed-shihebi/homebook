@@ -50,6 +50,9 @@
         <action
             android:id="@+id/action_feedFragment_to_receiptInfoFragment"
             app:destination="@id/receiptInfoFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_manageReceiptFragment"
+            app:destination="@id/manageReceiptFragment" />
     </fragment>
 
     <fragment
@@ -88,7 +91,7 @@
 
     <fragment
         android:id="@+id/manageReceiptFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.ManageReceiptFragment"
+        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment"
         android:label="Manage Receipt"
         tools:layout="@layout/fragment_manage_receipt" />
 
@@ -180,9 +183,6 @@
         <action
             android:id="@+id/action_settingsFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
-        <action
-            android:id="@+id/action_settingsFragment_to_changeLanguageFragment"
-            app:destination="@id/changeLanguageFragment" />
     </fragment>
 
     <fragment
@@ -190,10 +190,5 @@
         android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment"
         android:label="Receipt Info"
         tools:layout="@layout/fragment_receipt_info" />
-    <fragment
-        android:id="@+id/changeLanguageFragment"
-        android:name="com.mabem.homebook.Fragments.Main.ChangeLanguageFragment"
-        android:label="Change Language"
-        tools:layout="@layout/fragment_change_language" />
 
 </navigation>

@@ -76,9 +76,20 @@
     <string name="join_request">wants to enter </string>
     <string name="change_password">Change Password</string>
     <bool name="remember_me_default_value">false</bool>
-   <!-- TODO: Remove or change this placeholder text -->
+    <string name="version">Version 1.0</string>
+    <string name="about_text">MABEM Team\nPrepared with Love ❤</string>
+    <string name="copyright">©</string>
+    <string name="abd">Abdurrahman ODABAŞI</string>
+    <string name="batikan">Batıkan Bora ORMANCI</string>
+    <string name="ecesu">Ecesu ARSLAN</string>
+    <string name="mulham">Mulham ALIBRAHIM</string>
+    <string name="nur">Muhammednur ŞEHEBİ</string>
+    <string name="mabem">Mulham ALIBRAHIM, Ecesu ARSLAN, Abdurrahman ODABAŞI, Batıkan Bora ORMANCI, Muhammednur ŞEHEBİ</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_new_home">Add new Home</string>
+    <string name="add_new_home">Create new Home</string>
     <string name="new_home_created_successfully">New Home was successfully created.</string>
     <string name="please_enter_name_for_home_message">Please Enter a Name for the new Home.</string>
     <string name="new_reminder_added_message">The new Reminder Was added Successfully</string>
@@ -93,7 +104,7 @@
     <string name="profile_edit_enter_email">Please Enter a valid Email Address</string>
     <string name="profile_updated_successfully">Your Profile has been successfully updated.</string>
     <string name="searched_home_dialog_message_1">Is </string>
-    <string name="searched_home_dialog_message_2"> is the Home you are looking for?</string>
+    <string name="searched_home_dialog_message_2">" the Home you are looking for?"</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="search_result">Search Result</string>

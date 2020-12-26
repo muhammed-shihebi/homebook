@@ -68,6 +68,7 @@ public class EditProfileFragment extends Fragment {
             }else if(newEmail.isEmpty()){
                 Toast.makeText(requireContext(), R.string.profile_edit_enter_email, Toast.LENGTH_SHORT).show();
             }else{
+                editProfileBinding.progressBar.setVisibility(View.VISIBLE);
                 Member newMember = new Member(
                         currentMember.getId(),
                         newName,
@@ -77,12 +78,14 @@ public class EditProfileFragment extends Fragment {
                         );
 
                 homeViewModel.updateUser(newMember, imageUri);
-//                Navigation.findNavController(v).navigate(R.id.action_editProfileFragment_to_mainFragment);
             }
 
             homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), message->{
                 if(message != null){
                     Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                    editProfileBinding.progressBar.setVisibility(View.GONE);
+                    Navigation.findNavController(v).navigate(R.id.action_editProfileFragment_to_mainFragment);
+
                 }
             });
 
