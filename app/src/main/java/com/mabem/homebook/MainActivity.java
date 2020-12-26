@@ -1,22 +1,30 @@
 package com.mabem.homebook;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -25,12 +33,16 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
 import com.mabem.homebook.Fragments.Main.SearchedHomeDialog;
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Utils.SearchResultListener;
+import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.MainActivityViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchResultListener {
 
     private static final int TIME_BEFORE_SIGN_OUT = 1000; // 1 Second
     private static final String MAIN_ACTIVITY_TAG = "MainActivity";
@@ -39,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private MainActivityViewModel mainActivityViewModel;
     private NavController navController;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,13 +117,43 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+    //========================================= Search Home
+
         searchButton.setOnClickListener(v -> {
-            String homeName = search_edit_text.getText().toString().trim();
-            SearchedHomeDialog searchedHomeDialog = new SearchedHomeDialog(homeName);
-            searchedHomeDialog.show(getSupportFragmentManager(), "Test");
+            mainActivityViewModel.setShowResultDialog(true);
+            ProgressBar searchProgressBar = header.findViewById(R.id.search_progressBar);
+            searchProgressBar.setVisibility(View.VISIBLE);
+            String homeCode = search_edit_text.getText().toString().trim();
+            mainActivityViewModel.searchHome(homeCode);
+            mainActivityViewModel.getSearchResult().observe(this, homes -> {
+
+
+                if(homes != null){
+                    searchProgressBar.setVisibility(View.INVISIBLE);
+                    Util.hideKeyboard(this);
+                    if(mainActivityViewModel.isShowResultDialog()){
+                        SearchedHomeDialog searchedHomeDialog = new SearchedHomeDialog(homes, this, getBaseContext());
+                        searchedHomeDialog.show(getSupportFragmentManager(), "Test");
+                        mainActivityViewModel.setShowResultDialog(false);
+                    }
+                    mainActivityViewModel.clearSearchResults();
+                }
+
+
+            });
+
+
         });
 
     }
+
+    @Override
+    public void onHomeSelected(String homeId) {
+        mainActivityViewModel.sendJoinRequest(homeId);
+    }
+
+    //========================================= Search Home
 
     private void loadLocale() {
         SharedPreferences prefs = getSharedPreferences("settings", Activity.MODE_PRIVATE);
@@ -164,4 +207,7 @@ public class MainActivity extends AppCompatActivity {
             }.start();
         }
     }
+
+
+
 }

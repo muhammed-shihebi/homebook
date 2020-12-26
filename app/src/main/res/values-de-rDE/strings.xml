@@ -80,10 +80,10 @@
     <string name="nur">Muhammednur ŞEHEBİ</string>
     <string name="mabem">Mulham ALIBRAHIM, Ecesu ARSLAN, Abdurrahman ODABAŞI, Batıkan Bora ORMANCI, Muhammednur ŞEHEBİ</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="yes">Ja</string>
-    <string name="no">Nein</string>
+    <string name="send_join_request">Beitrittsanfrage Senden</string>
+    <string name="no">Abbrechen</string>
     <string name="search_result">Suchergebnis</string>
-    <string name="invitaion_sent_message">Beitrittsanfrage wurde erfolgreich gesendet</string>
+    <string name="invitation_sent_message">Beitrittsanfrage wurde erfolgreich gesendet</string>
     <string name="member_left_home_message">Mitglied hat die Wohnung erfolgreich verlassen</string>
     <string name="searched_home_dialog_message_1">Ist</string>
     <string name="searched_home_dialog_message_2">die Wohnung, nach der Sie suchen?</string>

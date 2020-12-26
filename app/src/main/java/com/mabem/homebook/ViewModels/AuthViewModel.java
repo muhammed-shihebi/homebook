@@ -6,7 +6,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.mabem.homebook.Database.Database;
+import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.User;
+
+import java.util.ArrayList;
 
 public class AuthViewModel extends AndroidViewModel {
     private final Database database;
@@ -53,9 +56,5 @@ public class AuthViewModel extends AndroidViewModel {
         database.forgotPassword(email);
     }
 
-
-    public void updateCurrentUser(){
-        database.updateCurrentUser();
-    }
 
 }

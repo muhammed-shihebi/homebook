@@ -36,21 +36,6 @@
     </androidx.cardview.widget.CardView>
 
 
-    <!--    <ImageView-->
-    <!--        android:id="@+id/profile_image"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:scaleType="centerCrop"-->
-    <!--        android:src="@drawable/default_profile_photo"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintHorizontal_bias="0.0"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toTopOf="parent"-->
-    <!--        app:layout_constraintVertical_bias="1.0">-->
-
-    <!--    </ImageView>-->
-
     <TextView
         android:id="@+id/receipt_name"
         android:layout_width="wrap_content"
@@ -113,5 +98,22 @@
         app:layout_constraintVertical_bias="0.531">
 
     </ImageView>
+
+    <ProgressBar
+        android:id="@+id/search_progressBar"
+        android:layout_width="48dp"
+        android:layout_height="41dp"
+        android:progressTint="#FFFFFF"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/search_edit_text"
+        app:layout_constraintEnd_toStartOf="@+id/search_button"
+        app:layout_constraintHorizontal_bias="0.931"
+        app:layout_constraintStart_toStartOf="@+id/search_edit_text"
+        app:layout_constraintTop_toTopOf="@+id/search_edit_text"
+        app:layout_constraintVertical_bias="1.0">
+
+    </ProgressBar>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

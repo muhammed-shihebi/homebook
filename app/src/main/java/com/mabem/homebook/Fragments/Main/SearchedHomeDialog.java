@@ -2,42 +2,64 @@ package com.mabem.homebook.Fragments.Main;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.SearchResultListener;
+
+import java.util.ArrayList;
 
 public class SearchedHomeDialog extends DialogFragment {
 
-    String homeName;
+    ArrayList<Home> searchResult;
+    CharSequence[] homeNames;
+    SearchResultListener searchResultListener;
+    Context context;
+    int checkedItem = 0;
 
-    public SearchedHomeDialog(String homeName) {
-        this.homeName = homeName;
+
+    public SearchedHomeDialog(ArrayList<Home> searchResult, SearchResultListener searchResultListener, Context context) {
+        this.searchResultListener = searchResultListener;
+        this.searchResult = searchResult;
+        homeNames = new CharSequence[searchResult.size()];
+        this.context = context;
+        for (int i = 0; i < searchResult.size(); i++) {
+            homeNames[i] = searchResult.get(i).getName();
+        }
     }
 
-    public SearchedHomeDialog() {
-    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setTitle(R.string.search_result)
-                .setMessage(getString(R.string.searched_home_dialog_message_1) + " \""+ homeName + "\" " + getString(R.string.searched_home_dialog_message_2))
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getContext(), "Yes", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        Toast.makeText(getContext(), "No", Toast.LENGTH_SHORT).show();
-                    }
+                .setNegativeButton(R.string.ok, (dialog, id) -> {
                 });
+
+
+        if(!searchResult.isEmpty()){
+            builder.setSingleChoiceItems(homeNames, 0, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    checkedItem = which;
+                }
+            }).setPositiveButton(R.string.send_join_request, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    searchResultListener.onHomeSelected(searchResult.get(checkedItem).getId());
+                }
+            }).setNegativeButton(R.string.cancel, (dialog, id) -> {
+            });
+        }else {
+            builder.setMessage("No Home found!");
+        }
+
 
         return builder.create();
     }

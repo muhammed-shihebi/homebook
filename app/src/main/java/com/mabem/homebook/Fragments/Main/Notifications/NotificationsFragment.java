@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.mabem.homebook.Adapters.NotificationAdapter;
 import com.mabem.homebook.Model.AdminNotification;
+import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.UserNotification;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NotificationMenuItemListener;
@@ -28,7 +29,6 @@ public class NotificationsFragment extends Fragment implements NotificationMenuI
 
     private ArrayList<AdminNotification> adminNotificationList = new ArrayList<>();
     private ArrayList<UserNotification> userNotificationList = new ArrayList<>();
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

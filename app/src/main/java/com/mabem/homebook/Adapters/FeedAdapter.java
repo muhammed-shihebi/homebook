@@ -11,9 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment;
-import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment;
+//import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 
@@ -83,8 +82,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             shape.setOnClickListener(v -> {
                 if(isAdmin){
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
-                    ReceiptManageFragment.setToEditReceipt(r);
-                    ReceiptManageFragment.setToEditFlag(true);
+//                    ReceiptManageFragment.setToEditReceipt(r);
+//                    ReceiptManageFragment.setToEditFlag(true);
                 }else{
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
                     ReceiptInfoFragment.setReceipt(r);

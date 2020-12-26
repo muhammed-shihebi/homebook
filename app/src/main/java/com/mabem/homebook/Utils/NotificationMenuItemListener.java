@@ -14,4 +14,5 @@ public interface NotificationMenuItemListener {
     public void onDeclineInvitation(UserNotification userNotification, int position);
 
     public void onOKClicked(UserNotification userNotification, int position);
+
 }

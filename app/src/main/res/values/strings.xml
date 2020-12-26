@@ -105,8 +105,7 @@
     <string name="profile_updated_successfully">Your Profile has been successfully updated.</string>
     <string name="searched_home_dialog_message_1">Is </string>
     <string name="searched_home_dialog_message_2">" the Home you are looking for?"</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
+    <string name="send_join_request">Send Join Request</string>
     <string name="search_result">Search Result</string>
     <string name="join_request_declined_message">The join request was declined successfully</string>
     <string name="join_request_accepted_message">The join request was accepted successfully</string>

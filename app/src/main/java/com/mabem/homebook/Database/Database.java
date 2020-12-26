@@ -87,7 +87,7 @@ public class Database {
     private final MutableLiveData<Receipt> currentReceipt = new MutableLiveData<>();
     private final MutableLiveData<Reminder> currentReminder = new MutableLiveData<>();
     private final MutableLiveData<Notification> currentNotification = new MutableLiveData<>();
-    private final MutableLiveData<Home> resultHomeSearch = new MutableLiveData<>();
+    private final MutableLiveData<ArrayList<Home>> searchResult = new MutableLiveData<>();
 
 
     private Database(Application application) {
@@ -567,7 +567,7 @@ public class Database {
 
     public MutableLiveData<Reminder> getCurrentReminder () { return currentReminder; }
 
-    public MutableLiveData<Home> getResultHomeSearch() {return resultHomeSearch; }
+    public MutableLiveData<ArrayList<Home>> getSearchResult() {return searchResult; }
 
     //========================================= Log in/Sign up Methods
 
@@ -1158,12 +1158,12 @@ public class Database {
 
     //========================================= User Functions
 
-    public void sendRequestToJoinHome(String homeId) {
+    public void sendJoinRequest(String homeId) {
         if (currentMember.getValue() != null) {
-            String userId = currentMember.getValue().getId();
+            String userEmail = currentMember.getValue().getEmailAddress();
             String userName = currentMember.getValue().getName();
             Map<String, Object> data = new HashMap<>();
-            data.put(USER_EMAIL, userId);
+            data.put(USER_EMAIL, userEmail);
             data.put(USER_NAME, userName);
 
             firestore.collection(HOME_COLLECTION)
@@ -1179,6 +1179,7 @@ public class Database {
                     });
         }
     }
+
 
     /**
      * Try to update the information of the currently logged in user.
@@ -1304,35 +1305,48 @@ public class Database {
     }
 
     public void searchHome(String homeCode) {
-        firestore.collection(HOME_COLLECTION)
-                .whereEqualTo(HOME_CODE, homeCode)
-                .get()
-                .addOnSuccessListener(queryDocumentSnapshots -> {
-                    QueryDocumentSnapshot result = null;
-                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                        result = queryDocumentSnapshot;
 
-                        Boolean homeVisibility = result.getBoolean(HOME_VISIBILITY);
+        if(currentMember.getValue() != null){
 
-                        if (homeVisibility == Home.VISIBILITY_PRIVATE) {
-                            continue;
+            // 1. Search for all homes with this code
+
+            ArrayList<Home> homes = new ArrayList<>();
+
+            firestore.collection(HOME_COLLECTION)
+                    .whereEqualTo(HOME_CODE, homeCode)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+
+
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                            Boolean homeVisibility = queryDocumentSnapshot.getBoolean(HOME_VISIBILITY);
+                            // 2. Ignore private homes
+                            if (homeVisibility == Home.VISIBILITY_PRIVATE) {
+                                continue;
+                            }
+                            String homeName = queryDocumentSnapshot.getString(HOME_NAME);
+                            String homeId = queryDocumentSnapshot.getId();
+                            Home home = new Home(homeId, homeName);
+                            // 3. if user is member in this home ignore it
+                            if(isMember(home)){
+                                continue;
+                            }
+                            homes.add(home);
                         }
 
-                        String homeName = result.getString(HOME_NAME);
-                        String homeId = result.getId();
-                        Home home = new Home(homeId, homeName);
-                        resultHomeSearch.postValue(home);
-                        break;
-                    }
-                    if (result == null) {
-                        resultHomeSearch.postValue(null);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    resultMessage.postValue(e.getMessage());
-                    Log.w(TAG, "Error by searching for Home", e);
-                });
+                        searchResult.postValue(homes);
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "Error by searching for Home", e);
+                    });
+        }
     }
+
+    public void clearSearchResults() {
+        searchResult.postValue(null);
+    }
+
 
     /**
      * Try to create a new Home associated with the currentMember.
@@ -1411,4 +1425,20 @@ public class Database {
         }
         return null;
     }
+
+    private boolean isMember(Home home) {
+        boolean isMember =false;
+
+        if(currentMember.getValue() != null){
+            for (Home memberHome: currentMember.getValue().getHome_role().keySet()) {
+                if (memberHome.getId().equals(home.getId())){
+                    isMember = true;
+                    break;
+                }
+            }
+        }
+
+        return isMember;
+    }
+
 }
