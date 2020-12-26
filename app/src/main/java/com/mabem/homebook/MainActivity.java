@@ -1,7 +1,9 @@
 package com.mabem.homebook;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -26,6 +28,8 @@ import com.mabem.homebook.Fragments.Main.SearchedHomeDialog;
 import com.mabem.homebook.ViewModels.MainActivityViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int TIME_BEFORE_SIGN_OUT = 1000; // 1 Second
@@ -40,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        loadLocale();
         //========================================= Init DataBinding
 
         mainActivityBinding = DataBindingUtil.setContentView(this, R.layout.main_activity);
@@ -105,6 +110,24 @@ public class MainActivity extends AppCompatActivity {
             searchedHomeDialog.show(getSupportFragmentManager(), "Test");
         });
 
+    }
+
+    private void loadLocale() {
+        SharedPreferences prefs = getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        String lang = prefs.getString("my_lang", "");
+        setLocale(lang);
+    }
+
+    public void setLocale(String locale1) {
+        Locale locale = new Locale(locale1);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings",  MODE_PRIVATE).edit();
+        editor.putString("my_lang",locale1);
+        editor.apply();
     }
 
     @Override

@@ -394,7 +394,7 @@ public class Database {
                                                 document.getString(MEMBER_NAME),
                                                 document.getString(MEMBER_ID)
                                         );
-
+                                        receipt.setItems(items);
                                         // 4. Post the value of the receipt
 
                                         currentReceipt.postValue(receipt);

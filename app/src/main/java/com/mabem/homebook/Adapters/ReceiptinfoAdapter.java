@@ -39,6 +39,8 @@ public class ReceiptinfoAdapter extends RecyclerView.Adapter<ReceiptinfoAdapter.
         Item i = items.get(position);
         holder.itemName.setText(i.getName());
         holder.itemPrice.setText(i.getPrice().toString());
+        //TODO SetImageOfMember
+
     }
 
     @Override

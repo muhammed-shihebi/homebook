@@ -13,6 +13,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment;
+import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 
@@ -24,10 +25,12 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<Receipt> list;
     private Receipt r;
+    private boolean isAdmin;
 
-    public FeedAdapter(Context context, ArrayList<Receipt> list) {
+    public FeedAdapter(Context context, ArrayList<Receipt> list, boolean isAdmin) {
         this.context = context;
         this.list = list;
+        this.isAdmin = isAdmin;
     }
 
     @NonNull
@@ -46,10 +49,10 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         DateFormat sdf = DateFormat.getDateInstance();
 
         holder.receiptDate.setText(sdf.format(r.getDate().getTime()));
-
-        //holder.receiptDate.setText(r.getDate().getDay()+"."+r.getDate().getMonth()+"."+r.getDate().getYear());
         holder.receiptTotal.setText(r.getTotal().toString());
         holder.memberName.setText(r.getMemberName());
+
+
 
         //holder.memberPhoto.setImageURI();
 
@@ -78,8 +81,15 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             memberPhoto = itemView.findViewById(R.id.feed_member_photo);
 
             shape.setOnClickListener(v -> {
-                Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
-                ReceiptInfoFragment.setReceipt(r);
+                if(isAdmin){
+                    Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
+                    ReceiptManageFragment.setToEditReceipt(r);
+                    ReceiptManageFragment.setToEditFlag(true);
+                }else{
+                    Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
+                    ReceiptInfoFragment.setReceipt(r);
+                }
+
             });
         }
 

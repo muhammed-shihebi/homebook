@@ -52,6 +52,10 @@ public class Receipt {
         return total;
     }
 
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
