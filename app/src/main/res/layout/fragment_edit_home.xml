@@ -173,7 +173,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="346dp"
         android:layout_height="229dp"
-        android:background="@drawable/rounded_edit_text"
+        android:background="@drawable/rounded_edit_box"
         app:layout_constraintBottom_toTopOf="@+id/save_home_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"

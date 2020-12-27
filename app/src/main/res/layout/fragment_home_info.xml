@@ -88,7 +88,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="335dp"
             android:layout_height="234dp"
-            android:background="@drawable/rounded_edit_text"
+            android:background="@drawable/rounded_edit_box"
             app:layout_constraintBottom_toTopOf="@+id/homeinfo_leave_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
