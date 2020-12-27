@@ -9,11 +9,13 @@ import static com.google.common.truth.Truth.assertThat;
 /**
  * Compare two equal 'Home' s
  * Compare two notes with all values other than 'code' and 'id' are different
-
+ * Compare home with another object
+ * .... Should I test all getter and setters?
  */
 
 public class HomeTest {
-    Home h;
+    Home h, h2;
+
 
     @Before // each test
     public void setUp() throws Exception {
@@ -24,6 +26,31 @@ public class HomeTest {
     @After // each test
     public void tearDown() throws Exception {
     }
+
+    @Test
+    public void homeWithSameIdAndCodeEqualToGivenHome_returnsTrue() {
+        h2 = new Home("11", "different", "22", false, null);
+        assertThat(h.equals(h2)).isTrue();
+    }
+
+    @Test
+    public void homeWithDifferentIdDifferentAsGivenHome_returnsFalse() {
+        h2 = new Home("12", "different", "22", false, null);
+        assertThat(h.equals(h2)).isFalse();
+    }
+
+    @Test
+    public void homeDifferentAsGivenObjectOfDifferentClass_returnsFalse() {
+
+        class NotHome {
+            String id = "11";
+            String name = "different";
+            String code = "22";
+        }
+        NotHome nh = new NotHome();
+        assertThat(h.equals(nh)).isFalse();
+    }
+
 
     @Test
     public void setMember_role() {
@@ -64,9 +91,6 @@ public class HomeTest {
     public void getReceipts() {
     }
 
-    @Test
-    public void testEquals() {
-    }
 
 
 
