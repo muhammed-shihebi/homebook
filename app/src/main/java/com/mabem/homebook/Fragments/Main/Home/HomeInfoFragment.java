@@ -92,7 +92,7 @@ public class HomeInfoFragment extends Fragment {
         fragmentHomeInfoBinding.homeinfoLeaveButton.setOnClickListener(v -> {
             homeViewModel.leaveHome();
             Toast.makeText(requireContext(), R.string.member_left_home_message, Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(v).navigate(R.id.action_addNewHomeFragment_to_mainFragment);
+            Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
         });
 
         return fragmentHomeInfoBinding.getRoot();

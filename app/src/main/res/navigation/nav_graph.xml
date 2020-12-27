@@ -91,7 +91,11 @@
         android:id="@+id/homeInfoFragment"
         android:name="com.mabem.homebook.Fragments.Main.Home.HomeInfoFragment"
         android:label="Home Info"
-        tools:layout="@layout/fragment_home_info" />
+        tools:layout="@layout/fragment_home_info" >
+        <action
+            android:id="@+id/action_homeInfoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/manageReceiptFragment"
