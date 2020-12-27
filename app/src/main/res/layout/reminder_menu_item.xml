@@ -44,7 +44,7 @@
             app:layout_constraintEnd_toStartOf="@+id/textViewExtra3"
             app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toEndOf="@+id/textViewExtra"
-            app:srcCompat="@drawable/Repetition_icon" />
+            app:srcCompat="@drawable/repetition_icon" />
 
         <TextView
             android:id="@+id/textViewExtra"
