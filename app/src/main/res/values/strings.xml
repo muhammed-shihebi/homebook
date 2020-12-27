@@ -71,6 +71,7 @@
     <string name="decline">Decline</string>
     <string name="details">Details</string>
     <string name="is_added">is Added</string>
+    <string name="code">Code</string>
     <string name="delete_receipt">Delete Receipt</string>
     <string name="add_receipt">Add Receipt</string>
     <string name="join_request">wants to enter </string>

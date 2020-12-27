@@ -75,7 +75,11 @@
         android:id="@+id/addNewHomeFragment"
         android:name="com.mabem.homebook.Fragments.Main.AddNewHomeFragment"
         android:label="Add New Home"
-        tools:layout="@layout/fragment_create_home" />
+        tools:layout="@layout/fragment_create_home" >
+        <action
+            android:id="@+id/action_addNewHomeFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/editHomeFragment"

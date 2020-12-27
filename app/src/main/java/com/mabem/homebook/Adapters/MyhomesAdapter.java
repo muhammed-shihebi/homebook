@@ -29,7 +29,7 @@ public class MyhomesAdapter extends RecyclerView.Adapter<MyhomesAdapter.ViewHold
     @Override
     public MyhomesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_member_menu_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_menu_item, parent, false);
         return new ViewHolder(v);
     }
 

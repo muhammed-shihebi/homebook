@@ -42,43 +42,29 @@
             android:layout_marginTop="56dp"
             android:text="@string/price"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.477"
+            app:layout_constraintHorizontal_bias="0.301"
             app:layout_constraintStart_toEndOf="@+id/textView9"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:id="@+id/scrollView3"
-            android:layout_width="360dp"
-            android:layout_height="526dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/receiptinfo_items_list"
+            android:layout_width="350dp"
+            android:layout_height="457dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.477"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/receiptinfo_items_list"
-                    android:layout_width="370dp"
-                    android:layout_height="513dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    tools:listitem="@layout/receipt_menu_item" />
-            </LinearLayout>
-        </ScrollView>
+            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            tools:listitem="@layout/receipt_menu_item" />
 
         <ImageView
             android:id="@+id/receiptinfo_memberphoto"
-            android:layout_width="50dp"
-            android:layout_height="43dp"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="36dp"
-            android:src="@drawable/default_profile_photo"
+            android:src="@drawable/user_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -95,12 +81,12 @@
             android:id="@+id/receiptinfo_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
             android:text="11.11.2020"
+
+            android:layout_marginBottom="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/receiptinfo_membername" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/imageView4"
@@ -110,15 +96,15 @@
             android:layout_marginBottom="48dp"
             android:src="@drawable/money_icon"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/textView13"
+            app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintStart_toEndOf="@+id/receiptinfo_date" />
 
         <TextView
             android:id="@+id/textView13"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
+            android:layout_marginStart="2dp"
             android:text="@string/total"
             app:layout_constraintBottom_toBottomOf="@+id/imageView4"
             app:layout_constraintEnd_toStartOf="@+id/receiptinfo_total"
@@ -129,10 +115,12 @@
             android:id="@+id/receiptinfo_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="28dp"
             android:text="250"
             app:layout_constraintBottom_toBottomOf="@+id/textView13"
-            app:layout_constraintStart_toEndOf="@+id/imageView4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
             app:layout_constraintTop_toTopOf="@+id/textView13"
             app:layout_constraintVertical_bias="0.0" />
 

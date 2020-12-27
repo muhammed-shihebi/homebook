@@ -1,31 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/admin"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="start|end">
+    android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/home_button"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="392dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@android:color/transparent"
-        android:text="@string/name"
-        android:textAlignment="viewStart"
-        android:textColor="#292424"
-        app:icon="@drawable/home_icon"
-        app:iconSize="30dp"
-        app:iconTint="#2B2323"
-        app:layout_constraintBottom_toTopOf="@+id/language_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintVertical_chainStyle="packed" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_weight="1"
+        android:src="@drawable/user_icon"/>
+
+    <TextView
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:text="  "/>
+
+    <TextView
+        android:id="@+id/homemember_name"
+        android:layout_width="210dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        android:text="@string/name" />
+
+    <TextView
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:text="  "/>
+
+    <TextView
+        android:id="@+id/homemember_role"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:text="@string/admin"
+        android:textStyle="italic"
+        android:typeface="normal" />
+
 
 </LinearLayout>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,14 +39,16 @@ public class AddNewHomeFragment extends Fragment {
                 homesViewModel.addNewHome(homeName, isPrivate);
                 homesViewModel.setShouldShowResultMessage(true);
             }
+            homesViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
+                if(homesViewModel.getShouldShowResultMessage()){
+                    Toast.makeText(requireContext(), homesViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(v).navigate(R.id.action_addNewHomeFragment_to_mainFragment);
+                }
+                homesViewModel.setShouldShowResultMessage(false);
+            });
         });
 
-        homesViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-            if(homesViewModel.getShouldShowResultMessage()){
-                Toast.makeText(requireContext(), homesViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-            }
-            homesViewModel.setShouldShowResultMessage(false);
-        });
+
 
         return createHomeBinding.getRoot();
     }

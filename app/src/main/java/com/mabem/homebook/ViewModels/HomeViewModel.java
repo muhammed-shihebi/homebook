@@ -47,32 +47,42 @@ public class HomeViewModel extends AndroidViewModel {
         return resultMessage;
     }
 
+    public void updateUser(Member m, Uri localUri){
+        database.updateMember(m, localUri);
+    }
 
     public void updateCurrentMember(){
         database.updateCurrentMember();
     }
+
+
+    public void addNewHome(String homeName, boolean isPrivate){
+        database.createHome(homeName, isPrivate);
+    }
     public void updateCurrentHome(String id){
         database.updateCurrentHome(id);
     }
+    public void updateHomeWithMembers(){
+        database.updateHomeWithMembers();
+    }
+    public void leaveHome(){
+        database.leaveHome();
+    }
+
 
     public void updateCurrentReceipt(String id){
         database.updateCurrentReceipt(id);
     }
 
-    public void updateUser(Member m, Uri localUri){
-        database.updateMember(m, localUri);
-    }
+
 
     public boolean getShouldShowResultMessage() {
         return shouldShowResultMessage;
     }
-
     public void setShouldShowResultMessage(boolean shouldShowResultMessage) {
         this.shouldShowResultMessage = shouldShowResultMessage;
     }
 
-    public void addNewHome(String homeName, boolean isPrivate){
-        database.createHome(homeName, isPrivate);
-    }
+
 
 }
