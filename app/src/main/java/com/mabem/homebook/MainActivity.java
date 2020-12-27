@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private MainActivityBinding mainActivityBinding;
     private Toolbar toolbar;
-    private MainActivityViewModel mainActivityViewModel;
+    private MainActivityViewModel mainActivityViewModel; // what about using ViewModelFactory?
     private NavController navController;
 
     @Override
