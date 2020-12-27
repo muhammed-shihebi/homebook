@@ -6,30 +6,20 @@
     android:layout_height="wrap_content">
 
     <FrameLayout
-        android:id="@+id/shape"
-        android:layout_width="409dp"
-        android:layout_height="157dp"
+        android:id="@+id/notification_shape"
+        android:layout_width="390dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/border"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="78dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/shape"
-        app:srcCompat="@drawable/default_profile_photo" />
-
     <TextView
-        android:id="@+id/textView15"
+        android:id="@+id/accept_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/accept"
@@ -38,6 +28,7 @@
         app:layout_constraintTop_toTopOf="@+id/accept_button" />
 
     <TextView
+        android:id="@+id/decline_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/decline"
@@ -46,56 +37,60 @@
         app:layout_constraintTop_toTopOf="@+id/decline_button" />
 
     <TextView
-        android:id="@+id/receipt_name"
+        android:id="@+id/first_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.077"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.256" />
+
+    <TextView
+        android:id="@+id/second_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:text="@string/name"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintBottom_toBottomOf="@+id/not_text"
+        app:layout_constraintStart_toEndOf="@+id/not_text"
+        app:layout_constraintTop_toTopOf="@+id/not_text" />
 
     <TextView
-        android:id="@+id/home_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/name"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/textView12"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toTopOf="@+id/textView12" />
-
-    <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/not_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="3dp"
         android:text="@string/join_request"
-        app:layout_constraintBottom_toBottomOf="@+id/receipt_name"
-        app:layout_constraintStart_toEndOf="@+id/receipt_name"
-        app:layout_constraintTop_toTopOf="@+id/receipt_name" />
+        app:layout_constraintBottom_toBottomOf="@+id/first_name"
+        app:layout_constraintStart_toEndOf="@+id/first_name"
+        app:layout_constraintTop_toTopOf="@+id/first_name" />
 
     <ImageView
         android:id="@+id/accept_button"
-        android:layout_width="wrap_content"
+        android:layout_width="42dp"
         android:layout_height="28dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="49dp"
-        app:layout_constraintBottom_toBottomOf="@+id/shape"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:srcCompat="@drawable/accept_icon"
-        tools:layout_editor_absoluteX="86dp" />
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/accept_icon" />
 
     <ImageView
         android:id="@+id/decline_button"
         android:layout_width="42dp"
         android:layout_height="28dp"
         android:layout_marginBottom="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/shape"
+        app:layout_constraintBottom_toBottomOf="@+id/notification_shape"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/textView15"
+        app:layout_constraintStart_toStartOf="@+id/accept_text"
         app:srcCompat="@drawable/decline_icon" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

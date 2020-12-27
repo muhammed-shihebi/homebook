@@ -3,9 +3,13 @@ package com.mabem.homebook.ViewModels;
 import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.mabem.homebook.Database.Database;
+import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.User;
+
+import java.util.ArrayList;
 
 public class AuthViewModel extends AndroidViewModel {
     private final Database database;
@@ -21,11 +25,11 @@ public class AuthViewModel extends AndroidViewModel {
 
     //========================================= Getters
 
-    public MutableLiveData<User> getCurrentUser(){
+    public LiveData<User> getCurrentUser(){
         return currentUser;
     }
 
-    public MutableLiveData<String> getResultMessage() {
+    public LiveData<String> getResultMessage() {
         return resultMessage;
     }
 
@@ -53,11 +57,4 @@ public class AuthViewModel extends AndroidViewModel {
     }
 
 
-    public void updateCurrentUser(){
-        database.updateCurrentUser();
-    }
-
-    public void updateUser(User u){
-        database.updateUser(u);
-    }
 }

@@ -71,14 +71,26 @@
     <string name="decline">Decline</string>
     <string name="details">Details</string>
     <string name="is_added">is Added</string>
+    <string name="code">Code</string>
     <string name="delete_receipt">Delete Receipt</string>
     <string name="add_receipt">Add Receipt</string>
     <string name="join_request">wants to enter </string>
     <string name="change_password">Change Password</string>
     <bool name="remember_me_default_value">false</bool>
-   <!-- TODO: Remove or change this placeholder text -->
+    <string name="version">Version 1.0</string>
+    <string name="about_text">MABEM Team\nPrepared with Love ❤</string>
+    <string name="copyright">©</string>
+    <string name="abd">Abdurrahman ODABAŞI</string>
+    <string name="batikan">Batıkan Bora ORMANCI</string>
+    <string name="ecesu">Ecesu ARSLAN</string>
+    <string name="mulham">Mulham ALIBRAHIM</string>
+    <string name="nur">Muhammednur ŞEHEBİ</string>
+    <string name="mabem">Mulham ALIBRAHIM, Ecesu ARSLAN, Abdurrahman ODABAŞI, Batıkan Bora ORMANCI, Muhammednur ŞEHEBİ</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add_new_home">Add new Home</string>
+    <string name="add_new_home">Create new Home</string>
     <string name="new_home_created_successfully">New Home was successfully created.</string>
     <string name="please_enter_name_for_home_message">Please Enter a Name for the new Home.</string>
     <string name="new_reminder_added_message">The new Reminder Was added Successfully</string>
@@ -92,7 +104,19 @@
     <string name="profile_edit_enter_name">Please Enter a valid Name</string>
     <string name="profile_edit_enter_email">Please Enter a valid Email Address</string>
     <string name="profile_updated_successfully">Your Profile has been successfully updated.</string>
-
+    <string name="searched_home_dialog_message_1">Is </string>
+    <string name="searched_home_dialog_message_2">" the Home you are looking for?"</string>
+    <string name="send_join_request">Send Join Request</string>
+    <string name="search_result">Search Result</string>
+    <string name="join_request_declined_message">The join request was declined successfully</string>
+    <string name="join_request_accepted_message">The join request was accepted successfully</string>
+    <string name="invitation_sent_message">Invitation sent successfully</string>
+    <string name="member_left_home_message">Member left home successfully</string>
+    <string name="invitation_message">invited you to join their home</string>
+    <string name="join_request_text">wants to join</string>
+    <string name="home_accepted_you_text">accepted your join request</string>
+    <string name="home_declined_you_text">declined your join request</string>
+    <string name="ok">OK</string>
 
 
 </resources>

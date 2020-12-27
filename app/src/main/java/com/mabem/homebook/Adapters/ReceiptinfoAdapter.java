@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mabem.homebook.Model.Item;
-import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 
 import java.util.ArrayList;
@@ -39,7 +38,8 @@ public class ReceiptinfoAdapter extends RecyclerView.Adapter<ReceiptinfoAdapter.
     public void onBindViewHolder(@NonNull ReceiptinfoAdapter.ViewHolder holder, int position) {
         Item i = items.get(position);
         holder.itemName.setText(i.getName());
-        holder.itemPrice.setText(i.getPrice()+"");
+        holder.itemPrice.setText(i.getPrice().toString());
+        //TODO SetImageOfMember
 
     }
 
@@ -48,7 +48,7 @@ public class ReceiptinfoAdapter extends RecyclerView.Adapter<ReceiptinfoAdapter.
         return this.items.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView itemName;
         private TextView itemPrice;
 

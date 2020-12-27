@@ -1,15 +1,18 @@
 package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
+import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Database.Database;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.User;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -18,6 +21,8 @@ public class HomeViewModel extends AndroidViewModel {
     private final MutableLiveData<Home> currentHome;
     private final MutableLiveData<Receipt> currentReceipt;
     private final MutableLiveData<String> resultMessage;
+
+    private boolean shouldShowResultMessage = false;
 
     public HomeViewModel(@NonNull Application application) {
         super(application);
@@ -29,29 +34,55 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
 
-    public MutableLiveData<Member> getCurrentMember() {
+    public LiveData<Member> getCurrentMember() {
         return currentMember;
     }
-    public MutableLiveData<Home> getCurrentHome() {
+    public LiveData<Home> getCurrentHome() {
         return currentHome;
     }
-    public MutableLiveData<Receipt> getCurrentReceipt() {
+    public LiveData<Receipt> getCurrentReceipt() {
         return currentReceipt;
     }
-    public MutableLiveData<String> getResultMessage() {
+    public LiveData<String> getResultMessage() {
         return resultMessage;
     }
 
+    public void updateUser(Member m, Uri localUri){
+        database.updateMember(m, localUri);
+    }
 
     public void updateCurrentMember(){
         database.updateCurrentMember();
     }
+
+
+    public void addNewHome(String homeName, boolean isPrivate){
+        database.createHome(homeName, isPrivate);
+    }
     public void updateCurrentHome(String id){
         database.updateCurrentHome(id);
     }
+    public void updateHomeWithMembers(){
+        database.updateHomeWithMembers();
+    }
+    public void leaveHome(){
+        database.leaveHome();
+    }
+
 
     public void updateCurrentReceipt(String id){
         database.updateCurrentReceipt(id);
     }
+
+
+
+    public boolean getShouldShowResultMessage() {
+        return shouldShowResultMessage;
+    }
+    public void setShouldShowResultMessage(boolean shouldShowResultMessage) {
+        this.shouldShowResultMessage = shouldShowResultMessage;
+    }
+
+
 
 }

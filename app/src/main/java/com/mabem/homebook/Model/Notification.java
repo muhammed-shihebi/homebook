@@ -1,42 +1,32 @@
 package com.mabem.homebook.Model;
 
+import java.util.ArrayList;
+
 public class Notification {
-    private String homeName;
-    private String userName;
-    private String url;
+    private ArrayList<AdminNotification> adminNotifications = new ArrayList<>();
+    private ArrayList<UserNotification> userNotifications = new ArrayList<>();
 
-    public Notification(String homeName, String userName, String url) {
-        this.homeName = homeName;
-        this.userName = userName;
-        this.url = url;
+    public Notification(ArrayList<AdminNotification> adminNotifications, ArrayList<UserNotification> userNotifications) {
+        this.adminNotifications = adminNotifications;
+        this.userNotifications = userNotifications;
     }
 
-    public Notification(String homeName, String userName) {
-        this.homeName = homeName;
-        this.userName = userName;
+    public Notification() {
     }
 
-    public String getHomeName() {
-        return homeName;
+    public ArrayList<AdminNotification> getAdminNotifications() {
+        return adminNotifications;
     }
 
-    public void setHomeName(String homeName) {
-        this.homeName = homeName;
+    public void setAdminNotifications(ArrayList<AdminNotification> adminNotifications) {
+        this.adminNotifications = adminNotifications;
     }
 
-    public String getUserName() {
-        return userName;
+    public ArrayList<UserNotification> getUserNotifications() {
+        return userNotifications;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUserNotifications(ArrayList<UserNotification> userNotifications) {
+        this.userNotifications = userNotifications;
     }
 }

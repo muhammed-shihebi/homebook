@@ -14,7 +14,7 @@
             android:id="@+id/my_homes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/home_member_menu_item"></androidx.recyclerview.widget.RecyclerView>
+            tools:listitem="@layout/home_menu_item"></androidx.recyclerview.widget.RecyclerView>
 
 
 

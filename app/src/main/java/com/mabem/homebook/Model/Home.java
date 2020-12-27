@@ -4,10 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Home {
+
+    public static final Boolean VISIBILITY_PUBLIC = true;
+    public static final Boolean VISIBILITY_PRIVATE = false;
+
     private String id = "";
     private String name = "";
     private String code = "";
-    private boolean visibility = true; //True -> Public, False -> Private
+    private Boolean visibility = true; //True -> Public, False -> Private
     private HashMap<Member, Boolean> member_role = new HashMap<Member, Boolean>(); //Role: False -> Normal Member, True -> Admin
 
     private ArrayList<Reminder> reminders;
@@ -18,7 +22,7 @@ public class Home {
         this.name = name;
     }
 
-    public Home(String id, String name, String code, boolean visibility, ArrayList<Receipt> receipts){
+    public Home(String id, String name, String code, Boolean visibility, ArrayList<Receipt> receipts){
         this.id = id;
         this.name = name;
         this.code = code;
@@ -46,7 +50,7 @@ public class Home {
         return code;
     }
 
-    public boolean isVisibility() {
+    public Boolean getVisibility() {
         return visibility;
     }
 

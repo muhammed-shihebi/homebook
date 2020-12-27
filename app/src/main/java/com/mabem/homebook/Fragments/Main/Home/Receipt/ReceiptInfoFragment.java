@@ -8,21 +8,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mabem.homebook.Adapters.FeedAdapter;
 import com.mabem.homebook.Adapters.ReceiptinfoAdapter;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.ViewModels.HomeViewModel;
-import com.mabem.homebook.databinding.FragmentFeedBinding;
 import com.mabem.homebook.databinding.FragmentReceiptInfoBinding;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
+
+import static android.content.ContentValues.TAG;
 
 
 public class ReceiptInfoFragment extends Fragment {
@@ -45,10 +46,11 @@ public class ReceiptInfoFragment extends Fragment {
         fragmentReceiptInfoBinding.receiptinfoItemsList.setLayoutManager(new LinearLayoutManager(getContext()));
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        DateFormat sdf = DateFormat.getDateInstance();
 
         fragmentReceiptInfoBinding.receiptinfoMembername.setText(currentReceipt.getMemberName());
-        fragmentReceiptInfoBinding.receiptinfoTotal.setText(currentReceipt.getTotal());
-        //fragmentReceiptInfoBinding.receiptinfoDate.setText(currentReceipt.getDate().toString());
+        fragmentReceiptInfoBinding.receiptinfoTotal.setText(currentReceipt.getTotal().toString());
+        fragmentReceiptInfoBinding.receiptinfoDate.setText(sdf.format(currentReceipt.getDate().getTime()));
         //fragmentReceiptInfoBinding.receiptinfoMemberphoto.setImageURI();
 
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
@@ -65,8 +67,6 @@ public class ReceiptInfoFragment extends Fragment {
                         }
                         adapter = new ReceiptinfoAdapter(getContext(), items);
                         fragmentReceiptInfoBinding.receiptinfoItemsList.setAdapter(adapter);
-
-
                     });
                 }
             }

@@ -10,6 +10,7 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mabem.homebook.Fragments.Main.Home.Receipt.FeedFragment;
+import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.R;
 
 import java.util.ArrayList;
@@ -17,9 +18,9 @@ import java.util.ArrayList;
 public class MyhomesAdapter extends RecyclerView.Adapter<MyhomesAdapter.ViewHolder> {
 
     private final Context context;
-    private final ArrayList<String> list;
+    private final ArrayList<Home> list;
 
-    public MyhomesAdapter(Context context, ArrayList<String> list) {
+    public MyhomesAdapter(Context context, ArrayList<Home> list) {
         this.context = context;
         this.list = list;
     }
@@ -28,13 +29,13 @@ public class MyhomesAdapter extends RecyclerView.Adapter<MyhomesAdapter.ViewHold
     @Override
     public MyhomesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_member_menu_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_menu_item, parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyhomesAdapter.ViewHolder holder, int position) {
-        String name = list.get(position);
+        String name = list.get(position).getName();
         holder.homename.setText(name);
 
     }
@@ -53,7 +54,11 @@ public class MyhomesAdapter extends RecyclerView.Adapter<MyhomesAdapter.ViewHold
 
             homename.setOnClickListener(v ->{
                 Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_feedFragment);
-                FeedFragment.setHome_name(homename.getText().toString().trim());
+                for(Home h : list){
+                    if(homename.getText().equals(h.getName())){
+                        FeedFragment.setHome_id(h.getId());
+                    }
+                }
             });
         }
 

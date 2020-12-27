@@ -3,7 +3,7 @@ package com.mabem.homebook.Model;
 public class Item {
     private String id = "";
     private String name = "";
-    private double price = 0;
+    private Double price = 0.0;
 
     public Item(String id, String name, double price) {
         this.id = id;
@@ -24,7 +24,7 @@ public class Item {
         return name;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -33,6 +33,6 @@ public class Item {
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Item i = (Item) o;
-        return (id.equals(i.id) && name.equals(i.name) && price == i.price);
+        return (id.equals(i.id) && name.equals(i.name) && price.equals(i.price));
     }
 }
