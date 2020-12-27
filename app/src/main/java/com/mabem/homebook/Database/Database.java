@@ -4,13 +4,17 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -64,7 +68,7 @@ public class Database {
     //========================================= Admin Notification Collection
     public static final String NOTIFICATION_TYPE = "type";
     public static final String NOTIFICATION_COLLECTION = "notification";
-    public static final String USER_EMAIL = "user_email";
+    public static final String USER_ID = "user_id";
     //========================================= User Notification Collection
     public static final String USER_NOTIFICATION_COLLECTION = "user_notification";
     //========================================= Storage
@@ -138,11 +142,19 @@ public class Database {
      */
 
     public void updateCurrentMember() {
+
+        Log.w(TAG, "updateCurrentMember: 1");
+
         if (currentMember.getValue() != null) {
+            Log.w(TAG, "updateCurrentMember: 2");
             updateMemberWithMember();
         } else if (currentUser.getValue() != null) {
+            Log.w(TAG, "updateCurrentMember: 3");
             updateMemberWithUser();
+        }else {
+            Log.w(TAG, "updateCurrentMember: 4");
         }
+
     }
 
     private void updateMemberWithUser() {
@@ -168,7 +180,11 @@ public class Database {
                         // 2. Post the value of the new current member.
 
                         Member member = new Member(currentUser.getValue(), home_role);
+
+
+
                         currentMember.postValue(member);
+
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
                     }
@@ -194,11 +210,9 @@ public class Database {
                             Home home = new Home(homeId, homeName);
                             home_role.put(home, role);
                         }
-
                         currentMember.getValue().setHomeRole(home_role);
 
                         // 2. Post value of the current Member
-
                         currentMember.postValue(currentMember.getValue());
 
                     } else {
@@ -212,7 +226,7 @@ public class Database {
 
             Notification notification = new Notification();
 
-            // 1. Get all admin Notification for this user.
+            // 1. Get all admin notification for this user.
 
             for(Home home: currentMember.getValue().getHome_role().keySet()){
 
@@ -227,7 +241,7 @@ public class Database {
 
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                                     AdminNotification an = new AdminNotification(
-                                            queryDocumentSnapshot.getString(USER_EMAIL),
+                                            queryDocumentSnapshot.getString(USER_ID),
                                             home.getId(),
                                             home.getName(),
                                             queryDocumentSnapshot.getString(USER_NAME)
@@ -236,36 +250,6 @@ public class Database {
                                 }
 
                                 notification.setAdminNotifications(adminNotifications);
-
-
-                                // 2. Get all user Notification for this user.
-
-                                ArrayList<UserNotification> userNotifications = new ArrayList<>();
-
-                                firestore.collection(USER_NOTIFICATION_COLLECTION)
-                                        .whereEqualTo(USER_EMAIL, currentMember.getValue().getEmailAddress())
-                                        .get()
-                                        .addOnSuccessListener(userNotificationsSnapshots -> {
-
-                                            for (QueryDocumentSnapshot userNotificationSnapshot : userNotificationsSnapshots) {
-                                                UserNotification un = new UserNotification(
-                                                        userNotificationSnapshot.getString(HOME_NAME),
-                                                        userNotificationSnapshot.getString(NOTIFICATION_TYPE),
-                                                        userNotificationSnapshot.getString(HOME_ID)
-                                                );
-                                                userNotifications.add(un);
-                                            }
-
-                                            notification.setUserNotifications(userNotifications);
-
-                                            currentNotification.postValue(notification);
-
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            resultMessage.postValue(e.getMessage());
-                                            Log.w(TAG, "updateCurrentMember: ", e);
-                                        });
-
                             })
                             .addOnFailureListener(e -> {
                                 resultMessage.postValue(e.getMessage());
@@ -274,6 +258,35 @@ public class Database {
                 }
 
             }
+
+            // 2. Get all user notification for this user.
+
+            ArrayList<UserNotification> userNotifications = new ArrayList<>();
+
+            firestore.collection(USER_NOTIFICATION_COLLECTION)
+                    .whereEqualTo(USER_ID, currentMember.getValue().getId())
+                    .get()
+                    .addOnSuccessListener(userNotificationsSnapshots -> {
+
+                        for (QueryDocumentSnapshot userNotificationSnapshot : userNotificationsSnapshots) {
+                            UserNotification un = new UserNotification(
+                                    userNotificationSnapshot.getString(HOME_NAME),
+                                    userNotificationSnapshot.getString(NOTIFICATION_TYPE),
+                                    userNotificationSnapshot.getString(HOME_ID)
+                            );
+                            userNotifications.add(un);
+                        }
+
+                        notification.setUserNotifications(userNotifications);
+
+                        currentNotification.postValue(notification);
+
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "updateCurrentMember: ", e);
+                    });
+
 
         }
     }
@@ -580,7 +593,6 @@ public class Database {
                         currentUser.postValue(user);
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
-                        currentUser.postValue(null);
                     }
                 });
     }
@@ -602,20 +614,26 @@ public class Database {
                                     currentUser.postValue(user);
                                 } else {
                                     resultMessage.postValue(task2.getException().getLocalizedMessage());
-                                    currentUser.postValue(null);
                                 }
                             });
                         }
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
-                        currentUser.postValue(null);
                     }
                 });
     }
 
     public void signOut() {
-        firebaseAuth.signOut();
         currentUser.postValue(null);
+        resultMessage.postValue(null);
+        currentMember.postValue(null);
+        currentHome.postValue(null);
+        currentReceipt.postValue(null);
+        currentReminder.postValue(null);
+        currentNotification.postValue(null);
+        searchResult.postValue(null);
+        firebaseAuth.signOut();
+        instance = null;
     }
 
     public void loginWithGoogle(String idToken) {
@@ -625,9 +643,7 @@ public class Database {
                 User user = makeUser(firebaseAuth.getCurrentUser());
                 currentUser.postValue(user);
             } else {
-                resultMessage.postValue(task.getException().getLocalizedMessage());
-                currentUser.postValue(null);
-            }
+                resultMessage.postValue(task.getException().getLocalizedMessage()); }
         });
     }
 
@@ -680,7 +696,6 @@ public class Database {
                     .addOnSuccessListener(aVoid -> {
                         Log.d(TAG, "Reminder successfully deleted!");
                         resultMessage.postValue(application.getString(R.string.reminder_deleted_message));
-                        currentReminder.postValue(null);
                     })
 
                     .addOnFailureListener(e -> {
@@ -773,7 +788,6 @@ public class Database {
                     .addOnSuccessListener(aVoid -> {
                         Log.d(TAG, "Receipt successfully deleted!");
                         resultMessage.postValue("Receipt successfully deleted!");
-                        currentReceipt.postValue(null);
                     })
                     .addOnFailureListener(e -> {
                         resultMessage.postValue(e.getMessage());
@@ -855,7 +869,7 @@ public class Database {
         Map<String, Object> data = new HashMap<>();
         data.put(HOME_NAME, adminNotification.getHomeName());
         data.put(NOTIFICATION_TYPE, UserNotification.TYPE_DECLINE);
-        data.put(USER_EMAIL, adminNotification.getUserEmail());
+        data.put(USER_ID, adminNotification.getUserId());
         data.put(HOME_ID, adminNotification.getHomeId());
 
         firestore.collection(USER_NOTIFICATION_COLLECTION)
@@ -878,16 +892,32 @@ public class Database {
 
         // 2. Add Notification to the user
 
-        Map<String, Object> data = new HashMap<>();
-        data.put(HOME_NAME, adminNotification.getHomeName());
-        data.put(NOTIFICATION_TYPE, UserNotification.TYPE_ACCEPT);
-        data.put(USER_EMAIL, adminNotification.getUserEmail());
-        data.put(HOME_ID, adminNotification.getHomeId());
+        Map<String, Object> user_notification = new HashMap<>();
+        user_notification.put(HOME_NAME, adminNotification.getHomeName());
+        user_notification.put(NOTIFICATION_TYPE, UserNotification.TYPE_ACCEPT);
+        user_notification.put(USER_ID, adminNotification.getUserId());
+        user_notification.put(HOME_ID, adminNotification.getHomeId());
 
         firestore.collection(USER_NOTIFICATION_COLLECTION)
-                .add(data)
+                .add(user_notification)
                 .addOnSuccessListener(documentReference -> {
-                    resultMessage.postValue(application.getString(R.string.join_request_accepted_message));
+
+                    Map<String, Object> homeUserData = new HashMap<>();
+                    homeUserData.put(HOME_NAME, adminNotification.getHomeName());
+                    homeUserData.put(HOME_ID, adminNotification.getHomeId());
+                    homeUserData.put(MEMBER_ID, adminNotification.getUserId());
+                    homeUserData.put(MEMBER_NAME, adminNotification.getUserName());
+                    homeUserData.put(MEMBER_ROLE, Member.MEMBER_ROLE);
+
+                    firestore.collection(HOME_USER_COLLECTION)
+                            .add(homeUserData)
+                            .addOnSuccessListener(documentReference1 -> {
+                                resultMessage.postValue(application.getString(R.string.join_request_accepted_message));
+                            })
+                            .addOnFailureListener(e -> {
+                                resultMessage.postValue(e.getMessage());
+                                Log.w(TAG, "acceptRequestToJoin: ", e);
+                            });
                 })
                 .addOnFailureListener(e -> {
                     resultMessage.postValue(e.getMessage());
@@ -896,8 +926,11 @@ public class Database {
     }
 
     private void deleteNotificationFromHome(AdminNotification adminNotification) {
-        firestore.collection(NOTIFICATION_COLLECTION)
-                .whereEqualTo(USER_EMAIL, adminNotification.getUserEmail())
+
+        firestore.collection(HOME_COLLECTION)
+                .document(adminNotification.getHomeId())
+                .collection(NOTIFICATION_COLLECTION)
+                .whereEqualTo(USER_ID, adminNotification.getUserId())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
@@ -926,27 +959,6 @@ public class Database {
                     .addOnFailureListener(e -> {
                         resultMessage.postValue(e.getMessage());
                         Log.w(TAG, "removeMemberFromHome: ", e);
-                    });
-        }
-    }
-
-    public void inviteUser(String userEmail) {
-        if (currentHome.getValue() != null) {
-
-            Map<String, Object> data = new HashMap<>();
-            data.put(HOME_NAME, currentHome.getValue().getName());
-            data.put(NOTIFICATION_TYPE, UserNotification.TYPE_INVITATION);
-            data.put(USER_EMAIL, userEmail);
-            data.put(HOME_ID, currentHome.getValue().getId());
-
-            firestore.collection(USER_NOTIFICATION_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue(application.getString(R.string.invitation_sent_message));
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "inviteUser: ", e);
                     });
         }
     }
@@ -1053,7 +1065,7 @@ public class Database {
                                 .whereEqualTo(HOME_ID, currentHome.getValue().getId())
                                 .get()
                                 .addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                    if (queryDocumentSnapshots.isEmpty()) { // home is empty > delete it
+                                    if (queryDocumentSnapshots.isEmpty()){ // home is empty > delete it
                                         firestore.collection(HOME_COLLECTION)
                                                 .document(currentHome.getValue().getId())
                                                 .delete();
@@ -1104,44 +1116,11 @@ public class Database {
     public void getStatistics() {
     }
 
-    public void acceptInvitation(UserNotification userNotification) {
-        // 1. delete notification form user notification collection
-
-        deleteUserNotification(userNotification);
-
-        // 2. add user to home_user collection as member
-
-        if(currentMember.getValue() != null){
-
-            Map<String, Object> data = new HashMap<>();
-            data.put(HOME_ID, userNotification.getHomeId());
-            data.put(HOME_NAME, userNotification.getHomeName());
-            data.put(MEMBER_ID, currentMember.getValue().getId());
-            data.put(MEMBER_NAME, currentMember.getValue().getName());
-            data.put(MEMBER_ROLE, Member.MEMBER_ROLE);
-
-            firestore.collection(HOME_USER_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue("User added to home successfully");
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "acceptInvitation: ", e);
-                    });
-        }
-    }
-
-    public void declineInvitation(UserNotification userNotification) {
-        // 1. delete notification form user notification collection
-        deleteUserNotification(userNotification);
-    }
-
     public void deleteUserNotification(UserNotification userNotification) {
         if (currentMember.getValue() != null) {
             firestore.collection(USER_NOTIFICATION_COLLECTION)
                     .whereEqualTo(HOME_ID, userNotification.getHomeId())
-                    .whereEqualTo(USER_EMAIL, currentMember.getValue().getEmailAddress())
+                    .whereEqualTo(USER_ID, currentMember.getValue().getId())
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
                         for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
@@ -1160,10 +1139,10 @@ public class Database {
 
     public void sendJoinRequest(String homeId) {
         if (currentMember.getValue() != null) {
-            String userEmail = currentMember.getValue().getEmailAddress();
+            String userId = currentMember.getValue().getId();
             String userName = currentMember.getValue().getName();
             Map<String, Object> data = new HashMap<>();
-            data.put(USER_EMAIL, userEmail);
+            data.put(USER_ID, userId);
             data.put(USER_NAME, userName);
 
             firestore.collection(HOME_COLLECTION)
@@ -1179,7 +1158,6 @@ public class Database {
                     });
         }
     }
-
 
     /**
      * Try to update the information of the currently logged in user.
@@ -1309,15 +1287,12 @@ public class Database {
         if(currentMember.getValue() != null){
 
             // 1. Search for all homes with this code
-
             ArrayList<Home> homes = new ArrayList<>();
 
             firestore.collection(HOME_COLLECTION)
                     .whereEqualTo(HOME_CODE, homeCode)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-
-
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                             Boolean homeVisibility = queryDocumentSnapshot.getBoolean(HOME_VISIBILITY);
                             // 2. Ignore private homes
@@ -1333,20 +1308,20 @@ public class Database {
                             }
                             homes.add(home);
                         }
-
                         searchResult.postValue(homes);
                     })
                     .addOnFailureListener(e -> {
                         resultMessage.postValue(e.getMessage());
                         Log.w(TAG, "Error by searching for Home", e);
                     });
+        }else{
+            Log.w("asdfasdf", "searchHome: current member is null"+ currentMember.getValue() );
         }
     }
 
     public void clearSearchResults() {
         searchResult.postValue(null);
     }
-
 
     /**
      * Try to create a new Home associated with the currentMember.
@@ -1364,7 +1339,12 @@ public class Database {
 
             Map<String, Object> data = new HashMap<>();
             data.put(HOME_NAME, homeName);
-            data.put(HOME_VISIBILITY, isPrivate);
+
+            if(isPrivate){
+                data.put(HOME_VISIBILITY, Home.VISIBILITY_PRIVATE);
+            }else {
+                data.put(HOME_VISIBILITY, Home.VISIBILITY_PUBLIC);
+            }
             data.put(HOME_CODE, homeCode);
 
             firestore.collection(HOME_COLLECTION)

@@ -17,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.AuthViewModel;
 
 public class SplashFragment extends Fragment {
@@ -29,7 +30,7 @@ public class SplashFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
-
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         new Handler().postDelayed(() -> {
 

@@ -5,7 +5,6 @@ public class UserNotification {
     // Types
     public static final String TYPE_ACCEPT = "accept";
     public static final String TYPE_DECLINE = "decline";
-    public static final String TYPE_INVITATION = "invitation";
 
 
     private String homeName;

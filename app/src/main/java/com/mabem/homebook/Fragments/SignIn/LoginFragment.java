@@ -23,6 +23,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.AuthViewModel;
 import com.mabem.homebook.databinding.LoginFragmentBinding;
@@ -44,6 +45,7 @@ public class LoginFragment extends Fragment {
 
         // Hide action bar.
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         // Block landscape orientation.
         // getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

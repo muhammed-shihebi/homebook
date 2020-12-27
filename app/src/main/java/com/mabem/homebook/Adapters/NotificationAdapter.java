@@ -115,26 +115,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void populate(UserNotification userNotification){
-            if(userNotification.getTyp().equals(UserNotification.TYPE_INVITATION)){
-
-                firstName.setText(userNotification.getHomeName());
-                secondName.setVisibility(View.INVISIBLE);
-                notText.setText(R.string.invitation_message);
-
-                acceptButton.setOnClickListener(v -> {
-                    clickListener.onAcceptInvitation(userNotification, getAdapterPosition());
-                });
-                acceptText.setOnClickListener(v -> {
-                    clickListener.onAcceptInvitation(userNotification, getAdapterPosition());
-                });
-                declineButton.setOnClickListener(v ->{
-                    clickListener.onDeclineInvitation(userNotification, getAdapterPosition());
-                });
-                declineText.setOnClickListener(v ->{
-                    clickListener.onDeclineInvitation(userNotification, getAdapterPosition());
-                });
-
-            }else if(userNotification.getTyp().equals(UserNotification.TYPE_ACCEPT)){
+            if(userNotification.getTyp().equals(UserNotification.TYPE_ACCEPT)){
                 firstName.setText(userNotification.getHomeName());
                 secondName.setVisibility(View.INVISIBLE);
                 notText.setText(R.string.home_accepted_you_text);
@@ -151,7 +132,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 acceptText.setOnClickListener(v -> {
                     clickListener.onOKClicked(userNotification, getAdapterPosition());
                 });
-
 
             }else if(userNotification.getTyp().equals(UserNotification.TYPE_DECLINE)) {
                 firstName.setText(userNotification.getHomeName());

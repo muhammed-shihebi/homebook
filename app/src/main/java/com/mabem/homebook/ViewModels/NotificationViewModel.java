@@ -36,13 +36,6 @@ public class NotificationViewModel extends AndroidViewModel {
     }
 
 
-    public void acceptInvitation(UserNotification userNotification){
-        database.acceptInvitation(userNotification);
-    }
-    
-    public void declineInvitation(UserNotification userNotification){
-        database.declineInvitation(userNotification);
-    }
     
     public void acceptJoinRequest(AdminNotification adminNotification){
         database.acceptJoinRequest(adminNotification);

@@ -75,20 +75,6 @@ public class NotificationsFragment extends Fragment implements NotificationMenuI
     }
 
     @Override
-    public void onAcceptInvitation(UserNotification userNotification, int position) {
-        notificationViewModel.acceptInvitation(userNotification);
-        userNotificationList.remove(position);
-        adapter.notifyItemRemoved(position);
-    }
-
-    @Override
-    public void onDeclineInvitation(UserNotification userNotification, int position) {
-        notificationViewModel.declineInvitation(userNotification);
-        userNotificationList.remove(position);
-        adapter.notifyItemRemoved(position);
-    }
-
-    @Override
     public void onOKClicked(UserNotification userNotification, int position) {
         notificationViewModel.deleteUserNotification(userNotification);
         userNotificationList.remove(position);
