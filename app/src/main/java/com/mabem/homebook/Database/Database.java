@@ -896,7 +896,9 @@ public class Database {
     }
 
     private void deleteNotificationFromHome(AdminNotification adminNotification) {
-        firestore.collection(NOTIFICATION_COLLECTION)
+        firestore.collection(HOME_COLLECTION)
+                .document(adminNotification.getHomeId())
+            .collection(NOTIFICATION_COLLECTION)
                 .whereEqualTo(USER_EMAIL, adminNotification.getUserEmail())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
