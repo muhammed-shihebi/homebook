@@ -18,6 +18,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -766,6 +767,7 @@ public class Database {
                             Map<String, Object> itemMap = new HashMap<>();
                             itemMap.put(ITEM_NAME, item.getName());
                             itemMap.put(ITEM_PRICE, item.getPrice());
+
                             documentReference.collection(ITEM_COLLECTION)
                                     .add(item);
                         }
@@ -786,6 +788,22 @@ public class Database {
                     .document(receiptId)
                     .delete()
                     .addOnSuccessListener(aVoid -> {
+
+                        firestore.collection(HOME_COLLECTION)
+                                .document(currentHome.getValue().getId())
+                                .collection(RECEIPT_COLLECTION)
+                                .document(receiptId)
+                                .collection(ITEM_COLLECTION)
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                                        queryDocumentSnapshot.getReference().delete();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+
+                                });
+
                         Log.d(TAG, "Receipt successfully deleted!");
                         resultMessage.postValue("Receipt successfully deleted!");
                     })
@@ -825,29 +843,48 @@ public class Database {
                     .update(data)
                     .addOnSuccessListener(aVoid -> {
 
-                        // 3. Update items
+                        // 3. Delete All Items in the Receipt
 
-                        for (Item item : updatedReceipt.getItems()) {
-                            Map<String, Object> newItem = new HashMap<>();
-                            newItem.put(ITEM_NAME, item.getName());
-                            newItem.put(ITEM_PRICE, item.getPrice());
+                        firestore.collection(HOME_COLLECTION)
+                                .document(currentHome.getValue().getId())
+                                .collection(RECEIPT_COLLECTION)
+                                .document(updatedReceipt.getId())
+                                .collection(ITEM_COLLECTION)
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots) {
+                                        queryDocumentSnapshot.getReference().delete();
+                                    }
 
-                            firestore.collection(HOME_COLLECTION)
-                                    .document(currentHome.getValue().getId())
-                                    .collection(RECEIPT_COLLECTION)
-                                    .document(updatedReceipt.getId())
-                                    .collection(ITEM_COLLECTION)
-                                    .document(item.getId())
-                                    .update(newItem)
-                                    .addOnSuccessListener(aVoid1 -> {
-                                        Log.d(TAG, "Receipt successfully updated!");
-                                        resultMessage.postValue(application.getString(R.string.receipt_updated_message));
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Log.w(TAG, "Error updating item collection", e);
-                                        resultMessage.postValue(e.getMessage());
-                                    });
-                        }
+                                    // 4. Add all items
+
+                                    for (Item item : updatedReceipt.getItems()) {
+                                        Map<String, Object> newItem = new HashMap<>();
+                                        newItem.put(ITEM_NAME, item.getName());
+                                        newItem.put(ITEM_PRICE, item.getPrice());
+
+                                        firestore.collection(HOME_COLLECTION)
+                                                .document(currentHome.getValue().getId())
+                                                .collection(RECEIPT_COLLECTION)
+                                                .document(updatedReceipt.getId())
+                                                .collection(ITEM_COLLECTION)
+                                                .add(newItem)
+                                                .addOnSuccessListener(aVoid1 -> {
+                                                    Log.d(TAG, "Receipt successfully updated!");
+                                                    resultMessage.postValue(application.getString(R.string.receipt_updated_message));
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Log.w(TAG, "Error updating item collection", e);
+                                                    resultMessage.postValue(e.getMessage());
+                                                });
+                                    }
+
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.w(TAG, "Error updating item collection", e);
+                                    resultMessage.postValue(e.getMessage());
+                                });
+
                     })
                     .addOnFailureListener(e -> {
                         Log.w(TAG, "Error updating receipt Collection", e);
@@ -1177,7 +1214,6 @@ public class Database {
          */
 
         if (localUri != null) { // new Photo >> delete old photo (if there is one) + update new one + update member
-//            Uri image = Uri.fromFile(new File(String.valueOf(localUri)));
             StorageReference photoRef = imageStorageRef.child(newMember.getId());
             UploadTask uploadTask = photoRef.putFile(localUri);
 
@@ -1188,11 +1224,9 @@ public class Database {
                         })
                         .addOnFailureListener(e -> {
                             resultMessage.postValue(e.getMessage());
-//                            Log.w(TAG, "updateMember: ",e);
                         });
             }).addOnFailureListener(e -> {
                 resultMessage.postValue(e.getMessage());
-//                Log.w(TAG, "updateMember: ",e);
             });
         } else {
             updateMemberWithNewUri(newMember, null);
