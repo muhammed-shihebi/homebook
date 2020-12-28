@@ -127,5 +127,6 @@
     <string name="please_enter_name_for_receipt_message">Please enter a name for the receipt.</string>
     <string name="please_enter_item_message">Please enter the item(s) of the receipt.</string>
     <string name="please_enter_date_of_receipt_message">Please enter the date of the receipt.</string>
+    <string name="no_text_sharing_app">There is no app that can handle text sharing</string>
 
 </resources>

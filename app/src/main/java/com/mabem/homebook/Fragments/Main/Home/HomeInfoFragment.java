@@ -1,7 +1,9 @@
 package com.mabem.homebook.Fragments.Main.Home;
 
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -36,6 +38,8 @@ public class HomeInfoFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private HashMap<Member,Boolean> members_role = new HashMap<Member,Boolean>();
     private RecyclerView.Adapter adapter;
+    private String homeCode;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,6 +53,8 @@ public class HomeInfoFragment extends Fragment {
 
         homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
+
+            homeCode = h.getCode();
 
             fragmentHomeInfoBinding.homeinfoName.setText(h.getName());
             fragmentHomeInfoBinding.homeinfoCode.setText(h.getCode());
@@ -113,8 +119,20 @@ public class HomeInfoFragment extends Fragment {
             mDialog.show();
         });
 
+
+        fragmentHomeInfoBinding.shareButton.setOnClickListener(v -> {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("test/plain")
+                    .putExtra(Intent.EXTRA_TEXT, homeCode);
+            try {
+                startActivity(shareIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getContext(), R.string.no_text_sharing_app, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         return fragmentHomeInfoBinding.getRoot();
     }
-
 
 }
