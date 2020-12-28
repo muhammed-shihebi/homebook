@@ -91,13 +91,6 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
 
-        //========================================= Handle sign out button
-
-        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
-            mainActivityViewModel.signOut();
-            return false;
-        });
-
         //========================================= Set up header
 
         View header = mainActivityBinding.navView.getHeaderView(0);
@@ -111,6 +104,15 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
         editProfileTextView.setOnClickListener(v -> {
             navController.navigate(R.id.editProfileFragment);
             drawerLayout.close();
+        });
+
+        //========================================= Handle sign out button
+
+        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
+            search_edit_text.setText("");
+            mainActivityViewModel.signOut();
+            navController.popBackStack();
+            return false;
         });
 
     //========================================= Search Home

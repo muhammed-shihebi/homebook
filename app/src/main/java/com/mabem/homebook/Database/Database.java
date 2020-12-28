@@ -4,21 +4,16 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -74,8 +69,8 @@ public class Database {
     public static final String USER_NOTIFICATION_COLLECTION = "user_notification";
     //========================================= Storage
     public static final String PROFILE_IMAGES = "profile_images";
-    private static final String USER_NAME = "user_name";
-    private static final String TAG = "Database";
+    public static final String USER_NAME = "user_name";
+    public static final String TAG = "Database";
 
 
     private static Database instance;
@@ -143,19 +138,11 @@ public class Database {
      */
 
     public void updateCurrentMember() {
-
-        Log.w(TAG, "updateCurrentMember: 1");
-
         if (currentMember.getValue() != null) {
-            Log.w(TAG, "updateCurrentMember: 2");
             updateMemberWithMember();
         } else if (currentUser.getValue() != null) {
-            Log.w(TAG, "updateCurrentMember: 3");
             updateMemberWithUser();
-        }else {
-            Log.w(TAG, "updateCurrentMember: 4");
         }
-
     }
 
     private void updateMemberWithUser() {
@@ -177,15 +164,9 @@ public class Database {
                             Home home = new Home(homeId, homeName);
                             home_role.put(home, role);
                         }
-
                         // 2. Post the value of the new current member.
-
                         Member member = new Member(currentUser.getValue(), home_role);
-
-
-
                         currentMember.postValue(member);
-
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
                     }
@@ -214,24 +195,24 @@ public class Database {
                         currentMember.getValue().setHomeRole(home_role);
 
                         // 2. Post value of the current Member
-                        currentMember.postValue(currentMember.getValue());
 
+                        currentMember.postValue(currentMember.getValue());
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
                     }
                 });
     }
 
-    public void updateCurrentNotification(){
-        if(currentMember.getValue() != null){
+    public void updateCurrentNotification() {
+        if (currentMember.getValue() != null) {
 
             Notification notification = new Notification();
 
             // 1. Get all admin notification for this user.
 
-            for(Home home: currentMember.getValue().getHome_role().keySet()){
+            for (Home home : currentMember.getValue().getHome_role().keySet()) {
 
-                if(currentMember.getValue().getHome_role().get(home) == Member.ADMIN_ROLE){
+                if (currentMember.getValue().getHome_role().get(home) == Member.ADMIN_ROLE) {
                     firestore.collection(HOME_COLLECTION)
                             .document(home.getId())
                             .collection(NOTIFICATION_COLLECTION)
@@ -303,6 +284,15 @@ public class Database {
     public void updateCurrentHome(String homeId) {
 
         // 1. Get selected home with homeId
+//        Log.i("qwerqwer", "updateCurrentHome: " + currentMember);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  currentUser);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  resultMessage);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  currentMember);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  currentHome);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  currentReceipt);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  currentReminder);
+//        Log.i("qwerqwer", "updateCurrentHome: " +  currentNotification);
+
 
         if (currentMember.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
@@ -333,7 +323,6 @@ public class Database {
                                                     );
                                                     receipts.add(receipt);
                                                 }
-
 
                                                 // 3. Create new Home
 
@@ -577,11 +566,17 @@ public class Database {
         return currentReceipt;
     }
 
-    public MutableLiveData<Notification> getCurrentNotification() { return currentNotification; }
+    public MutableLiveData<Notification> getCurrentNotification() {
+        return currentNotification;
+    }
 
-    public MutableLiveData<Reminder> getCurrentReminder () { return currentReminder; }
+    public MutableLiveData<Reminder> getCurrentReminder() {
+        return currentReminder;
+    }
 
-    public MutableLiveData<ArrayList<Home>> getSearchResult() {return searchResult; }
+    public MutableLiveData<ArrayList<Home>> getSearchResult() {
+        return searchResult;
+    }
 
     //========================================= Log in/Sign up Methods
 
@@ -625,16 +620,15 @@ public class Database {
     }
 
     public void signOut() {
-        currentUser.postValue(null);
-        resultMessage.postValue(null);
-        currentMember.postValue(null);
-        currentHome.postValue(null);
-        currentReceipt.postValue(null);
-        currentReminder.postValue(null);
-        currentNotification.postValue(null);
-        searchResult.postValue(null);
+        currentUser.setValue(null);
+        resultMessage.setValue(null);
+        currentMember.setValue(null);
+        currentHome.setValue(null);
+        currentReceipt.setValue(null);
+        currentReminder.setValue(null);
+        currentNotification.setValue(null);
+        searchResult.setValue(null);
         firebaseAuth.signOut();
-        instance = null;
     }
 
     public void loginWithGoogle(String idToken) {
@@ -644,7 +638,8 @@ public class Database {
                 User user = makeUser(firebaseAuth.getCurrentUser());
                 currentUser.postValue(user);
             } else {
-                resultMessage.postValue(task.getException().getLocalizedMessage()); }
+                resultMessage.postValue(task.getException().getLocalizedMessage());
+            }
         });
     }
 
@@ -796,7 +791,7 @@ public class Database {
                                 .collection(ITEM_COLLECTION)
                                 .get()
                                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                                    for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                                         queryDocumentSnapshot.getReference().delete();
                                     }
                                 })
@@ -852,7 +847,7 @@ public class Database {
                                 .collection(ITEM_COLLECTION)
                                 .get()
                                 .addOnSuccessListener(queryDocumentSnapshots -> {
-                                    for (QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots) {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                                         queryDocumentSnapshot.getReference().delete();
                                     }
 
@@ -1102,7 +1097,7 @@ public class Database {
                                 .whereEqualTo(HOME_ID, currentHome.getValue().getId())
                                 .get()
                                 .addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                    if (queryDocumentSnapshots.isEmpty()){ // home is empty > delete it
+                                    if (queryDocumentSnapshots.isEmpty()) { // home is empty > delete it
                                         firestore.collection(HOME_COLLECTION)
                                                 .document(currentHome.getValue().getId())
                                                 .delete();
@@ -1160,7 +1155,7 @@ public class Database {
                     .whereEqualTo(USER_ID, currentMember.getValue().getId())
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-                        for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                             queryDocumentSnapshot.getReference().delete();
                         }
                     })
@@ -1317,8 +1312,7 @@ public class Database {
     }
 
     public void searchHome(String homeCode) {
-
-        if(currentMember.getValue() != null){
+        if (currentMember.getValue() != null) {
 
             // 1. Search for all homes with this code
             ArrayList<Home> homes = new ArrayList<>();
@@ -1337,7 +1331,7 @@ public class Database {
                             String homeId = queryDocumentSnapshot.getId();
                             Home home = new Home(homeId, homeName);
                             // 3. if user is member in this home ignore it
-                            if(isMember(home)){
+                            if (isMember(home)) {
                                 continue;
                             }
                             homes.add(home);
@@ -1348,8 +1342,6 @@ public class Database {
                         resultMessage.postValue(e.getMessage());
                         Log.w(TAG, "Error by searching for Home", e);
                     });
-        }else{
-            Log.w("asdfasdf", "searchHome: current member is null"+ currentMember.getValue() );
         }
     }
 
@@ -1374,9 +1366,9 @@ public class Database {
             Map<String, Object> data = new HashMap<>();
             data.put(HOME_NAME, homeName);
 
-            if(isPrivate){
+            if (isPrivate) {
                 data.put(HOME_VISIBILITY, Home.VISIBILITY_PRIVATE);
-            }else {
+            } else {
                 data.put(HOME_VISIBILITY, Home.VISIBILITY_PUBLIC);
             }
             data.put(HOME_CODE, homeCode);
@@ -1441,11 +1433,11 @@ public class Database {
     }
 
     private boolean isMember(Home home) {
-        boolean isMember =false;
+        boolean isMember = false;
 
-        if(currentMember.getValue() != null){
-            for (Home memberHome: currentMember.getValue().getHome_role().keySet()) {
-                if (memberHome.getId().equals(home.getId())){
+        if (currentMember.getValue() != null) {
+            for (Home memberHome : currentMember.getValue().getHome_role().keySet()) {
+                if (memberHome.getId().equals(home.getId())) {
                     isMember = true;
                     break;
                 }

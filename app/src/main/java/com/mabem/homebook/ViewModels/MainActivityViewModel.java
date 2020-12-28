@@ -1,6 +1,7 @@
 package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,7 +17,7 @@ import com.mabem.homebook.Model.User;
 import java.util.ArrayList;
 
 public class MainActivityViewModel extends AndroidViewModel {
-    private final Database database;
+    private Database database;
     private final MutableLiveData<ArrayList<Home>> searchResults;
 
     private boolean showResultDialog = false;
