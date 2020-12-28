@@ -31,17 +31,12 @@ public class SplashFragment extends Fragment {
                              Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         ((NavigationDrawer) getActivity()).disableNavDrawer();
-
         new Handler().postDelayed(() -> {
-
             ConnectivityManager connMgr = (ConnectivityManager) getActivity()
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
-
             NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-
                 authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
-
                 authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
                     if (user != null) {
                         NavController navController = Navigation.findNavController(requireActivity(), R.id.splash_homebook_text_view);
@@ -63,7 +58,6 @@ public class SplashFragment extends Fragment {
                 alertDialogBuilder.create().show();
             }
         }, SPLASH_TIME);
-
         return inflater.inflate(R.layout.fragment_splash, container, false);
     }
 }

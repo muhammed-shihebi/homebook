@@ -119,14 +119,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
             mainActivityViewModel.setShowResultDialog(true);
             searchProgressBar.setVisibility(View.VISIBLE);
             String homeCode = search_edit_text.getText().toString().trim();
-
-
-            Log.w("asdfasdf", "onCreate: ");
-
             mainActivityViewModel.searchHome(homeCode);
-
-
-
             mainActivityViewModel.getSearchResult().observe(this, homes -> {
                 if(homes != null){
                     searchProgressBar.setVisibility(View.INVISIBLE);
@@ -138,12 +131,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
                     }
                     mainActivityViewModel.clearSearchResults();
                 }
-
-
             });
-
-
-
         });
 
     }
@@ -188,7 +176,6 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     protected void onStop() {
         super.onStop();
         // If the user didn't check remember me, he/she will be logged out.
-
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
         boolean defaultValue = getResources().getBoolean(R.bool.remember_me_default_value);
         boolean rememberMe = sharedPref.getBoolean(getString(R.string.saved_remember_me_preference), defaultValue);
@@ -198,7 +185,6 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
                 public void onTick(long millisUntilFinished) {
                 }
                 public void onFinish() {
-
                     // This will log out the user and end the activity.
                     // If the user tries to open the app again a new activity will be created again.
                     mainActivityViewModel.signOut();

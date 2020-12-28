@@ -37,7 +37,15 @@ public class EditProfileFragment extends Fragment {
     private Member currentMember;
     private Uri imageUri;
 
+    private static boolean automaticallyLoggedIn = true;
 
+    public static boolean isAutomaticallyLoggedIn() {
+        return automaticallyLoggedIn;
+    }
+
+    public static void setAutomaticallyLoggedIn(boolean automaticallyLoggedIn) {
+        EditProfileFragment.automaticallyLoggedIn = automaticallyLoggedIn;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
