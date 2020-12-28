@@ -79,7 +79,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
 
         if(toEditFlag){
             fragmentManageReceiptBinding.receiptManageReceiptName.setText(toEditReceipt.getName());
-            Calendar cal = Calendar.getInstance();
+            cal = Calendar.getInstance();
             cal.setTime(toEditReceipt.getDate());
             Log.d("Demo", " At beginning"+cal.getTime().toString());
             fragmentManageReceiptBinding.receiptManageDateButton.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
