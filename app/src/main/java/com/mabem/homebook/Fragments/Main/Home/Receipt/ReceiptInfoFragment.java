@@ -51,7 +51,6 @@ public class ReceiptInfoFragment extends Fragment {
         fragmentReceiptInfoBinding.receiptinfoMembername.setText(currentReceipt.getMemberName());
         fragmentReceiptInfoBinding.receiptinfoTotal.setText(currentReceipt.getTotal().toString());
         fragmentReceiptInfoBinding.receiptinfoDate.setText(sdf.format(currentReceipt.getDate().getTime()));
-        //fragmentReceiptInfoBinding.receiptinfoMemberphoto.setImageURI();
 
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
             ArrayList<Receipt> receipts = h.getReceipts();

@@ -101,5 +101,10 @@
     <string name="about_text">MABEM Team\\nMit Liebe hergestellt ❤</string>
     <string name="join_request_declined_message">Beitrittsanfrage wurde erfolgreich abgelehnt</string>
     <string name="join_request_accepted_message">Beitrittsanfrage wurde erfolgreich akzeptiert</string>
+    <string name="ok">OK</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+    <string name="delete_receipt_warning">Diese Rechnung löschen?</string>
+    <string name="leave_home_warning">Diese Wohnung verlassen?</string>
 
 </resources>

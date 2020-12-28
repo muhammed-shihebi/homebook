@@ -34,7 +34,7 @@ public class MainFragment extends Fragment {
     private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
 
     private MainFragmentBinding mainBinding;
-    private HomeViewModel HomesViewModel;
+    private HomeViewModel homesViewModel;
     private ArrayList list = new ArrayList();
     private RecyclerView.Adapter adapter;
 
@@ -45,14 +45,14 @@ public class MainFragment extends Fragment {
         ((NavigationDrawer) getActivity()).enableNavDrawer();
 
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
-        HomesViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homesViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         mainBinding.myHomes.setHasFixedSize(true);
         mainBinding.myHomes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        HomesViewModel.updateCurrentMember();
+        homesViewModel.updateCurrentMember();
 
-        HomesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
+        homesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
             if(member != null){
 
                 ((NavigationDrawer) getActivity()).setCurrentMember(member);

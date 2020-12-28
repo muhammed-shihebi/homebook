@@ -1,5 +1,7 @@
 package com.mabem.homebook.Fragments.Main.Home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -90,9 +92,25 @@ public class HomeInfoFragment extends Fragment {
 
 
         fragmentHomeInfoBinding.homeinfoLeaveButton.setOnClickListener(v -> {
-            homeViewModel.leaveHome();
-            Toast.makeText(requireContext(), R.string.member_left_home_message, Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.leave_home_warning)
+                    .setMessage(R.string.leave_home_warning_message)
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            homeViewModel.leaveHome();
+                            homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
+                                Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
+                            });
+                        }
+                    });
+            AlertDialog mDialog = builder.create();
+            mDialog.show();
         });
 
         return fragmentHomeInfoBinding.getRoot();

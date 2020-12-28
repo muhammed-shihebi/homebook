@@ -73,7 +73,15 @@ public class HomeViewModel extends AndroidViewModel {
     public void updateCurrentReceipt(String id){
         database.updateCurrentReceipt(id);
     }
-
+    public void addReceipt(Receipt r){
+        database.addReceipt(r);
+    }
+    public void updateReceipt(Receipt r){
+        database.updateReceipt(r);
+    }
+    public void deleteReceipt(String id){
+        database.deleteReceipt(id);
+    }
 
 
     public boolean getShouldShowResultMessage() {

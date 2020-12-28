@@ -28,6 +28,7 @@ import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentFeedBinding;
+import com.mabem.homebook.databinding.FragmentManageReceiptBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,6 +68,7 @@ public class FeedFragment extends Fragment {
                 for(Home h1 : memberHomes.keySet()){
                     if( h1.getId().equals(home_id) ){
                         boolean isAdmin = memberHomes.get(h1);
+
                         homeViewModel.updateCurrentHome(h1.getId());
 
                         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
@@ -85,7 +87,7 @@ public class FeedFragment extends Fragment {
                                 }
                             });
 
-                            adapter = new FeedAdapter(getContext(), list, isAdmin);
+                            adapter = new FeedAdapter(getContext(), list, isAdmin, member.getId());
                             fragmentFeedBinding.myReceipts.setAdapter(adapter);
                          });
                     }
@@ -97,8 +99,8 @@ public class FeedFragment extends Fragment {
 
 
         fragmentFeedBinding.addButton.setOnClickListener(v -> {
+            ReceiptManageFragment.setToEditFlag(false);
             Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_addReceiptFragment);
-
         });
 
         setHasOptionsMenu(true);
