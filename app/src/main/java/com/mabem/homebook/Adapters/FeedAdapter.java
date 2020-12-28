@@ -80,13 +80,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             memberName.setText(r.getMemberName());
 
             shape.setOnClickListener(v -> {
-                if(isAdmin){
+                if(isAdmin || member_id.equals(r.getMemberId())){
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
                     ReceiptManageFragment.setToEditReceipt(r);
                     ReceiptManageFragment.setToEditFlag(true);
                 }else{
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
                     ReceiptInfoFragment.setReceipt(r);
+                    ReceiptManageFragment.setToEditFlag(false);
                 }
             });
         }
