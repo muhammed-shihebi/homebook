@@ -104,7 +104,9 @@
         tools:layout="@layout/fragment_manage_receipt" >
         <action
             android:id="@+id/action_manageReceiptFragment_to_feedFragment"
-            app:destination="@id/feedFragment" />
+            app:destination="@id/feedFragment"
+            app:popUpTo="@id/feedFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

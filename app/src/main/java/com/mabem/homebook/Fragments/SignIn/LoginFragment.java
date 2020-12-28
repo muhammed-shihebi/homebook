@@ -22,6 +22,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.mabem.homebook.Fragments.Main.EditProfileFragment;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.Util;
@@ -64,6 +65,7 @@ public class LoginFragment extends Fragment {
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
 
         authViewModel.getCurrentUser().observe(getViewLifecycleOwner(), user -> {
+            EditProfileFragment.setAutomaticallyLoggedIn(false);
             loginBinding.progressBar.setVisibility(View.GONE);
             if (user != null) {
                 Navigation.findNavController(
