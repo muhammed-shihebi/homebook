@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import com.mabem.homebook.R;
@@ -89,9 +90,12 @@ public class ReminderSetFragment extends Fragment implements AdapterView.OnItemS
         frequencies.add(Reminder.DAILY);
         frequencies.add(Reminder.WEEKLY);
         frequencies.add(Reminder.MONTHLY);
+
+
         ArrayAdapter arrayAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_spinner_item, frequencies);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         reminderSetBinding.reminderFrequencySpinner.setAdapter(arrayAdapter);
+     
 
 
 
