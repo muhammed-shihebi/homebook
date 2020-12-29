@@ -120,10 +120,12 @@
     <string name="no">No</string>
     <string name="delete_receipt_warning">Delete this receipt?</string>
     <string name="leave_home_warning">Leave this home?</string>
+    <string name="warning">Warning</string>
 
 
     <string name="delete_receipt_warning_message">Are you sure that you want to delete this receipt?</string>
     <string name="leave_home_warning_message">Are you sure that you want to leave this home?</string>
+    <string name="edit_email_warning_message">To edit your Email-Address, please relog in!</string>
     <string name="please_enter_name_for_receipt_message">Please enter a name for the receipt.</string>
     <string name="please_enter_item_message">Please enter the item(s) of the receipt.</string>
     <string name="please_enter_date_of_receipt_message">Please enter the date of the receipt.</string>

@@ -35,6 +35,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
+import com.mabem.homebook.Fragments.Main.EditProfileFragment;
 import com.mabem.homebook.Fragments.Main.SearchedHomeDialog;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
@@ -193,6 +194,8 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
                     finish();
                 }
             }.start();
+        }else{
+            EditProfileFragment.setAutomaticallyLoggedIn(true);
         }
     }
 
