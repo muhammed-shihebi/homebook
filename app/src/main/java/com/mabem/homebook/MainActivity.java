@@ -27,6 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -59,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     private Toolbar toolbar;
     private MainActivityViewModel mainActivityViewModel;
     private NavController navController;
+    private EditText search_edit_text;
 
     TextView userName;
     ImageView userImage;
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
         userImage = header.findViewById(R.id.profile_image);
         TextView editProfileTextView = header.findViewById(R.id.header_edit_profile);
         ImageView searchButton = header.findViewById(R.id.search_button);
-        EditText search_edit_text = header.findViewById(R.id.search_edit_text);
+        search_edit_text = header.findViewById(R.id.search_edit_text);
         ProgressBar searchProgressBar = header.findViewById(R.id.search_progressBar);
 
         editProfileTextView.setOnClickListener(v -> {
@@ -142,6 +144,24 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     @Override
     public void onHomeSelected(String homeId) {
         mainActivityViewModel.sendJoinRequest(homeId);
+        Observer<String> messageObserver = new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if(s != null){
+                    drawerLayout.close();
+                    search_edit_text.setText("");
+                    Toast.makeText(MainActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+                    mainActivityViewModel.getResultMessage().removeObserver(this);
+                }
+            }
+        };
+        mainActivityViewModel.getResultMessage().observe(this, messageObserver);
+    }
+
+    @Override
+    public void onOkPressed() {
+        drawerLayout.close();
+        search_edit_text.setText("");
     }
 
     //========================================= Search Home

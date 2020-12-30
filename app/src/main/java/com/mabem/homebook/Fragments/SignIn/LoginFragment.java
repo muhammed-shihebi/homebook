@@ -77,6 +77,7 @@ public class LoginFragment extends Fragment {
         authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message->{
             if(message != null){
                 Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
+                loginBinding.progressBar.setVisibility(View.GONE);
             }
         });
 

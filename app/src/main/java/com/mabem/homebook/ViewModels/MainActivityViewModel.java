@@ -2,6 +2,7 @@ package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class MainActivityViewModel extends AndroidViewModel {
     private Database database;
     private final MutableLiveData<ArrayList<Home>> searchResults;
+    private final MutableLiveData<String> resultMessage;
 
     private boolean showResultDialog = false;
 
@@ -26,9 +28,12 @@ public class MainActivityViewModel extends AndroidViewModel {
         super(application);
         database = Database.getInstance(application);
         searchResults = database.getSearchResult();
+        resultMessage = database.getResultMessage();
     }
 
     public LiveData<ArrayList<Home>> getSearchResult() { return searchResults; }
+
+    public LiveData<String> getResultMessage() {return resultMessage; }
 
     public void signOut(){
         database.signOut();

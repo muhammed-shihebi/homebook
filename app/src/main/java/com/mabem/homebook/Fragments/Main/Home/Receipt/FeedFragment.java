@@ -73,23 +73,24 @@ public class FeedFragment extends Fragment {
                         homeViewModel.updateCurrentHome(h1.getId());
 
                         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
+                            if(h != null){
+                                currentHome = h;
 
-                            currentHome = h;
-
-                            list.clear();
-                            ArrayList<Receipt> receipts = h.getReceipts();
-                            for(Receipt receipt : receipts){
-                                list.add(receipt);
-                            }
-                            Collections.sort(list, new Comparator<Receipt>() {
-                                @Override
-                                public int compare(Receipt o1, Receipt o2) {
-                                    return o2.getDate().compareTo(o1.getDate());
+                                list.clear();
+                                ArrayList<Receipt> receipts = h.getReceipts();
+                                for(Receipt receipt : receipts){
+                                    list.add(receipt);
                                 }
-                            });
+                                Collections.sort(list, new Comparator<Receipt>() {
+                                    @Override
+                                    public int compare(Receipt o1, Receipt o2) {
+                                        return o2.getDate().compareTo(o1.getDate());
+                                    }
+                                });
 
-                            adapter = new FeedAdapter(getContext(), list, isAdmin, member.getId());
-                            fragmentFeedBinding.myReceipts.setAdapter(adapter);
+                                adapter = new FeedAdapter(getContext(), list, isAdmin, member.getId());
+                                fragmentFeedBinding.myReceipts.setAdapter(adapter);
+                            }
                          });
                     }
                 }

@@ -53,47 +53,48 @@ public class HomeInfoFragment extends Fragment {
 
         homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
+            if(h != null){
+                homeCode = h.getCode();
 
-            homeCode = h.getCode();
+                fragmentHomeInfoBinding.homeinfoName.setText(h.getName());
+                fragmentHomeInfoBinding.homeinfoCode.setText(h.getCode());
 
-            fragmentHomeInfoBinding.homeinfoName.setText(h.getName());
-            fragmentHomeInfoBinding.homeinfoCode.setText(h.getCode());
+                members_role.clear();
+                members_role = h.getMember_role();
 
-            members_role.clear();
-            members_role = h.getMember_role();
+                Log.d("demo1", members_role.isEmpty()+"");
 
-            Log.d("demo1", members_role.isEmpty()+"");
+                ArrayList<Member> admins = new ArrayList<Member>();
+                ArrayList<Member> normalmembers = new ArrayList<Member>();
+                ArrayList<Member> allMembers = new ArrayList<>();
+                for(Member m : members_role.keySet()){
+                    allMembers.add(m);
+                }
 
-            ArrayList<Member> admins = new ArrayList<Member>();
-            ArrayList<Member> normalmembers = new ArrayList<Member>();
-            ArrayList<Member> allMembers = new ArrayList<>();
-            for(Member m : members_role.keySet()){
-                allMembers.add(m);
+                for(int i = 0; i < allMembers.size(); i++){
+                    if(members_role.get(allMembers.get(i)).equals(true)){
+                        admins.add(allMembers.get(i));
+                    }else if(members_role.get(allMembers.get(i)).equals(false)){
+                        normalmembers.add(allMembers.get(i));
+                    }
+                }
+
+                Collections.sort(admins, new Comparator<Member>() {
+                    @Override
+                    public int compare(Member o1, Member o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+                Collections.sort(normalmembers, new Comparator<Member>() {
+                    @Override
+                    public int compare(Member o1, Member o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+
+                adapter = new HomeInfoAdapter(getContext(), admins, normalmembers, members_role.size());
+                fragmentHomeInfoBinding.homeinfoMemberlist.setAdapter(adapter);
             }
-
-            for(int i = 0; i < allMembers.size(); i++){
-                if(members_role.get(allMembers.get(i)).equals(true)){
-                    admins.add(allMembers.get(i));
-                }else if(members_role.get(allMembers.get(i)).equals(false)){
-                    normalmembers.add(allMembers.get(i));
-                }
-            }
-
-            Collections.sort(admins, new Comparator<Member>() {
-                @Override
-                public int compare(Member o1, Member o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-            Collections.sort(normalmembers, new Comparator<Member>() {
-                @Override
-                public int compare(Member o1, Member o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-
-            adapter = new HomeInfoAdapter(getContext(), admins, normalmembers, members_role.size());
-            fragmentHomeInfoBinding.homeinfoMemberlist.setAdapter(adapter);
         });
 
 
@@ -110,8 +111,10 @@ public class HomeInfoFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             homeViewModel.leaveHome();
                             homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                                Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                                Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
+                                if(s != null){
+                                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
+                                }
                             });
                         }
                     });

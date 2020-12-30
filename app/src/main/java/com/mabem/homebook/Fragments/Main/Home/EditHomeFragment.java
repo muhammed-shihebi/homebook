@@ -62,52 +62,53 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
 
         homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-            currentHome = h;
-            homeCode = h.getCode();
-            isPrivate = !h.getVisibility();
+            if(h != null){
+                currentHome = h;
+                homeCode = h.getCode();
+                isPrivate = !h.getVisibility();
 
-            fragmentEditHomeBinding.privateCheckbox.setChecked(isPrivate);
-            fragmentEditHomeBinding.homeEditName.setText(h.getName());
-            fragmentEditHomeBinding.homeEditCode.setText(h.getCode());
+                fragmentEditHomeBinding.privateCheckbox.setChecked(isPrivate);
+                fragmentEditHomeBinding.homeEditName.setText(h.getName());
+                fragmentEditHomeBinding.homeEditCode.setText(h.getCode());
 
-            members_role.clear();
-            members_role = h.getMember_role();
+                members_role.clear();
+                members_role = h.getMember_role();
 
-            ArrayList<Member> admins = new ArrayList<Member>();
-            ArrayList<Member> normalmembers = new ArrayList<Member>();
-            allMembers = new ArrayList<>();
-            for(Member m : members_role.keySet()){
-                allMembers.add(m);
+                ArrayList<Member> admins = new ArrayList<Member>();
+                ArrayList<Member> normalmembers = new ArrayList<Member>();
+                allMembers = new ArrayList<>();
+                for(Member m : members_role.keySet()){
+                    allMembers.add(m);
+                }
+
+                for(int i = 0; i < allMembers.size(); i++){
+                    if(members_role.get(allMembers.get(i)).equals(true)){
+                        admins.add(allMembers.get(i));
+                    }else if(members_role.get(allMembers.get(i)).equals(false)){
+                        normalmembers.add(allMembers.get(i));
+                    }
+                }
+
+                Collections.sort(admins, new Comparator<Member>() {
+                    @Override
+                    public int compare(Member o1, Member o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+                Collections.sort(normalmembers, new Comparator<Member>() {
+                    @Override
+                    public int compare(Member o1, Member o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+
+                allMembers.clear();
+                allMembers.addAll(admins);
+                allMembers.addAll(normalmembers);
+
+                adapter = new EditHomeAdapter(getContext(), allMembers, admins.size(), this);
+                fragmentEditHomeBinding.homeEditMembersList.setAdapter(adapter);
             }
-
-            for(int i = 0; i < allMembers.size(); i++){
-                if(members_role.get(allMembers.get(i)).equals(true)){
-                    admins.add(allMembers.get(i));
-                }else if(members_role.get(allMembers.get(i)).equals(false)){
-                    normalmembers.add(allMembers.get(i));
-                }
-            }
-
-            Collections.sort(admins, new Comparator<Member>() {
-                @Override
-                public int compare(Member o1, Member o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-            Collections.sort(normalmembers, new Comparator<Member>() {
-                @Override
-                public int compare(Member o1, Member o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-
-            allMembers.clear();
-            allMembers.addAll(admins);
-            allMembers.addAll(normalmembers);
-
-            adapter = new EditHomeAdapter(getContext(), allMembers, admins.size(), this);
-            fragmentEditHomeBinding.homeEditMembersList.setAdapter(adapter);
-
         });
 
         fragmentEditHomeBinding.privateCheckbox.setOnClickListener(v -> {
@@ -123,8 +124,10 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                 h.setMember_role(members_role);
                 homeViewModel.updateHome(h);
                 homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
+                    if(s != null){
+                        Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
+                    }
                 });
 
             }

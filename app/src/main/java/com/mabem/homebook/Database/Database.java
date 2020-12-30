@@ -31,7 +31,6 @@ import com.mabem.homebook.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class Database {
@@ -1028,41 +1027,41 @@ public class Database {
 
     public void updateHome(Home newHome) {
 
-        // 1. Update home name and home visibility
         firestore.collection(HOME_COLLECTION)
                 .document(newHome.getId())
                 .update(HOME_NAME, newHome.getName(),
                         HOME_VISIBILITY, newHome.getVisibility())
                 .addOnSuccessListener(aVoid -> {
 
-                    // 2. Check if there is a deleted members and delete them from the user_home collection
-                    // 3. Update the user_home collection with the new home name and new member roles.
-
                     firestore.collection(HOME_USER_COLLECTION)
                             .whereEqualTo(HOME_ID, newHome.getId())
                             .get()
                             .addOnSuccessListener(queryDocumentSnapshots -> {
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                    String queryMemberId = queryDocumentSnapshot.getString(MEMBER_ID);
-                                    Member m = getMember(newHome.getMember_role().keySet(), queryMemberId);
-                                    if (m != null) { // Member still there > don't delete + update
-                                        queryDocumentSnapshot
-                                                .getReference()
-                                                .update(MEMBER_NAME, m.getName(),
-                                                        MEMBER_ROLE, newHome.getMember_role().get(m))
-                                                .addOnSuccessListener(aVoid1 -> {
-                                                    currentHome.postValue(newHome);
-                                                    resultMessage.postValue(application.getString(R.string.home_updated_message));
-                                                })
-                                                .addOnFailureListener(e -> {
-                                                    resultMessage.postValue(e.getMessage());
-                                                    Log.i(TAG, "updateHome: ", e);
-                                                });
-                                    } else { // Member removed so delete it form the user_home collection
-                                        queryDocumentSnapshot.getReference().delete();
-                                    }
-
+                                    queryDocumentSnapshot.getReference().delete();
                                 }
+
+                                for (Member newMember : newHome.getMember_role().keySet()) {
+                                    Boolean memberRole = newHome.getMember_role().get(newMember);
+
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put(HOME_ID, newHome.getId());
+                                    data.put(HOME_NAME, newHome.getName());
+                                    data.put(MEMBER_ID, newMember.getId());
+                                    data.put(MEMBER_NAME, newMember.getName());
+                                    data.put(MEMBER_ROLE, memberRole);
+
+                                    firestore.collection(HOME_USER_COLLECTION)
+                                            .add(data)
+                                            .addOnFailureListener(e -> {
+                                                resultMessage.postValue(e.getMessage());
+                                                Log.i(TAG, "updateHome: ", e);
+                                            });
+                                }
+
+                                currentHome.postValue(newHome);
+                                resultMessage.postValue(application.getString(R.string.home_updated_message));
+
                             })
                             .addOnFailureListener(e -> {
                                 resultMessage.postValue(e.getMessage());
@@ -1178,16 +1177,38 @@ public class Database {
             data.put(USER_ID, userId);
             data.put(USER_NAME, userName);
 
+            // check if there is a unanswered request first
+            // if yes don't add new request
+
             firestore.collection(HOME_COLLECTION)
                     .document(homeId)
                     .collection(NOTIFICATION_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue("The request was sent successfully");
-                    })
-                    .addOnFailureListener(e -> {
+                    .whereEqualTo(USER_ID, userId)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        boolean thereIsARequest = false;
+                        for (QueryDocumentSnapshot q : queryDocumentSnapshots) {
+                            thereIsARequest = true;
+                        }
+                        if (!thereIsARequest) {
+                            firestore.collection(HOME_COLLECTION)
+                                    .document(homeId)
+                                    .collection(NOTIFICATION_COLLECTION)
+                                    .add(data)
+                                    .addOnSuccessListener(documentReference -> {
+                                        resultMessage.postValue(application.getString(R.string.request_sent_successfully));
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        resultMessage.postValue(e.getMessage());
+                                        Log.w(TAG, "sendJoinRequest: ", e);
+                                    });
+                        }else {
+                            resultMessage.postValue("You sent a join request to this Home before");
+                        }
+
+                    }).addOnFailureListener(e -> {
                         resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "declineRequestToJoin: ", e);
+                        Log.w(TAG, "sendJoinRequest: ", e);
                     });
         }
     }
@@ -1337,6 +1358,7 @@ public class Database {
                             }
                             homes.add(home);
                         }
+
                         searchResult.postValue(homes);
                     })
                     .addOnFailureListener(e -> {
@@ -1419,15 +1441,6 @@ public class Database {
                         firebaseUser.getEmail(),
                         null
                 );
-            }
-        }
-        return null;
-    }
-
-    private Member getMember(Set<Member> keySet, String queryMemberId) {
-        for (Member m : keySet) {
-            if (m.getId().equals(queryMemberId)) {
-                return m;
             }
         }
         return null;

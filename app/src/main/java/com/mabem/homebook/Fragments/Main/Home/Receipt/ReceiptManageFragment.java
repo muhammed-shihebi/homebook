@@ -79,13 +79,15 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
 
             homeViewModel.updateCurrentReceipt(toEditReceipt.getId());
             homeViewModel.getCurrentReceipt().observe(getViewLifecycleOwner(), r -> {
-                itemsOfReceipt.clear();
-                ArrayList<Item> i = r.getItems();
-                for(Item item : i){
-                    itemsOfReceipt.add(item);
+                if(r != null){
+                    itemsOfReceipt.clear();
+                    ArrayList<Item> i = r.getItems();
+                    for(Item item : i){
+                        itemsOfReceipt.add(item);
+                    }
+                    adapter = new ReceiptManageAdapter(getContext(), itemsOfReceipt, this);
+                    fragmentManageReceiptBinding.receiptManageItemList.setAdapter(adapter);
                 }
-                adapter = new ReceiptManageAdapter(getContext(), itemsOfReceipt, this);
-                fragmentManageReceiptBinding.receiptManageItemList.setAdapter(adapter);
             });
 
         }else{
@@ -134,8 +136,10 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                     updated.setItems(itemsOfReceipt);
                     homeViewModel.updateReceipt(updated);
                     homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                        Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                        if(s != null){
+                            Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                        }
                     });
                 }else{
                     if(fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()){
@@ -151,8 +155,10 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                     r.setItems(itemsOfReceipt);
                     homeViewModel.addReceipt(r);
                     homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                        Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                        Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                        if(s != null){
+                            Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                            Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                        }
                     });
                 }else{
                     if(fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()){
@@ -181,8 +187,10 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                             public void onClick(DialogInterface dialog, int which) {
                                 homeViewModel.deleteReceipt(toEditReceipt.getId());
                                 homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                                    Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                                    if(s != null){
+                                        Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                        Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                                    }
                                 });
                             }
                         });
