@@ -62,6 +62,12 @@
     <string name="details">Details</string>
     <string name="accept">Akzeptieren</string>
     <string name="decline">Ablehnen</string>
+    <string name="statistics">Statistik</string>
+    <string name="show_for">Zeigen für</string>
+    <string name="total_home_expenses">Gesamte Wohnung Ausgaben</string>
+    <string name="your_total_expenses">Deine Gesamte Ausgaben</string>
+    <string name="everyone_should_pay">Jeder sollte bezahlen</string>
+    <string name="you_should_pay">du solltest bezahlen</string>
     <string name="is_added">ist hinzugefügt</string>
     <string name="join_request">will eintreten in </string>
     <string name="item">Artikel</string>
