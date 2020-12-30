@@ -1052,6 +1052,7 @@ public class Database {
                                                         MEMBER_ROLE, newHome.getMember_role().get(m))
                                                 .addOnSuccessListener(aVoid1 -> {
                                                     currentHome.postValue(newHome);
+                                                    resultMessage.postValue(application.getString(R.string.home_updated_message));
                                                 })
                                                 .addOnFailureListener(e -> {
                                                     resultMessage.postValue(e.getMessage());

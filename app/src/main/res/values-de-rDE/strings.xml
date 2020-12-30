@@ -100,7 +100,7 @@
     <string name="reminder_updated_message">Die Erinnerung wurde erfolgreich aktualisiert</string>
     <string name="reminder_deleted_message">Die Erinnerung wurde erfolgreich gelöscht</string>
     <string name="new_reminder_added_message">Neue Erinnerung wurde erfolgreich hinzugefügt</string>
-    <string name="please_enter_name_for_home_message">Geben Sie bitte einen Namen für die neue Wohnung</string>
+    <string name="please_enter_name_for_home_message">Geben Sie bitte einen Namen für die Wohnung</string>
     <string name="new_home_created_successfully">Neue Wohnung wurde erfolgreich erstellt</string>
     <string name="about_text">MABEM Team\\nMit Liebe hergestellt ❤</string>
     <string name="join_request_declined_message">Beitrittsanfrage wurde erfolgreich abgelehnt</string>
@@ -132,5 +132,14 @@
     <string name="home_accepted_you_text">hat Ihre Beitrittsanfrage akzeptiert</string>
     <string name="home_declined_you_text">hat Ihre Beitrittsanfrage abgelehnt</string>
     <string name="join_request_text">möchte beitreten</string>
+    <string name="remove_member_warning">Diesen Mitglied entfernen?</string>
+    <string name="remove_member_warning_message">Sind Sie sicher, dass Sie dieses Mitglied aus der Wohnung entfernen möchten?</string>
+
+    <string name="remove_last_member_warning_message">Sie können das letzte Mitglied aus der Wohnung nicht entfernen!</string>
+    <string name="remove_last_admin_warning_message">Sie können den letzten Administrator der Wohnung zum normalen Mitglied nicht machen!</string>
+    <string name="make_admin_warning">Zum Admin machen?</string>
+    <string name="make_admin_warning_message">Sind Sie sicher, dass Sie dieses Mitglied zum Admin machen möchten?</string>
+    <string name="delete_last_admin_warning_message">Sie können den letzten Admin aus der Wohnung nicht entfernen!</string>
+    <string name="home_updated_message">Die Wohnung wurde erfolgreich aktualisiert</string>
 
 </resources>

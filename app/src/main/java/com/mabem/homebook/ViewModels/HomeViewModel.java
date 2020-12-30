@@ -73,6 +73,9 @@ public class HomeViewModel extends AndroidViewModel {
     public void leaveHome(){
         database.leaveHome();
     }
+    public void updateHome(Home h) {
+        database.updateHome(h);
+    }
 
 
     public void updateCurrentReceipt(String id){

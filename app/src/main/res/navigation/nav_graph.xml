@@ -85,9 +85,15 @@
 
     <fragment
         android:id="@+id/editHomeFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.editHomeFragment"
+        android:name="com.mabem.homebook.Fragments.Main.Home.EditHomeFragment"
         android:label="@string/edit_home"
-        tools:layout="@layout/fragment_edit_home" />
+        tools:layout="@layout/fragment_edit_home" >
+        <action
+            android:id="@+id/action_editHomeFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/mainFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 
     <fragment
         android:id="@+id/homeInfoFragment"

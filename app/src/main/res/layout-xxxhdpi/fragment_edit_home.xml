@@ -1,151 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/create_home_background">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/receipt_name"
-        android:layout_width="205dp"
-        android:layout_height="39dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_edit_text"
-        android:ellipsize="none"
-        android:ems="50"
-        android:fadingEdge="horizontal"
-        android:hint="@string/name"
-        android:inputType="textPersonName"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:shadowColor="#FAF3F3"
-        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.165"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.113"
-        tools:layout_constraintCircleRadius="50dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/create_home_background">
 
-    <CheckBox
-        android:id="@+id/private_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        <EditText
+            android:id="@+id/home_edit_name"
+            android:layout_width="205dp"
+            android:layout_height="39dp"
+            android:autofillHints=""
+            android:background="@drawable/rounded_edit_text"
+            android:ellipsize="none"
+            android:ems="50"
+            android:fadingEdge="horizontal"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:shadowColor="#FAF3F3"
+            app:layout_constraintBottom_toTopOf="@+id/home_edit_save_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.165"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            app:layout_constraintVertical_bias="0.113"
+            tools:layout_constraintCircleRadius="50dp" />
 
-        android:text="@string/private_checkbox"
-        android:textColor="#FFFFFF"
-        app:buttonTint="#FFFFFF"
-        app:layout_constraintBottom_toBottomOf="@+id/receipt_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.229"
-        app:layout_constraintStart_toEndOf="@+id/receipt_name"
-        app:layout_constraintTop_toTopOf="@+id/receipt_name"
-        app:layout_constraintVertical_bias="0.0" />
+        <CheckBox
+            android:id="@+id/private_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="39dp"
 
-    <Button
-        android:id="@+id/save_home_button"
-        android:layout_width="143dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="92dp"
-        android:text="@string/save"
-        android:textAllCaps="false"
-        app:backgroundTint="#857C23"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:text="@string/private_checkbox"
+            android:textColor="#FFFFFF"
+            app:buttonTint="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/home_edit_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.229"
+            app:layout_constraintStart_toEndOf="@+id/home_edit_name"
+            app:layout_constraintTop_toTopOf="@+id/home_edit_name"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/delete_receipt_button"
-        android:layout_width="143dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="44dp"
-        android:text="@string/delete_home"
-        android:textAllCaps="false"
-        app:backgroundTint="#85232C"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <Button
+            android:id="@+id/home_edit_save_button"
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="100dp"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="92dp"
-        android:layout_height="80dp"
-        android:contentDescription="@string/App_logo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.106"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.046"
-        app:srcCompat="@drawable/logo" />
+        <Button
+            android:id="@+id/home_edit_delete_button"
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="44dp"
+            android:text="@string/delete_home"
+            android:textAllCaps="false"
+            app:backgroundTint="#85232C"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/edit_home"
-        android:textColor="#ACA325"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="@+id/logo"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toTopOf="@+id/logo" />
+        <Button
+            android:id="@+id/home_edit_leave_button"
+            android:layout_width="143dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="44dp"
+            android:text="@string/leave_home"
+            android:textAllCaps="false"
+            app:backgroundTint="#85232C"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.85"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/name"
-        android:textColor="#8C8C8C"
-        app:layout_constraintBottom_toTopOf="@+id/receipt_name"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.114"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.612" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="92dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/App_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.106"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.046"
+            app:srcCompat="@drawable/logo" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/members"
-        android:textColor="#8C8C8C"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.127"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receipt_name"
-        app:layout_constraintVertical_bias="0.709" />
-
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="346dp"
-        android:layout_height="229dp"
-        android:background="@drawable/rounded_edit_box"
-        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/receipt_name"
-        app:layout_constraintVertical_bias="0.328">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:text="@string/edit_home"
+            android:textColor="#ACA325"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/logo"
+            app:layout_constraintStart_toEndOf="@+id/logo"
+            app:layout_constraintTop_toTopOf="@+id/logo" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/members_list"
-                android:layout_width="322dp"
-                android:layout_height="227dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                tools:listitem="@layout/admin_home_member_menu_item" />
-        </LinearLayout>
-    </ScrollView>
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/name"
+            android:textColor="#8C8C8C"
+            app:layout_constraintBottom_toTopOf="@+id/home_edit_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo"
+            app:layout_constraintVertical_bias="0.612" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/members"
+            android:textColor="#8C8C8C"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.127"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_edit_name"
+            app:layout_constraintVertical_bias="0.709" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="346dp"
+            android:layout_height="229dp"
+            android:background="@drawable/rounded_edit_box"
+            app:layout_constraintBottom_toTopOf="@+id/home_edit_save_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/home_edit_name"
+            app:layout_constraintVertical_bias="0.428">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_edit_members_list"
+                    android:layout_width="310dp"
+                    android:layout_height="227dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    tools:listitem="@layout/admin_home_member_menu_item" />
+            </LinearLayout>
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Code:"
+            android:textColor="#8C8C8C"
+            app:layout_constraintBottom_toTopOf="@+id/home_edit_save_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.344"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+        <TextView
+            android:id="@+id/home_edit_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:text="@string/code"
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintStart_toStartOf="@+id/textView11"
+            app:layout_constraintTop_toTopOf="@+id/textView11"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageView
+            android:id="@+id/home_edit_share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/home_edit_code"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toEndOf="@+id/home_edit_code"
+            app:layout_constraintTop_toTopOf="@+id/home_edit_code"
+            app:layout_constraintVertical_bias="0.50"
+            app:srcCompat="@android:drawable/ic_menu_share" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
