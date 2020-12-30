@@ -13,6 +13,7 @@ import com.mabem.homebook.Database.Database;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.Model.User;
 
 public class HomeViewModel extends AndroidViewModel {
@@ -57,7 +58,7 @@ public class HomeViewModel extends AndroidViewModel {
     }
 
 
-    public void addNewHome(String homeName, boolean isPrivate){
+    public void addNewHome(String homeName, boolean isPrivate) {
         database.createHome(homeName, isPrivate);
     }
     public void updateCurrentHome(String id){
@@ -65,6 +66,9 @@ public class HomeViewModel extends AndroidViewModel {
     }
     public void updateHomeWithMembers(){
         database.updateHomeWithMembers();
+    }
+    public void updateHomeWithReminders(){
+        database.updateHomeWithReminders();
     }
     public void leaveHome(){
         database.leaveHome();
@@ -82,6 +86,17 @@ public class HomeViewModel extends AndroidViewModel {
     }
     public void deleteReceipt(String id){
         database.deleteReceipt(id);
+    }
+
+
+    public void updateReminder(Reminder r) {
+        database.updateReminder(r);
+    }
+    public void setReminder(Reminder r) {
+        database.setReminder(r);
+    }
+    public void deleteReminder(String id){
+        database.deleteReminder(id);
     }
 
 

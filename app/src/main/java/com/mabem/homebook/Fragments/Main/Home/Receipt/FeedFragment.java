@@ -22,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mabem.homebook.Adapters.FeedAdapter;
+import com.mabem.homebook.Fragments.Main.Home.Reminder.RemindersFragment;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
@@ -83,7 +84,7 @@ public class FeedFragment extends Fragment {
                             Collections.sort(list, new Comparator<Receipt>() {
                                 @Override
                                 public int compare(Receipt o1, Receipt o2) {
-                                    return o1.getDate().compareTo(o2.getDate());
+                                    return o2.getDate().compareTo(o1.getDate());
                                 }
                             });
 
@@ -121,6 +122,9 @@ public class FeedFragment extends Fragment {
                 navController.navigate(R.id.editHomeFragment);
                 return true;
             }
+        }
+        if(item.getItemId() == R.id.remindersFragment){
+            RemindersFragment.setHome_id(home_id);
         }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }

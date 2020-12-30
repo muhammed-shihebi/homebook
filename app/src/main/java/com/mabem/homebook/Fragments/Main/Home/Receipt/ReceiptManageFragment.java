@@ -21,10 +21,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.Toast;
 
-import com.mabem.homebook.Adapters.MyhomesAdapter;
 import com.mabem.homebook.Adapters.ReceiptManageAdapter;
-import com.mabem.homebook.Adapters.ReceiptinfoAdapter;
-import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
@@ -35,13 +32,8 @@ import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentManageReceiptBinding;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
 
 public class ReceiptManageFragment extends Fragment implements ReceiptManagerItemListener {
 
@@ -81,7 +73,6 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
             fragmentManageReceiptBinding.receiptManageReceiptName.setText(toEditReceipt.getName());
             cal = Calendar.getInstance();
             cal.setTime(toEditReceipt.getDate());
-            Log.d("Demo", " At beginning"+cal.getTime().toString());
             fragmentManageReceiptBinding.receiptManageDateButton.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
             total = toEditReceipt.getTotal();
             fragmentManageReceiptBinding.receiptManageTotal.setText(toEditReceipt.getTotal().toString());
@@ -101,6 +92,8 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
             itemsOfReceipt.clear();
             adapter = new ReceiptManageAdapter(getContext(), itemsOfReceipt, this);
             fragmentManageReceiptBinding.receiptManageItemList.setAdapter(adapter);
+            fragmentManageReceiptBinding.receiptManageSaveButton.setText(R.string.add_receipt);
+            fragmentManageReceiptBinding.receiptManageDeleteButton.setText(R.string.cancel);
         }
 
         fragmentManageReceiptBinding.receiptManageDateButton.setOnClickListener(v -> {
@@ -131,7 +124,6 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                 Item i = new Item(name, d);
                 onAddingItem(i);
             }
-
         });
 
         fragmentManageReceiptBinding.receiptManageSaveButton.setOnClickListener(v -> {
@@ -145,7 +137,6 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                         Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
                     });
-
                 }else{
                     if(fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()){
                         Toast.makeText(requireContext(), R.string.please_enter_name_for_receipt_message, Toast.LENGTH_SHORT).show();
@@ -163,7 +154,6 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                         Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
                     });
-
                 }else{
                     if(fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()){
                         Toast.makeText(requireContext(), R.string.please_enter_name_for_receipt_message, Toast.LENGTH_SHORT).show();
@@ -177,29 +167,31 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
         });
 
         fragmentManageReceiptBinding.receiptManageDeleteButton.setOnClickListener(v -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.delete_receipt_warning)
-                    .setMessage(R.string.delete_receipt_warning_message)
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {}
-                    })
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            homeViewModel.deleteReceipt(toEditReceipt.getId());
-                            homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                                Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                                Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
-                            });
-                        }
-                    });
-            AlertDialog mDialog = builder.create();
-            mDialog.show();
+            if(isToEditFlag()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.delete_receipt_warning)
+                        .setMessage(R.string.delete_receipt_warning_message)
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                homeViewModel.deleteReceipt(toEditReceipt.getId());
+                                homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
+                                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+                                });
+                            }
+                        });
+                AlertDialog mDialog = builder.create();
+                mDialog.show();
+            }else{
+                Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
+            }
         });
-
-
-
 
         return fragmentManageReceiptBinding.getRoot();
     }

@@ -76,8 +76,6 @@ public class EditProfileFragment extends Fragment {
             String newName = editProfileBinding.profileName.getText().toString().trim();
             String newEmail = editProfileBinding.profileEmail.getText().toString().trim();
 
-
-
             if(newName.isEmpty()){
                 Toast.makeText(requireContext(), R.string.profile_edit_enter_name, Toast.LENGTH_SHORT).show();
             }else if(newEmail.isEmpty()){

@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 public class Reminder {
 
-    public static final String NEVER = "Never";
+    public static final String ONCE = "Once";
     public static final String DAILY = "Daily";
     public static final String WEEKLY = "Weekly";
     public static final String MONTHLY = "Monthly";
