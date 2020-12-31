@@ -4,8 +4,13 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -14,6 +19,7 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -985,10 +991,15 @@ public class Database {
 
     public void deleteHome() {
         if (currentHome.getValue() != null) {
+
+            // 1. Delete home collection
+
             firestore.collection(HOME_COLLECTION)
                     .document(currentHome.getValue().getId())
                     .delete()
                     .addOnSuccessListener(aVoid -> {
+
+                        // 2. Delete home_user collection related to this home
 
                         firestore.collection(HOME_USER_COLLECTION)
                                 .whereEqualTo(HOME_ID, currentHome.getValue().getId())
@@ -999,8 +1010,73 @@ public class Database {
                                                 .document(queryDocumentSnapshot.getId())
                                                 .delete();
                                     }
-                                    resultMessage.postValue(application.getString(R.string.home_deleted_message));
-                                    Log.i(TAG, "Home was deleted successfully");
+
+                                    // 3. Delete receipts related to this home
+
+                                    firestore.collection(HOME_COLLECTION)
+                                            .document(currentHome.getValue().getId())
+                                            .collection(RECEIPT_COLLECTION)
+                                            .get()
+                                            .addOnSuccessListener(receiptDocuments -> {
+
+                                                // 4. Delete items of this receipt
+
+                                                for (QueryDocumentSnapshot receiptDocument : receiptDocuments) {
+                                                    receiptDocument
+                                                            .getReference()
+                                                            .collection(ITEM_COLLECTION)
+                                                            .get()
+                                                            .addOnSuccessListener(itemDocuments -> {
+                                                                for(QueryDocumentSnapshot itemDocument: itemDocuments){
+                                                                    itemDocument.getReference().delete();
+                                                                }
+                                                            }).addOnFailureListener(e -> {
+                                                                resultMessage.postValue(e.getMessage());
+                                                                Log.i(TAG, "Error by deleting Home");
+                                                            });
+                                                    receiptDocument.getReference().delete();
+                                                }
+
+                                                // 5. Delete all reminders related to this home
+
+                                                firestore.collection(HOME_COLLECTION)
+                                                        .document(currentHome.getValue().getId())
+                                                        .collection(REMINDER_COLLECTION)
+                                                        .get()
+                                                        .addOnSuccessListener(reminderDocuments -> {
+                                                            for(QueryDocumentSnapshot reminderDocument: reminderDocuments){
+                                                                reminderDocument.getReference().delete();
+                                                            }
+
+                                                            // 5. Delete all notifications related to this home
+
+                                                            firestore.collection(HOME_COLLECTION)
+                                                                    .document(currentHome.getValue().getId())
+                                                                    .collection(NOTIFICATION_COLLECTION)
+                                                                    .get()
+                                                                    .addOnSuccessListener(notificationDocuments -> {
+                                                                        for (QueryDocumentSnapshot notificationDocument : notificationDocuments) {
+                                                                            notificationDocument.getReference().delete();
+                                                                        }
+                                                                        resultMessage.postValue(application.getString(R.string.home_deleted_message));
+                                                                        currentHome.postValue(null);
+                                                                        Log.i(TAG, "Home was deleted successfully");
+                                                                    })
+                                                                    .addOnFailureListener(e -> {
+                                                                        resultMessage.postValue(e.getMessage());
+                                                                        Log.i(TAG, "Error by deleting Home");
+                                                                    });
+
+                                                        })
+                                                        .addOnFailureListener(e -> {
+                                                            resultMessage.postValue(e.getMessage());
+                                                            Log.i(TAG, "Error by deleting Home");
+                                                        });
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                resultMessage.postValue(e.getMessage());
+                                                Log.i(TAG, "Error by deleting Home");
+                                            });
                                 })
                                 .addOnFailureListener(e -> {
                                     resultMessage.postValue(e.getMessage());
@@ -1085,18 +1161,22 @@ public class Database {
                         firestore.collection(HOME_USER_COLLECTION)
                                 .whereEqualTo(HOME_ID, currentHome.getValue().getId())
                                 .get()
-                                .addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                    if (queryDocumentSnapshots.isEmpty()) { // home is empty > delete it
-                                        firestore.collection(HOME_COLLECTION)
-                                                .document(currentHome.getValue().getId())
-                                                .delete();
-                                        resultMessage.postValue(application.getString(R.string.member_left_home_message));
+                                .addOnSuccessListener(homeUserDocuments -> {
+                                    boolean homeUserIsEmpty = true;
+                                    for (QueryDocumentSnapshot q : homeUserDocuments) {
+                                        homeUserIsEmpty = false;
+                                        break;
+                                    }
+                                    if (homeUserIsEmpty) {
+                                        deleteHome();
+                                    }else{
 
-                                    } else { // home is not empty > check if there is an admin
-                                        Boolean thereIsNoAdmin = true;
+                                        // 3. Check if the user left was the last admin. If so make new Admin
 
-                                        for (QueryDocumentSnapshot queryDocumentSnapshot1 : queryDocumentSnapshots) {
-                                            Boolean memberRole = queryDocumentSnapshot1.getBoolean(MEMBER_ROLE);
+                                        boolean thereIsNoAdmin = true;
+
+                                        for (QueryDocumentSnapshot homeUserDocument : homeUserDocuments) {
+                                            Boolean memberRole = homeUserDocument.getBoolean(MEMBER_ROLE);
                                             if (memberRole == Member.ADMIN_ROLE) { // there is an admin
                                                 thereIsNoAdmin = false;
                                                 break;
@@ -1104,8 +1184,8 @@ public class Database {
                                         }
 
                                         if (thereIsNoAdmin) {
-                                            for (QueryDocumentSnapshot queryDocumentSnapshot1 : queryDocumentSnapshots) {
-                                                queryDocumentSnapshot1
+                                            for (QueryDocumentSnapshot homeUserDocument : homeUserDocuments) {
+                                                homeUserDocument
                                                         .getReference()
                                                         .update(MEMBER_ROLE, Member.ADMIN_ROLE)
                                                         .addOnSuccessListener(aVoid -> {

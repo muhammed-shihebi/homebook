@@ -14,7 +14,7 @@
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
         <item name="android:textColorSecondary">@color/gold</item>
     </style>
-<!--    To change the color of the hamburger icon    -->
+    <!--    To change the color of the hamburger icon    -->
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/gold</item>
