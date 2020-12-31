@@ -282,17 +282,6 @@ public class Database {
 
     public void updateCurrentHome(String homeId) {
 
-        // 1. Get selected home with homeId
-//        Log.i("qwerqwer", "updateCurrentHome: " + currentMember);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  currentUser);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  resultMessage);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  currentMember);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  currentHome);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  currentReceipt);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  currentReminder);
-//        Log.i("qwerqwer", "updateCurrentHome: " +  currentNotification);
-
-
         if (currentMember.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
                     .document(homeId)
@@ -1129,7 +1118,6 @@ public class Database {
                                                 break;
                                             }
                                         }
-
                                     }
                                 })
                                 .addOnFailureListener(e -> {
@@ -1200,14 +1188,14 @@ public class Database {
                                         resultMessage.postValue(e.getMessage());
                                         Log.w(TAG, "sendJoinRequest: ", e);
                                     });
-                        }else {
+                        } else {
                             resultMessage.postValue("You sent a join request to this Home before");
                         }
 
                     }).addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "sendJoinRequest: ", e);
-                    });
+                resultMessage.postValue(e.getMessage());
+                Log.w(TAG, "sendJoinRequest: ", e);
+            });
         }
     }
 
@@ -1455,7 +1443,6 @@ public class Database {
                 }
             }
         }
-
         return isMember;
     }
 }

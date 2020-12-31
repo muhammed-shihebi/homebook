@@ -30,8 +30,8 @@
     <string name="members">Mitglieder</string>
     <string name="invite_member">Neues Mitglied Einladen</string>
     <string name="invite">Einladen</string>
-    <string name="delete_home">Wohnung Löschen</string>
-    <string name="leave_home">Wohnung Verlassen</string>
+    <string name="delete_home">Löschen</string>
+    <string name="leave_home">Verlassen</string>
     <string name="add_receipt">Rechnung Hinzufügen</string>
     <string name="notifications">Benachritigungen</string>
     <string name="other">Anders</string>
@@ -40,7 +40,7 @@
     <string name="user">Benutzer</string>
     <string name="edit">Bearbeiten</string>
     <string name="search">Suchen</string>
-    <string name="enter_home_code">Wohnung-Code Eingeben</string>
+    <string name="enter_home_code">Wohnung-Code</string>
     <string name="add_new_home">Neue Wohnung erstellen</string>
     <string name="admin">Admin</string>
     <string name="home_info">Wohnungsinformationen</string>
@@ -72,7 +72,7 @@
     <string name="item">Artikel</string>
     <string name="add_item">Artikel Hinzufügen</string>
     <string name="total">Gesamtbetrag: </string>
-    <string name="delete_receipt">Rechnung Löschen</string>
+    <string name="delete_receipt">Löschen</string>
     <string name="price">Preis</string>
     <string name="change_password">Kennwort Aktualisieren</string>
     <string name="version">Version 1.0</string>
@@ -141,5 +141,6 @@
     <string name="make_admin_warning_message">Sind Sie sicher, dass Sie dieses Mitglied zum Admin machen möchten?</string>
     <string name="delete_last_admin_warning_message">Sie können den letzten Admin aus der Wohnung nicht entfernen!</string>
     <string name="home_updated_message">Die Wohnung wurde erfolgreich aktualisiert</string>
+    <string name="request_sent_successfully">Die Beitrittsanfrage wurde erfolgreich gesendet</string>
 
 </resources>

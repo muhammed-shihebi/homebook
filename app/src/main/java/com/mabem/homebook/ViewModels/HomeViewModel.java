@@ -56,7 +56,6 @@ public class HomeViewModel extends AndroidViewModel {
 
     public void updateCurrentMember(){
         resultMessage.setValue(null);
-
         database.updateCurrentMember();
     }
 

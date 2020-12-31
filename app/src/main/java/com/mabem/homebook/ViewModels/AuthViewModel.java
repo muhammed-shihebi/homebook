@@ -60,5 +60,4 @@ public class AuthViewModel extends AndroidViewModel {
         String email = currentUser.getValue().getEmailAddress();
         database.forgotPassword(email);
     }
-
 }

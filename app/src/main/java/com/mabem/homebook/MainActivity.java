@@ -1,16 +1,10 @@
 package com.mabem.homebook;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.AlertDialog;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -22,15 +16,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -38,7 +33,6 @@ import androidx.navigation.ui.NavigationUI;
 import com.bumptech.glide.Glide;
 import com.mabem.homebook.Fragments.Main.EditProfileFragment;
 import com.mabem.homebook.Fragments.Main.SearchedHomeDialog;
-import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.SearchResultListener;
@@ -46,15 +40,14 @@ import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.MainActivityViewModel;
 import com.mabem.homebook.databinding.MainActivityBinding;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SearchResultListener, NavigationDrawer {
 
     private static final int TIME_BEFORE_SIGN_OUT = 1000; // 1 Second
     private static final String MAIN_ACTIVITY_TAG = "MainActivity";
-
-
+    TextView userName;
+    ImageView userImage;
     private DrawerLayout drawerLayout;
     private MainActivityBinding mainActivityBinding;
     private Toolbar toolbar;
@@ -62,13 +55,11 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     private NavController navController;
     private EditText search_edit_text;
 
-    TextView userName;
-    ImageView userImage;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         loadLocale();
         //========================================= Init DataBinding
@@ -87,12 +78,21 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                 R.id.mainFragment)
+                R.id.mainFragment)
                 .setDrawerLayout(drawerLayout)
                 .build();
         // NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout);
         NavigationUI.setupWithNavController(toolbar, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(mainActivityBinding.navView, navController);
+
+        //=========================================
+
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                Util.hideKeyboard(MainActivity.this);
+            }
+        });
 
         //========================================= Set up header
 
@@ -111,14 +111,14 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
 
         //========================================= Handle sign out button
 
-        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem ->{
+        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem -> {
             search_edit_text.setText("");
             mainActivityViewModel.signOut();
             navController.popBackStack();
             return false;
         });
 
-    //========================================= Search Home
+        //========================================= Search Home
 
         searchButton.setOnClickListener(v -> {
             mainActivityViewModel.setShowResultDialog(true);
@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
             String homeCode = search_edit_text.getText().toString().trim();
             mainActivityViewModel.searchHome(homeCode);
             mainActivityViewModel.getSearchResult().observe(this, homes -> {
-                if(homes != null){
+                if (homes != null) {
                     searchProgressBar.setVisibility(View.INVISIBLE);
                     Util.hideKeyboard(this);
-                    if(mainActivityViewModel.isShowResultDialog()){
+                    if (mainActivityViewModel.isShowResultDialog()) {
                         SearchedHomeDialog searchedHomeDialog = new SearchedHomeDialog(homes, this, getBaseContext());
                         searchedHomeDialog.show(getSupportFragmentManager(), "Test");
                         mainActivityViewModel.setShowResultDialog(false);
@@ -138,59 +138,15 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
                 }
             });
         });
-
-    }
-
-    @Override
-    public void onHomeSelected(String homeId) {
-        mainActivityViewModel.sendJoinRequest(homeId);
-        Observer<String> messageObserver = new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(s != null){
-                    drawerLayout.close();
-                    search_edit_text.setText("");
-                    Toast.makeText(MainActivity.this, "" + s, Toast.LENGTH_SHORT).show();
-                    mainActivityViewModel.getResultMessage().removeObserver(this);
-                }
-            }
-        };
-        mainActivityViewModel.getResultMessage().observe(this, messageObserver);
-    }
-
-    @Override
-    public void onOkPressed() {
-        drawerLayout.close();
-        search_edit_text.setText("");
-    }
-
-    //========================================= Search Home
-
-    private void loadLocale() {
-        SharedPreferences prefs = getSharedPreferences("settings", Activity.MODE_PRIVATE);
-        String lang = prefs.getString("my_lang", "");
-        setLocale(lang);
-    }
-
-    public void setLocale(String locale1) {
-        Locale locale = new Locale(locale1);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-        SharedPreferences.Editor editor = getSharedPreferences("settings",  MODE_PRIVATE).edit();
-        editor.putString("my_lang",locale1);
-        editor.apply();
     }
 
     @Override
     public void onBackPressed() {
         // If the back button is pressed while the navigation drawer is open
         // the application will not close and the drawer will be closed instead.
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }
@@ -207,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
             new CountDownTimer(TIME_BEFORE_SIGN_OUT, 1000) {
                 public void onTick(long millisUntilFinished) {
                 }
+
                 public void onFinish() {
                     // This will log out the user and end the activity.
                     // If the user tries to open the app again a new activity will be created again.
@@ -214,11 +171,30 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
                     finish();
                 }
             }.start();
-        }else{
+        } else {
             EditProfileFragment.setAutomaticallyLoggedIn(true);
         }
     }
 
+    //========================================= Language
+
+    private void loadLocale() {
+        SharedPreferences prefs = getSharedPreferences("settings", Activity.MODE_PRIVATE);
+        String lang = prefs.getString("my_lang", "");
+        setLocale(lang);
+    }
+
+    public void setLocale(String locale1) {
+        Locale locale = new Locale(locale1);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
+        editor.putString("my_lang", locale1);
+        editor.apply();
+    }
 
     //========================================= NavDrawer Functions
 
@@ -234,13 +210,38 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
 
     @Override
     public void setCurrentMember(Member member) {
-        if(member != null){
+        if (member != null) {
             userName.setText(member.getName());
-            if(member.getImageURI() != null){
+            if (member.getImageURI() != null) {
                 Glide.with(this)
                         .load(member.getImageURI())
                         .into(userImage);
             }
         }
+    }
+
+    //========================================= Search Listener
+
+    @Override
+    public void onHomeSelected(String homeId) {
+        mainActivityViewModel.sendJoinRequest(homeId);
+        Observer<String> messageObserver = new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    drawerLayout.close();
+                    search_edit_text.setText("");
+                    Toast.makeText(MainActivity.this, "" + s, Toast.LENGTH_SHORT).show();
+                    mainActivityViewModel.getResultMessage().removeObserver(this);
+                }
+            }
+        };
+        mainActivityViewModel.getResultMessage().observe(this, messageObserver);
+    }
+
+    @Override
+    public void onOkPressed() {
+        drawerLayout.close();
+        search_edit_text.setText("");
     }
 }

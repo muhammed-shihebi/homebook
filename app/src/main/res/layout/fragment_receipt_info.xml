@@ -8,55 +8,55 @@
         android:layout_height="match_parent"
         tools:context=".Fragments.Main.Home.Receipt.ReceiptInfoFragment">
 
-        <!-- TODO: Update blank fragment layout -->
-
         <TextView
             android:id="@+id/textView8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/details"
+            android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.117"
+            app:layout_constraintHorizontal_bias="0.077"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="64dp"
-            android:layout_marginEnd="320dp"
+            android:layout_width="94dp"
+            android:layout_height="40dp"
             android:text="@string/item"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.477"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/receiptinfo_items_list"
+            app:layout_constraintEnd_toStartOf="@+id/textView10"
+            app:layout_constraintHorizontal_bias="0.11"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="172dp"
-            android:layout_marginTop="56dp"
+            android:layout_width="81dp"
+            android:layout_height="42dp"
             android:text="@string/price"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/receiptinfo_items_list"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.301"
-            app:layout_constraintStart_toEndOf="@+id/textView9"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/receiptinfo_items_list"
-            android:layout_width="350dp"
-            android:layout_height="457dp"
+            android:layout_width="340dp"
+            android:layout_height="446dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.477"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/receipt_menu_item" />
 
         <ImageView
@@ -82,9 +82,9 @@
             android:id="@+id/receiptinfo_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="11.11.2020"
-
             android:layout_marginBottom="18dp"
+
+            android:text="11.11.2020"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -94,7 +94,7 @@
             android:layout_width="29dp"
             android:layout_height="22dp"
             android:layout_marginStart="18dp"
-            android:layout_marginBottom="48dp"
+            android:layout_marginBottom="44dp"
             android:src="@drawable/money_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView13"

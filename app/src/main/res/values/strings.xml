@@ -27,7 +27,7 @@
     <string name="members">Members</string>
     <string name="invite_member">Invite New Member</string>
     <string name="invite">Invite</string>
-    <string name="delete_home">Delete Home</string>
+    <string name="delete_home">Delete</string>
     <string name="log_in_with_facebook">Log in with Facebook</string>
     <string name="or">OR</string>
     <string name="sign_up_with_google">Sign up with Google</string>
@@ -59,9 +59,9 @@
     <string name="edit">Edit</string>
     <string name="admin">Admin</string>
     <string name="home_info">Home Info</string>
-    <string name="leave_home">Leave Home</string>
+    <string name="leave_home">Leave</string>
     <string name="search">Search</string>
-    <string name="enter_home_code">Enter Home-Code</string>
+    <string name="enter_home_code">Home-Code</string>
     <string name="items">Items</string>
     <string name="item">Item</string>
     <string name="add_item">Add Item</string>

@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_info"
             android:textColor="#ACA325"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/logo"
             app:layout_constraintStart_toEndOf="@+id/logo"
             app:layout_constraintTop_toTopOf="@+id/logo" />

@@ -10,9 +10,9 @@
 
         <Button
             android:id="@+id/receipt_manage_date_button"
-            android:layout_width="179dp"
-            android:layout_height="42dp"
-            android:layout_marginBottom="70dp"
+            android:layout_width="183dp"
+            android:layout_height="39dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/rounded_edit_text"
             android:text="@string/date"
             android:textAlignment="textStart"
@@ -24,10 +24,10 @@
             app:iconTint="#2B2B2B"
             app:layout_constraintBottom_toTopOf="@+id/scrollView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.78"
-            app:layout_constraintStart_toEndOf="@+id/textView"
+            app:layout_constraintHorizontal_bias="0.195"
+            app:layout_constraintStart_toEndOf="@+id/receipt_manage_receipt_name"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintVertical_bias="0.935" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <Button
             android:id="@+id/receipt_manage_delete_button"
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:text="@string/add_receipt"
             android:textColor="#ACA325"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/logo"
             app:layout_constraintStart_toEndOf="@+id/logo"
             app:layout_constraintTop_toTopOf="@+id/logo" />
