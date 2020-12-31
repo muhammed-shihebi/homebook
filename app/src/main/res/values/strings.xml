@@ -125,6 +125,7 @@
     <string name="no">No</string>
     <string name="remove_member_warning">Remove this member?</string>
     <string name="delete_receipt_warning">Delete this receipt?</string>
+    <string name="delete_home_warning">Delete this home?</string>
     <string name="delete_reminder_warning">Delete this reminder?</string>
     <string name="make_admin_warning">Make this member admin?</string>
     <string name="leave_home_warning">Leave this home?</string>
@@ -141,6 +142,7 @@
     <string name="make_admin_warning_message">Are you sure that you want to make this member admin?</string>
     <string name="remove_last_admin_warning_message">You can not make the last admin of the home a normal member!</string>
     <string name="delete_receipt_warning_message">Are you sure that you want to delete this receipt?</string>
+    <string name="delete_home_warning_message">Are you sure that you want to delete this home?\n\nAll receipts and reminders of this home will be also deleted!</string>
     <string name="delete_reminder_warning_message">Are you sure that you want to delete this reminder?</string>
     <string name="leave_home_warning_message">Are you sure that you want to leave this home?</string>
     <string name="edit_email_warning_message">To edit your Email-Address, please relog in!</string>

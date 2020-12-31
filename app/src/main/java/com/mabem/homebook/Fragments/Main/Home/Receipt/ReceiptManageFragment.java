@@ -121,7 +121,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
         fragmentManageReceiptBinding.receiptManageAddItemButton.setOnClickListener(v -> {
             String name = fragmentManageReceiptBinding.receiptManageItemName.getText().toString().trim();
             String price = fragmentManageReceiptBinding.receiptManageItemPrice.getText().toString().trim();
-            if(name != null && price != null) {
+            if(!name.isEmpty() && !price.isEmpty()) {
                 Double d = Double.parseDouble(price);
                 Item i = new Item(name, d);
                 onAddingItem(i);

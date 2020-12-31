@@ -133,6 +133,54 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
             }
         });
 
+        fragmentEditHomeBinding.homeEditDeleteButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.delete_home_warning)
+                    .setMessage(R.string.delete_home_warning_message)
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            homeViewModel.deleteHome();
+                            homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
+                                if(s != null){
+                                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
+                                }
+                            });
+                        }
+                    });
+            AlertDialog mDialog = builder.create();
+            mDialog.show();
+        });
+
+        fragmentEditHomeBinding.homeEditLeaveButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.leave_home_warning)
+                    .setMessage(R.string.leave_home_warning_message)
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            homeViewModel.leaveHome();
+                            homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
+                                if(s != null){
+                                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
+                                }
+                            });
+                        }
+                    });
+            AlertDialog mDialog = builder.create();
+            mDialog.show();
+        });
+
         fragmentEditHomeBinding.homeEditShareButton.setOnClickListener(v -> {
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("test/plain")

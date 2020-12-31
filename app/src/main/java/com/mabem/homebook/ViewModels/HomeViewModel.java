@@ -83,6 +83,10 @@ public class HomeViewModel extends AndroidViewModel {
         resultMessage.setValue(null);
         database.updateHome(h);
     }
+    public void deleteHome() {
+        resultMessage.setValue(null);
+        database.deleteHome();
+    }
 
 
     public void updateCurrentReceipt(String id){
