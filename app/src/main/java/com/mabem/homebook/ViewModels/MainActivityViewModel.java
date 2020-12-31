@@ -48,6 +48,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void sendJoinRequest(String homeId) {
+        resultMessage.setValue(null);
         database.sendJoinRequest(homeId);
     }
 

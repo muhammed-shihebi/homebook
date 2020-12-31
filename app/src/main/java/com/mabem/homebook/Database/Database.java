@@ -1126,6 +1126,7 @@ public class Database {
                                                             resultMessage.postValue(e.getMessage());
                                                             Log.w(TAG, "leaveHome: ", e);
                                                         });
+                                                break;
                                             }
                                         }
 
@@ -1143,9 +1144,6 @@ public class Database {
                     });
 
         }
-    }
-
-    public void getStatistics() {
     }
 
     public void deleteUserNotification(UserNotification userNotification) {
@@ -1460,5 +1458,4 @@ public class Database {
 
         return isMember;
     }
-
 }

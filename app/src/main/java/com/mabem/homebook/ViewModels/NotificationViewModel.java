@@ -16,19 +16,13 @@ import com.mabem.homebook.Model.UserNotification;
 public class NotificationViewModel extends AndroidViewModel {
 
     private final Database database;
-    private final MutableLiveData<String> resultMessage;
     private final MutableLiveData<Notification> currentNotification;
 
 
     public NotificationViewModel(@NonNull Application application) {
         super(application);
         this.database = Database.getInstance(application);
-        this.resultMessage = database.getResultMessage();
         this.currentNotification = database.getCurrentNotification();
-    }
-
-    public LiveData<String> getResultMessage() {
-        return resultMessage;
     }
 
     public LiveData<Notification> getCurrentNotification() {

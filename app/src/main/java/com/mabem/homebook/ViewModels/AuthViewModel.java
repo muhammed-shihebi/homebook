@@ -36,22 +36,27 @@ public class AuthViewModel extends AndroidViewModel {
     //========================================= Methods
 
     public void loginWithEmail(String email, String password) {
+        resultMessage.setValue(null);
         database.loginWithEmail(email, password);
     }
 
     public void signUpWithEmail(String email, String password, String name){
+        resultMessage.setValue(null);
         database.signUpWithEmail(email, password, name);
     }
 
     public void loginWithGoogle(String idToken) {
+        resultMessage.setValue(null);
         database.loginWithGoogle(idToken);
     }
 
     public void forgotPassword(String email) {
+        resultMessage.setValue(null);
         database.forgotPassword(email);
     }
 
     public void changePassword() {
+        resultMessage.setValue(null);
         String email = currentUser.getValue().getEmailAddress();
         database.forgotPassword(email);
     }
