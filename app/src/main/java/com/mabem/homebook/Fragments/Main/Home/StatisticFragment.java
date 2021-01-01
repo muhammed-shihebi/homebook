@@ -1,5 +1,7 @@
 package com.mabem.homebook.Fragments.Main.Home;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -139,10 +141,19 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         Log.d("Stat", "Size of member "+numMembers);
         shouldEveryOne = totalAmount/numMembers;
 
-        DecimalFormat df = new DecimalFormat("#######.#");
+        DecimalFormat df = new DecimalFormat("#######.##");
         String i = df.format(shouldEveryOne);
         Log.d("Stat", "onItemSelected: i "+i);
         if(shouldEveryOne < Double.MAX_VALUE && shouldEveryOne > Double.MIN_VALUE){
+            SharedPreferences prefs = getActivity().getSharedPreferences("settings", Activity.MODE_PRIVATE);
+            String lang = prefs.getString("my_lang", "");
+            if(lang.equals("de")){
+                if(i.contains(",")){
+                    String[] ss = i.split(",");
+                    i = ss[0]+"."+ss[1];
+                }
+
+            }
             shouldEveryOne = Double.parseDouble(i);
 
             Double shouldGetOrPay = shouldEveryOne - totalSelf;
