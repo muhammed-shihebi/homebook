@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 
 import com.mabem.homebook.Adapters.FeedAdapter;
 import com.mabem.homebook.Fragments.Main.Home.Reminder.RemindersFragment;
+import com.mabem.homebook.Fragments.Main.Home.StatisticFragment;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
@@ -71,25 +72,30 @@ public class FeedFragment extends Fragment {
                         boolean isAdmin = memberHomes.get(h1);
 
                         homeViewModel.updateCurrentHome(h1.getId());
-
                         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
                             if(h != null){
-                                currentHome = h;
+                                homeViewModel.updateHomeWithMembers();
+                                homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h2 -> {
+                                    if (h2 != null) {
 
-                                list.clear();
-                                ArrayList<Receipt> receipts = h.getReceipts();
-                                for(Receipt receipt : receipts){
-                                    list.add(receipt);
-                                }
-                                Collections.sort(list, new Comparator<Receipt>() {
-                                    @Override
-                                    public int compare(Receipt o1, Receipt o2) {
-                                        return o2.getDate().compareTo(o1.getDate());
+                                        currentHome = h2;
+
+                                        list.clear();
+                                        ArrayList<Receipt> receipts = h.getReceipts();
+                                        for (Receipt receipt : receipts) {
+                                            list.add(receipt);
+                                        }
+                                        Collections.sort(list, new Comparator<Receipt>() {
+                                            @Override
+                                            public int compare(Receipt o1, Receipt o2) {
+                                                return o2.getDate().compareTo(o1.getDate());
+                                            }
+                                        });
+
+                                        adapter = new FeedAdapter(getContext(), list, isAdmin, member.getId());
+                                        fragmentFeedBinding.myReceipts.setAdapter(adapter);
                                     }
                                 });
-
-                                adapter = new FeedAdapter(getContext(), list, isAdmin, member.getId());
-                                fragmentFeedBinding.myReceipts.setAdapter(adapter);
                             }
                          });
                     }
@@ -126,6 +132,10 @@ public class FeedFragment extends Fragment {
         }
         if(item.getItemId() == R.id.remindersFragment){
             RemindersFragment.setHome_id(home_id);
+        }
+        if(item.getItemId() == R.id.statisticFragment){
+            StatisticFragment.setHome_id(home_id);
+            StatisticFragment.setNumMembers(currentHome.getMember_role().size());
         }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
     }

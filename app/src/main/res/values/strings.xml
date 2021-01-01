@@ -71,10 +71,11 @@
     <string name="decline">Decline</string>
     <string name="statistics">Statistics</string>
     <string name="show_for">Show for</string>
-    <string name="total_home_expenses">Total Home Expenses</string>
-    <string name="your_total_expenses">Your Total Expenses</string>
-    <string name="everyone_should_pay">Everyone Should Pay</string>
-    <string name="you_should_pay">You Should Pay</string>
+    <string name="total_home_expenses">Total home expenses</string>
+    <string name="your_total_expenses">Your total expenses</string>
+    <string name="everyone_should_pay">Everyone should pay</string>
+    <string name="you_should_pay">You should still pay</string>
+    <string name="you_should_get">You should still get</string>
     <string name="details">Details</string>
     <string name="is_added">is Added</string>
     <string name="code">Code</string>
@@ -134,6 +135,8 @@
     <string name="receipt_info">Receipt Info</string>
     <string name="manage_receipt">Manage Receipt</string>
     <string name="reminders">Reminders</string>
+    <string name="this_month">This Month</string>
+    <string name="last_month">Last Month</string>
 
     <string name="remove_last_member_warning_message">You can not remove the last member of the home! </string>
 
