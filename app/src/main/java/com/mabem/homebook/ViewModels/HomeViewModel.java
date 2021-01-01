@@ -39,6 +39,7 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData<Member> getCurrentMember() {
         return currentMember;
     }
+
     public LiveData<Home> getCurrentHome() {
         return currentHome;
     }

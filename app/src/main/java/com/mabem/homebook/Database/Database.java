@@ -4,13 +4,8 @@ import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -19,7 +14,6 @@ import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -286,58 +280,49 @@ public class Database {
      */
 
     public void updateCurrentHome(String homeId) {
-
         if (currentMember.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
                     .document(homeId)
                     .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot homeDocument = task.getResult();
-                            if (homeDocument.exists()) {
+                    .addOnSuccessListener(homeDocumentSnapshot -> {
 
-                                // 2. Get all Receipts of this home
+                        // 2. Get all Receipts of this home
+                        firestore.collection(HOME_COLLECTION)
+                                .document(homeDocumentSnapshot.getId())
+                                .collection(RECEIPT_COLLECTION)
+                                .get()
+                                .addOnSuccessListener(receiptDocumentSnapshots -> {
+                                    ArrayList<Receipt> receipts = new ArrayList<>();
+                                    for (QueryDocumentSnapshot receiptDocument : receiptDocumentSnapshots) {
+                                        Receipt receipt = new Receipt(
+                                                receiptDocument.getId(),
+                                                receiptDocument.getString(RECEIPT_NAME),
+                                                receiptDocument.getDate(RECEIPT_DATE),
+                                                receiptDocument.getDouble(RECEIPT_TOTAL),
+                                                receiptDocument.getString(MEMBER_NAME),
+                                                receiptDocument.getString(MEMBER_ID)
+                                        );
+                                        receipts.add(receipt);
+                                    }
 
-                                firestore.collection(HOME_COLLECTION)
-                                        .document(homeDocument.getId())
-                                        .collection(RECEIPT_COLLECTION)
-                                        .get()
-                                        .addOnCompleteListener(task1 -> {
-                                            if (task1.isSuccessful()) {
-                                                ArrayList<Receipt> receipts = new ArrayList<>();
-                                                for (QueryDocumentSnapshot receiptDocument : task1.getResult()) {
-                                                    Receipt receipt = new Receipt(
-                                                            receiptDocument.getId(),
-                                                            receiptDocument.getString(RECEIPT_NAME),
-                                                            receiptDocument.getDate(RECEIPT_DATE),
-                                                            receiptDocument.getDouble(RECEIPT_TOTAL),
-                                                            receiptDocument.getString(MEMBER_NAME),
-                                                            receiptDocument.getString(MEMBER_ID)
-                                                    );
-                                                    receipts.add(receipt);
-                                                }
+                                    // 3. Create new Home
+                                    Home home = new Home(
+                                            homeDocumentSnapshot.getId(),
+                                            homeDocumentSnapshot.getString(HOME_NAME),
+                                            homeDocumentSnapshot.getString(HOME_CODE),
+                                            homeDocumentSnapshot.getBoolean(HOME_VISIBILITY),
+                                            receipts
+                                    );
 
-                                                // 3. Create new Home
-
-                                                Home home = new Home(
-                                                        homeDocument.getId(),
-                                                        homeDocument.getString(HOME_NAME),
-                                                        homeDocument.getString(HOME_CODE),
-                                                        homeDocument.getBoolean(HOME_VISIBILITY),
-                                                        receipts
-                                                );
-
-                                                // 4. Post the value of the new home
-
-                                                currentHome.postValue(home);
-                                            } else {
-                                                resultMessage.postValue(task1.getException().getMessage());
-                                            }
-                                        });
-                            }
-                        } else {
-                            resultMessage.postValue(task.getException().getMessage());
-                        }
+                                    // 4. Post the value of the new home
+                                    currentHome.postValue(home);
+                                })
+                                .addOnFailureListener(e -> {
+                                    resultMessage.postValue(e.getMessage());
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
                     });
         }
     }
@@ -537,6 +522,7 @@ public class Database {
                         currentUser.postValue(user);
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
+                        currentUser.postValue(null);
                     }
                 });
     }
@@ -960,13 +946,13 @@ public class Database {
                                                             .collection(ITEM_COLLECTION)
                                                             .get()
                                                             .addOnSuccessListener(itemDocuments -> {
-                                                                for(QueryDocumentSnapshot itemDocument: itemDocuments){
+                                                                for (QueryDocumentSnapshot itemDocument : itemDocuments) {
                                                                     itemDocument.getReference().delete();
                                                                 }
                                                             }).addOnFailureListener(e -> {
-                                                                resultMessage.postValue(e.getMessage());
-                                                                Log.i(TAG, "Error by deleting Home");
-                                                            });
+                                                        resultMessage.postValue(e.getMessage());
+                                                        Log.i(TAG, "Error by deleting Home");
+                                                    });
                                                     receiptDocument.getReference().delete();
                                                 }
 
@@ -977,7 +963,7 @@ public class Database {
                                                         .collection(REMINDER_COLLECTION)
                                                         .get()
                                                         .addOnSuccessListener(reminderDocuments -> {
-                                                            for(QueryDocumentSnapshot reminderDocument: reminderDocuments){
+                                                            for (QueryDocumentSnapshot reminderDocument : reminderDocuments) {
                                                                 reminderDocument.getReference().delete();
                                                             }
 
@@ -1101,7 +1087,7 @@ public class Database {
                                     }
                                     if (homeUserIsEmpty) {
                                         deleteHome();
-                                    }else{
+                                    } else {
 
                                         // 3. Check if the user left was the last admin. If so make new Admin
 

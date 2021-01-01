@@ -1,5 +1,6 @@
 package com.mabem.homebook.Fragments.Main.Home;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentStatisticBinding;
 
@@ -29,16 +31,18 @@ import java.util.Calendar;
 import java.lang.Math;
 
 public class StatisticFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    private static final String STATISTICS_FRAGMENT_TAG = "Statistics Fragment";
+
+
     private FragmentStatisticBinding fragmentStatisticBinding;
     private HomeViewModel homeViewModel;
     private Member currentMember;
-    private static int numMembers = -1;
-    private Calendar cal;
-    private static String home_id = "";
-    private ArrayList<Receipt> receipts;
+    private ArrayList<Receipt> receipts = new ArrayList<>();
+
+
     private int month = 0;
     private int year = 0;
+    private Calendar cal;
+    private int numMembers = 1;
     private boolean flag = false;
 
 
@@ -70,125 +74,90 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         fragmentStatisticBinding.monthSpinner.setAdapter(arrayAdapter);
         fragmentStatisticBinding.monthSpinner.setOnItemSelectedListener(this);
 
-
-        homeViewModel.updateHomeWithMembers();
+        //========================================= Get Home and Member and number of Members
         homeViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
             if (member != null) {
                 currentMember = member;
             }
         });
 
+        homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-            if(h != null){
+            if(h != null && h.getMember_role().size() != 0){
                 receipts = h.getReceipts();
                 numMembers = h.getMember_role().size();
-                Log.d("Stat", "onCreateView: SizeMembers in Orta "+numMembers);
-                fragmentStatisticBinding.monthSpinner.setSelection(0);
+                calculateStatistics(getContext().getResources().getString(R.string.this_month));
             }
         });
-
-
-
         return fragmentStatisticBinding.getRoot();
-    }
-
-    public static String getHome_id() {
-        return home_id;
-    }
-
-    public static void setHome_id(String home_id) {
-        StatisticFragment.home_id = home_id;
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Double totalAmount = 0.0;
-        Double totalSelf = 0.0;
-        Double shouldEveryOne = 0.0;
-        Double shouldGet_Pay = 0.0;
-
         String selectedMonth = parent.getItemAtPosition(position).toString().trim();
-        int selectedMon = 0;
-        if(selectedMonth.equals(getContext().getResources().getString(R.string.this_month))){
-            selectedMon = month;
-        }else if(selectedMonth.equals(getContext().getResources().getString(R.string.last_month))){
-            selectedMon = ((((month - 1) % 12) + 12) % 12);
-        }else{
-            selectedMon = ((((Integer.parseInt(selectedMonth) - 1) % 12) + 12) % 12);
-        }
-        ArrayList<Receipt> thismonthReceipt = new ArrayList<Receipt>();
-        for(Receipt receipt : receipts){
-            cal.setTime(receipt.getDate());
-            if(selectedMon <= month){
-                if( cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year) ){
+        calculateStatistics(selectedMonth);
+    }
 
-                    totalAmount += receipt.getTotal();
-                    if(receipt.getMemberId().equals(currentMember.getId())){
-                        totalSelf += receipt.getTotal();
+    @SuppressLint("SetTextI18n")
+    private void calculateStatistics(String selectedMonth) {
+        if(!receipts.isEmpty()){
+            Double totalHomeExpense = 0.0;
+            Double totalSelf = 0.0;
+            double onEachMember = 0.0;
+            double absoluteShouldGetOrPay =  0.0;
+
+            int selectedMon;
+            if(selectedMonth.equals(getContext().getResources().getString(R.string.this_month))){
+                selectedMon = month;
+            }else if(selectedMonth.equals(getContext().getResources().getString(R.string.last_month))){
+                selectedMon = ((((month - 1) % 12) + 12) % 12);
+            }else{
+                selectedMon = ((((Integer.parseInt(selectedMonth) - 1) % 12) + 12) % 12);
+            }
+
+            for(Receipt receipt : receipts){
+                cal.setTime(receipt.getDate());
+                if(selectedMon <= month){
+                    if( cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year) ){
+                        totalHomeExpense += receipt.getTotal();
+                        if(receipt.getMemberId().equals(currentMember.getId())){
+                            totalSelf += receipt.getTotal();
+                        }
+                    }
+                }else{
+                    if( cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year-1) ){
+                        totalHomeExpense += receipt.getTotal();
+                        if(receipt.getMemberId().equals(currentMember.getId())){
+                            totalSelf += receipt.getTotal();
+                        }
                     }
                 }
-            }else{
-                if( cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year-1) ){
-                    totalAmount += receipt.getTotal();
-                    if(receipt.getMemberId().equals(currentMember.getId())){
-                        totalSelf += receipt.getTotal();
-                    }
+            }
+
+            onEachMember = totalHomeExpense/numMembers;
+
+            if((onEachMember < Double.MAX_VALUE && onEachMember > Double.MIN_VALUE) || onEachMember == 0.0){
+
+                double shouldGetOrPay = totalSelf - onEachMember;
+                absoluteShouldGetOrPay = Math.abs(totalSelf - onEachMember);
+
+                if(shouldGetOrPay > 0){
+                    fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_get));
+                    fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.GREEN);
+                }else{
+                    fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_pay));
+                    fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.RED);
                 }
+                fragmentStatisticBinding.shouldPayGetAmount.setText(Util.round(absoluteShouldGetOrPay, 2).toString());
             }
+            fragmentStatisticBinding.everyoneAmount.setText(Util.round(onEachMember, 2).toString());
+            fragmentStatisticBinding.selfAmount.setText(Util.round(totalSelf, 2).toString());
+            fragmentStatisticBinding.totalAmount.setText(Util.round(totalHomeExpense, 2).toString());
         }
-
-
-        Log.d("Stat", "Size of member "+numMembers);
-        shouldEveryOne = totalAmount/numMembers;
-
-        DecimalFormat df = new DecimalFormat("#######.##");
-        String i = df.format(shouldEveryOne);
-        Log.d("Stat", "onItemSelected: i "+i);
-        if(shouldEveryOne < Double.MAX_VALUE && shouldEveryOne > Double.MIN_VALUE){
-            SharedPreferences prefs = getActivity().getSharedPreferences("settings", Activity.MODE_PRIVATE);
-            String lang = prefs.getString("my_lang", "");
-            if(lang.equals("de")){
-                if(i.contains(",")){
-                    String[] ss = i.split(",");
-                    i = ss[0]+"."+ss[1];
-                }
-
-            }
-            shouldEveryOne = Double.parseDouble(i);
-
-            Double shouldGetOrPay = shouldEveryOne - totalSelf;
-            shouldGet_Pay = Math.abs(shouldGetOrPay);
-
-            if(shouldGetOrPay < 0 ){
-                fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_get));
-                fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.GREEN);
-            }else{
-                fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_pay));
-                fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.RED);
-            }
-            fragmentStatisticBinding.shouldPayGetAmount.setText(shouldGet_Pay.toString());
-        }else{  //============== Size of Members is null
-            fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_pay));
-            shouldGet_Pay = Double.parseDouble(shouldGet_Pay.toString());
-            fragmentStatisticBinding.shouldPayGetAmount.setText(shouldGet_Pay.toString());
-            fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.RED);
-        }
-        fragmentStatisticBinding.everyoneAmount.setText(i);
-        fragmentStatisticBinding.selfAmount.setText(totalSelf.toString());
-        fragmentStatisticBinding.totalAmount.setText(totalAmount.toString());
-
-        Log.d("Stat", "TotalAmount "+totalAmount);
-        Log.d("Stat", "TotalSelf "+totalSelf);
-        Log.d("Stat", "ShouldPayGet "+shouldGet_Pay);
-        Log.d("Stat", "ShouldEveryone "+shouldEveryOne);
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         parent.setSelection(0);
-    }
-
-    public static void setNumMembers(int numMembers) {
-        StatisticFragment.numMembers = numMembers;
     }
 }

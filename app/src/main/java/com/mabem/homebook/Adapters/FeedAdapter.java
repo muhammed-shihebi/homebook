@@ -24,9 +24,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private final Context context;
     private final ArrayList<Receipt> list;
-    private Receipt r;
-    private boolean isAdmin;
-    private String member_id;
+    private final boolean isAdmin;
+    private final String member_id;
 
     public FeedAdapter(Context context, ArrayList<Receipt> list, boolean isAdmin, String member_id) {
         this.context = context;
@@ -45,8 +44,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FeedAdapter.ViewHolder holder, int position) {
-        r = list.get(position);
-        holder.populate(r);
+        holder.populate(list.get(position));
     }
 
     @Override
@@ -68,25 +66,23 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             receiptName = itemView.findViewById(R.id.feed_receipt_name);
             receiptTotal = itemView.findViewById(R.id.feed_receipt_total);
             memberName = itemView.findViewById(R.id.feed_member_name);
-
         }
 
-        public void populate(Receipt r) {
-            receiptName.setText(r.getName().trim());
+        public void populate(Receipt receipt) {
+            receiptName.setText(receipt.getName().trim());
             DateFormat sdf = DateFormat.getDateInstance();
-
-            receiptDate.setText(sdf.format(r.getDate().getTime()));
-            receiptTotal.setText(r.getTotal().toString());
-            memberName.setText(r.getMemberName());
+            receiptDate.setText(sdf.format(receipt.getDate().getTime()));
+            receiptTotal.setText(receipt.getTotal().toString());
+            memberName.setText(receipt.getMemberName());
 
             shape.setOnClickListener(v -> {
-                if(isAdmin || member_id.equals(r.getMemberId())){
+                if(isAdmin || member_id.equals(receipt.getMemberId())){
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
-                    ReceiptManageFragment.setToEditReceipt(r);
+                    ReceiptManageFragment.setToEditReceipt(receipt);
                     ReceiptManageFragment.setToEditFlag(true);
                 }else{
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
-                    ReceiptInfoFragment.setReceipt(r);
+                    ReceiptInfoFragment.setReceipt(receipt);
                     ReceiptManageFragment.setToEditFlag(false);
                 }
             });
