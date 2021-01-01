@@ -90,7 +90,6 @@ public class Database {
     private final MutableLiveData<Member> currentMember = new MutableLiveData<>();
     private final MutableLiveData<Home> currentHome = new MutableLiveData<>();
     private final MutableLiveData<Receipt> currentReceipt = new MutableLiveData<>();
-    private final MutableLiveData<Reminder> currentReminder = new MutableLiveData<>();
     private final MutableLiveData<Notification> currentNotification = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<Home>> searchResult = new MutableLiveData<>();
 
@@ -119,7 +118,7 @@ public class Database {
 
     /*
      * These methods should be used when trying to access data right after navigation to a new fragment
-     * without being invoked by explicit action.
+     * without being invoked by an explicit action.
      * After calling these methods the MutableLiveData will be modified and all observes will be notified about the change.
      * */
 
@@ -409,47 +408,6 @@ public class Database {
     }
 
     /**
-     * Try to get the reminder associated with @param reminderId.
-     * If successful, currentReminder will be updated with reminder data.
-     * If not, currentReminder will be null.
-     *
-     * @param reminderId reminderId to get from the database.
-     */
-
-    public void updateCurrentReminder(String reminderId) {
-        if (currentHome.getValue() != null) {
-
-            // 1. Get the reminder related to this home
-
-            firestore.collection(HOME_COLLECTION)
-                    .document(currentHome.getValue().getId())
-                    .collection(REMINDER_COLLECTION)
-                    .document(reminderId)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-
-                            // 2. Create the reminder
-
-                            DocumentSnapshot document = task.getResult();
-                            Reminder reminder = new Reminder(
-                                    document.getId(),
-                                    document.getString(REMINDER_NAME),
-                                    document.getString(REMINDER_FREQUENCY),
-                                    document.getDate(REMINDER_DATE)
-                            );
-
-                            // 3. Post reminder value
-
-                            currentReminder.postValue(reminder);
-                        } else {
-                            resultMessage.postValue(task.getException().getMessage());
-                        }
-                    });
-        }
-    }
-
-    /**
      * Try to get the reminders associated with the currentHome.
      * If successful, currentHome will be updated with the associated reminders.
      * If not, currentHome will not be changed.
@@ -564,10 +522,6 @@ public class Database {
         return currentNotification;
     }
 
-    public MutableLiveData<Reminder> getCurrentReminder() {
-        return currentReminder;
-    }
-
     public MutableLiveData<ArrayList<Home>> getSearchResult() {
         return searchResult;
     }
@@ -619,7 +573,6 @@ public class Database {
         currentMember.setValue(null);
         currentHome.setValue(null);
         currentReceipt.setValue(null);
-        currentReminder.setValue(null);
         currentNotification.setValue(null);
         searchResult.setValue(null);
         firebaseAuth.signOut();
@@ -969,26 +922,6 @@ public class Database {
                 });
     }
 
-    public void removeMemberFromHome(String memberId) {
-        if (currentHome.getValue() != null) {
-            firestore.collection(HOME_USER_COLLECTION)
-                    .whereEqualTo(MEMBER_ID, memberId)
-                    .whereEqualTo(HOME_ID, currentHome.getValue().getId())
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                            firestore.collection(HOME_USER_COLLECTION)
-                                    .document(queryDocumentSnapshot.getId())
-                                    .delete();
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "removeMemberFromHome: ", e);
-                    });
-        }
-    }
-
     public void deleteHome() {
         if (currentHome.getValue() != null) {
 
@@ -1138,7 +1071,6 @@ public class Database {
                     Log.i(TAG, "updateHome: ", e);
                 });
     }
-
 
     //========================================= Member Functions
 
