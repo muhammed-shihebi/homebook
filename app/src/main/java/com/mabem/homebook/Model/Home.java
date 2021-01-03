@@ -14,8 +14,8 @@ public class Home {
     private Boolean visibility = true; //True -> Public, False -> Private
     private HashMap<Member, Boolean> member_role = new HashMap<Member, Boolean>(); //Role: False -> Normal Member, True -> Admin
 
-    private ArrayList<Reminder> reminders;
-    private ArrayList<Receipt> receipts;
+    private ArrayList<Reminder> reminders = new ArrayList<Reminder>();
+    private ArrayList<Receipt> receipts = new ArrayList<Receipt>();
 
     public Home(String id, String name){
         this.id = id;

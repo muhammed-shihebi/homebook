@@ -51,23 +51,25 @@ public class ReceiptInfoFragment extends Fragment {
         fragmentReceiptInfoBinding.receiptinfoMembername.setText(currentReceipt.getMemberName());
         fragmentReceiptInfoBinding.receiptinfoTotal.setText(currentReceipt.getTotal().toString());
         fragmentReceiptInfoBinding.receiptinfoDate.setText(sdf.format(currentReceipt.getDate().getTime()));
-        //fragmentReceiptInfoBinding.receiptinfoMemberphoto.setImageURI();
 
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-            ArrayList<Receipt> receipts = h.getReceipts();
-            for(Receipt receipt : receipts){
-                if(receipt.equals(currentReceipt)){
-
-                    homeViewModel.updateCurrentReceipt(receipt.getId());
-                    homeViewModel.getCurrentReceipt().observe(getViewLifecycleOwner(), r -> {
-                        items.clear();
-                        ArrayList<Item> i = r.getItems();
-                        for(Item item : i){
-                            items.add(item);
-                        }
-                        adapter = new ReceiptinfoAdapter(getContext(), items);
-                        fragmentReceiptInfoBinding.receiptinfoItemsList.setAdapter(adapter);
-                    });
+            if(h != null){
+                ArrayList<Receipt> receipts = h.getReceipts();
+                for(Receipt receipt : receipts){
+                    if(receipt.equals(currentReceipt)){
+                        homeViewModel.updateCurrentReceipt(receipt.getId());
+                        homeViewModel.getCurrentReceipt().observe(getViewLifecycleOwner(), r -> {
+                            if(r != null){
+                                items.clear();
+                                ArrayList<Item> i = r.getItems();
+                                for(Item item : i){
+                                    items.add(item);
+                                }
+                                adapter = new ReceiptinfoAdapter(getContext(), items);
+                                fragmentReceiptInfoBinding.receiptinfoItemsList.setAdapter(adapter);
+                            }
+                        });
+                    }
                 }
             }
         });

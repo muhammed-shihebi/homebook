@@ -1,6 +1,8 @@
 package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
+import android.util.Log;
+import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,24 +18,22 @@ import com.mabem.homebook.Model.User;
 import java.util.ArrayList;
 
 public class MainActivityViewModel extends AndroidViewModel {
-    private final Database database;
-    private final MutableLiveData<Member> currentMember;
+    private Database database;
     private final MutableLiveData<ArrayList<Home>> searchResults;
+    private final MutableLiveData<String> resultMessage;
 
     private boolean showResultDialog = false;
 
     public MainActivityViewModel(@NonNull Application application) {
         super(application);
         database = Database.getInstance(application);
-        currentMember = database.getCurrentMember();
         searchResults = database.getSearchResult();
-    }
-
-    public LiveData<Member> getCurrentMember(){
-        return currentMember;
+        resultMessage = database.getResultMessage();
     }
 
     public LiveData<ArrayList<Home>> getSearchResult() { return searchResults; }
+
+    public LiveData<String> getResultMessage() {return resultMessage; }
 
     public void signOut(){
         database.signOut();
@@ -48,6 +48,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     }
 
     public void sendJoinRequest(String homeId) {
+        resultMessage.setValue(null);
         database.sendJoinRequest(homeId);
     }
 
@@ -59,8 +60,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void setShowResultDialog(boolean showResultDialog) {
         this.showResultDialog = showResultDialog;
     }
-
-
+    
     public void clearSearchResults() {
         database.clearSearchResults();
     }

@@ -19,14 +19,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/new_home_icon" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_receipts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/feed_item"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/my_receipts"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/feed_item">
-
-                </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -12,7 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment;
-//import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment;
+import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment;
+import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 
@@ -23,13 +24,14 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     private final Context context;
     private final ArrayList<Receipt> list;
-    private Receipt r;
-    private boolean isAdmin;
+    private final boolean isAdmin;
+    private final String member_id;
 
-    public FeedAdapter(Context context, ArrayList<Receipt> list, boolean isAdmin) {
+    public FeedAdapter(Context context, ArrayList<Receipt> list, boolean isAdmin, String member_id) {
         this.context = context;
         this.list = list;
         this.isAdmin = isAdmin;
+        this.member_id = member_id;
     }
 
     @NonNull
@@ -42,19 +44,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull FeedAdapter.ViewHolder holder, int position) {
-        r = list.get(position);
-        holder.receiptName.setText(r.getName().trim());
-
-        DateFormat sdf = DateFormat.getDateInstance();
-
-        holder.receiptDate.setText(sdf.format(r.getDate().getTime()));
-        holder.receiptTotal.setText(r.getTotal().toString());
-        holder.memberName.setText(r.getMemberName());
-
-
-
-        //holder.memberPhoto.setImageURI();
-
+        holder.populate(list.get(position));
     }
 
     @Override
@@ -68,7 +58,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         private TextView receiptDate;
         private TextView receiptTotal;
         private TextView memberName;
-        private ImageView memberPhoto;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,21 +66,26 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             receiptName = itemView.findViewById(R.id.feed_receipt_name);
             receiptTotal = itemView.findViewById(R.id.feed_receipt_total);
             memberName = itemView.findViewById(R.id.feed_member_name);
-            memberPhoto = itemView.findViewById(R.id.feed_member_photo);
-
-            shape.setOnClickListener(v -> {
-                if(isAdmin){
-                    Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
-//                    ReceiptManageFragment.setToEditReceipt(r);
-//                    ReceiptManageFragment.setToEditFlag(true);
-                }else{
-                    Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
-                    ReceiptInfoFragment.setReceipt(r);
-                }
-
-            });
         }
 
+        public void populate(Receipt receipt) {
+            receiptName.setText(receipt.getName().trim());
+            DateFormat sdf = DateFormat.getDateInstance();
+            receiptDate.setText(sdf.format(receipt.getDate().getTime()));
+            receiptTotal.setText(receipt.getTotal().toString());
+            memberName.setText(receipt.getMemberName());
 
+            shape.setOnClickListener(v -> {
+                if(isAdmin || member_id.equals(receipt.getMemberId())){
+                    Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
+                    ReceiptManageFragment.setToEditReceipt(receipt);
+                    ReceiptManageFragment.setToEditFlag(true);
+                }else{
+                    Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
+                    ReceiptInfoFragment.setReceipt(receipt);
+                    ReceiptManageFragment.setToEditFlag(false);
+                }
+            });
+        }
     }
 }

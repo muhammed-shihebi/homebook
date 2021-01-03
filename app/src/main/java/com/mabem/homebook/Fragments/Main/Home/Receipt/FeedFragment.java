@@ -20,14 +20,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 
 import com.mabem.homebook.Adapters.FeedAdapter;
+import com.mabem.homebook.Fragments.Main.Home.Reminder.RemindersFragment;
+import com.mabem.homebook.Fragments.Main.Home.StatisticFragment;
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentFeedBinding;
+import com.mabem.homebook.databinding.FragmentManageReceiptBinding;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +44,8 @@ public class FeedFragment extends Fragment {
 
     private FragmentFeedBinding fragmentFeedBinding;
     private HomeViewModel homeViewModel;
-    private ArrayList list = new ArrayList();
-    private RecyclerView.Adapter adapter;
+    private final ArrayList<Receipt> list = new ArrayList<>();
+    private FeedAdapter adapter;
     private static String home_id = "";
     private NavController navController;
     private Home currentHome;
@@ -53,7 +57,6 @@ public class FeedFragment extends Fragment {
         fragmentFeedBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_feed, container, false);
 
         fragmentFeedBinding.myReceipts.setHasFixedSize(true);
-        fragmentFeedBinding.myReceipts.setLayoutManager(new LinearLayoutManager(getContext()));
 
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
@@ -68,25 +71,16 @@ public class FeedFragment extends Fragment {
                     if( h1.getId().equals(home_id) ){
                         boolean isAdmin = memberHomes.get(h1);
                         homeViewModel.updateCurrentHome(h1.getId());
-
                         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-
-                            currentHome = h;
-
-                            list.clear();
-                            ArrayList<Receipt> receipts = h.getReceipts();
-                            for(Receipt receipt : receipts){
-                                list.add(receipt);
+                            if(h != null){
+                                currentHome = h;
+                                list.clear();
+                                ArrayList<Receipt> receipts = h.getReceipts();
+                                list.addAll(receipts);
+                                Collections.sort(list, (o1, o2) -> o2.getDate().compareTo(o1.getDate()));
+                                adapter = new FeedAdapter(getContext(), list, isAdmin, member.getId());
+                                fragmentFeedBinding.myReceipts.setAdapter(adapter);
                             }
-                            Collections.sort(list, new Comparator<Receipt>() {
-                                @Override
-                                public int compare(Receipt o1, Receipt o2) {
-                                    return o1.getDate().compareTo(o2.getDate());
-                                }
-                            });
-
-                            adapter = new FeedAdapter(getContext(), list, isAdmin);
-                            fragmentFeedBinding.myReceipts.setAdapter(adapter);
                          });
                     }
                 }
@@ -97,8 +91,8 @@ public class FeedFragment extends Fragment {
 
 
         fragmentFeedBinding.addButton.setOnClickListener(v -> {
+            ReceiptManageFragment.setToEditFlag(false);
             Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_addReceiptFragment);
-
         });
 
         setHasOptionsMenu(true);
@@ -120,11 +114,10 @@ public class FeedFragment extends Fragment {
                 return true;
             }
         }
+        if(item.getItemId() == R.id.remindersFragment){
+            RemindersFragment.setHome_id(home_id);
+        }
         return NavigationUI.onNavDestinationSelected(item, navController) || super.onOptionsItemSelected(item);
-    }
-
-    public static String getHome_id() {
-        return home_id;
     }
 
     public static void setHome_id(String home_id2) {

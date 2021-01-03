@@ -3,11 +3,11 @@
 
     <item
         android:id="@+id/remindersFragment"
-        android:title="Reminders" />
+        android:title="@string/reminders" />
     <item
         android:id="@+id/statisticFragment"
-        android:title="Statistics" />
+        android:title="@string/statistics" />
     <item
         android:id="@+id/homeInfoFragment"
-        android:title="Home Info" />
+        android:title="@string/home_info" />
 </menu>

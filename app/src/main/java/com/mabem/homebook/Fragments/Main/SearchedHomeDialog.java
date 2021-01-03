@@ -41,6 +41,7 @@ public class SearchedHomeDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.search_result)
                 .setNegativeButton(R.string.ok, (dialog, id) -> {
+                    searchResultListener.onOkPressed();
                 });
 
 
@@ -55,6 +56,7 @@ public class SearchedHomeDialog extends DialogFragment {
                     searchResultListener.onHomeSelected(searchResult.get(checkedItem).getId());
                 }
             }).setNegativeButton(R.string.cancel, (dialog, id) -> {
+                searchResultListener.onOkPressed();
             });
         }else {
             builder.setMessage("No Home found!");

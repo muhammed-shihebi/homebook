@@ -31,7 +31,6 @@ import com.mabem.homebook.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.UUID;
 
 public class Database {
@@ -64,13 +63,13 @@ public class Database {
     //========================================= Admin Notification Collection
     public static final String NOTIFICATION_TYPE = "type";
     public static final String NOTIFICATION_COLLECTION = "notification";
-    public static final String USER_EMAIL = "user_email";
+    public static final String USER_ID = "user_id";
     //========================================= User Notification Collection
     public static final String USER_NOTIFICATION_COLLECTION = "user_notification";
     //========================================= Storage
     public static final String PROFILE_IMAGES = "profile_images";
-    private static final String USER_NAME = "user_name";
-    private static final String TAG = "Database";
+    public static final String USER_NAME = "user_name";
+    public static final String TAG = "Database";
 
 
     private static Database instance;
@@ -85,7 +84,6 @@ public class Database {
     private final MutableLiveData<Member> currentMember = new MutableLiveData<>();
     private final MutableLiveData<Home> currentHome = new MutableLiveData<>();
     private final MutableLiveData<Receipt> currentReceipt = new MutableLiveData<>();
-    private final MutableLiveData<Reminder> currentReminder = new MutableLiveData<>();
     private final MutableLiveData<Notification> currentNotification = new MutableLiveData<>();
     private final MutableLiveData<ArrayList<Home>> searchResult = new MutableLiveData<>();
 
@@ -114,7 +112,7 @@ public class Database {
 
     /*
      * These methods should be used when trying to access data right after navigation to a new fragment
-     * without being invoked by explicit action.
+     * without being invoked by an explicit action.
      * After calling these methods the MutableLiveData will be modified and all observes will be notified about the change.
      * */
 
@@ -164,9 +162,7 @@ public class Database {
                             Home home = new Home(homeId, homeName);
                             home_role.put(home, role);
                         }
-
                         // 2. Post the value of the new current member.
-
                         Member member = new Member(currentUser.getValue(), home_role);
                         currentMember.postValue(member);
                     } else {
@@ -194,29 +190,27 @@ public class Database {
                             Home home = new Home(homeId, homeName);
                             home_role.put(home, role);
                         }
-
                         currentMember.getValue().setHomeRole(home_role);
 
                         // 2. Post value of the current Member
 
                         currentMember.postValue(currentMember.getValue());
-
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
                     }
                 });
     }
 
-    public void updateCurrentNotification(){
-        if(currentMember.getValue() != null){
+    public void updateCurrentNotification() {
+        if (currentMember.getValue() != null) {
 
             Notification notification = new Notification();
 
-            // 1. Get all admin Notification for this user.
+            // 1. Get all admin notification for this user.
 
-            for(Home home: currentMember.getValue().getHome_role().keySet()){
+            for (Home home : currentMember.getValue().getHome_role().keySet()) {
 
-                if(currentMember.getValue().getHome_role().get(home) == Member.ADMIN_ROLE){
+                if (currentMember.getValue().getHome_role().get(home) == Member.ADMIN_ROLE) {
                     firestore.collection(HOME_COLLECTION)
                             .document(home.getId())
                             .collection(NOTIFICATION_COLLECTION)
@@ -227,7 +221,7 @@ public class Database {
 
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                                     AdminNotification an = new AdminNotification(
-                                            queryDocumentSnapshot.getString(USER_EMAIL),
+                                            queryDocumentSnapshot.getString(USER_ID),
                                             home.getId(),
                                             home.getName(),
                                             queryDocumentSnapshot.getString(USER_NAME)
@@ -236,36 +230,6 @@ public class Database {
                                 }
 
                                 notification.setAdminNotifications(adminNotifications);
-
-
-                                // 2. Get all user Notification for this user.
-
-                                ArrayList<UserNotification> userNotifications = new ArrayList<>();
-
-                                firestore.collection(USER_NOTIFICATION_COLLECTION)
-                                        .whereEqualTo(USER_EMAIL, currentMember.getValue().getEmailAddress())
-                                        .get()
-                                        .addOnSuccessListener(userNotificationsSnapshots -> {
-
-                                            for (QueryDocumentSnapshot userNotificationSnapshot : userNotificationsSnapshots) {
-                                                UserNotification un = new UserNotification(
-                                                        userNotificationSnapshot.getString(HOME_NAME),
-                                                        userNotificationSnapshot.getString(NOTIFICATION_TYPE),
-                                                        userNotificationSnapshot.getString(HOME_ID)
-                                                );
-                                                userNotifications.add(un);
-                                            }
-
-                                            notification.setUserNotifications(userNotifications);
-
-                                            currentNotification.postValue(notification);
-
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            resultMessage.postValue(e.getMessage());
-                                            Log.w(TAG, "updateCurrentMember: ", e);
-                                        });
-
                             })
                             .addOnFailureListener(e -> {
                                 resultMessage.postValue(e.getMessage());
@@ -274,6 +238,35 @@ public class Database {
                 }
 
             }
+
+            // 2. Get all user notification for this user.
+
+            ArrayList<UserNotification> userNotifications = new ArrayList<>();
+
+            firestore.collection(USER_NOTIFICATION_COLLECTION)
+                    .whereEqualTo(USER_ID, currentMember.getValue().getId())
+                    .get()
+                    .addOnSuccessListener(userNotificationsSnapshots -> {
+
+                        for (QueryDocumentSnapshot userNotificationSnapshot : userNotificationsSnapshots) {
+                            UserNotification un = new UserNotification(
+                                    userNotificationSnapshot.getString(HOME_NAME),
+                                    userNotificationSnapshot.getString(NOTIFICATION_TYPE),
+                                    userNotificationSnapshot.getString(HOME_ID)
+                            );
+                            userNotifications.add(un);
+                        }
+
+                        notification.setUserNotifications(userNotifications);
+
+                        currentNotification.postValue(notification);
+
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
+                        Log.w(TAG, "updateCurrentMember: ", e);
+                    });
+
 
         }
     }
@@ -287,61 +280,49 @@ public class Database {
      */
 
     public void updateCurrentHome(String homeId) {
-
-        // 1. Get selected home with homeId
-
         if (currentMember.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
                     .document(homeId)
                     .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-                            DocumentSnapshot homeDocument = task.getResult();
-                            if (homeDocument.exists()) {
+                    .addOnSuccessListener(homeDocumentSnapshot -> {
 
-                                // 2. Get all Receipts of this home
+                        // 2. Get all Receipts of this home
+                        firestore.collection(HOME_COLLECTION)
+                                .document(homeDocumentSnapshot.getId())
+                                .collection(RECEIPT_COLLECTION)
+                                .get()
+                                .addOnSuccessListener(receiptDocumentSnapshots -> {
+                                    ArrayList<Receipt> receipts = new ArrayList<>();
+                                    for (QueryDocumentSnapshot receiptDocument : receiptDocumentSnapshots) {
+                                        Receipt receipt = new Receipt(
+                                                receiptDocument.getId(),
+                                                receiptDocument.getString(RECEIPT_NAME),
+                                                receiptDocument.getDate(RECEIPT_DATE),
+                                                receiptDocument.getDouble(RECEIPT_TOTAL),
+                                                receiptDocument.getString(MEMBER_NAME),
+                                                receiptDocument.getString(MEMBER_ID)
+                                        );
+                                        receipts.add(receipt);
+                                    }
 
-                                firestore.collection(HOME_COLLECTION)
-                                        .document(homeDocument.getId())
-                                        .collection(RECEIPT_COLLECTION)
-                                        .get()
-                                        .addOnCompleteListener(task1 -> {
-                                            if (task1.isSuccessful()) {
-                                                ArrayList<Receipt> receipts = new ArrayList<>();
-                                                for (QueryDocumentSnapshot receiptDocument : task1.getResult()) {
-                                                    Receipt receipt = new Receipt(
-                                                            receiptDocument.getId(),
-                                                            receiptDocument.getString(RECEIPT_NAME),
-                                                            receiptDocument.getDate(RECEIPT_DATE),
-                                                            receiptDocument.getDouble(RECEIPT_TOTAL),
-                                                            receiptDocument.getString(MEMBER_NAME),
-                                                            receiptDocument.getString(MEMBER_ID)
-                                                    );
-                                                    receipts.add(receipt);
-                                                }
+                                    // 3. Create new Home
+                                    Home home = new Home(
+                                            homeDocumentSnapshot.getId(),
+                                            homeDocumentSnapshot.getString(HOME_NAME),
+                                            homeDocumentSnapshot.getString(HOME_CODE),
+                                            homeDocumentSnapshot.getBoolean(HOME_VISIBILITY),
+                                            receipts
+                                    );
 
-
-                                                // 3. Create new Home
-
-                                                Home home = new Home(
-                                                        homeDocument.getId(),
-                                                        homeDocument.getString(HOME_NAME),
-                                                        homeDocument.getString(HOME_CODE),
-                                                        homeDocument.getBoolean(HOME_VISIBILITY),
-                                                        receipts
-                                                );
-
-                                                // 4. Post the value of the new home
-
-                                                currentHome.postValue(home);
-                                            } else {
-                                                resultMessage.postValue(task1.getException().getMessage());
-                                            }
-                                        });
-                            }
-                        } else {
-                            resultMessage.postValue(task.getException().getMessage());
-                        }
+                                    // 4. Post the value of the new home
+                                    currentHome.postValue(home);
+                                })
+                                .addOnFailureListener(e -> {
+                                    resultMessage.postValue(e.getMessage());
+                                });
+                    })
+                    .addOnFailureListener(e -> {
+                        resultMessage.postValue(e.getMessage());
                     });
         }
     }
@@ -406,47 +387,6 @@ public class Database {
                         } else {
                             resultMessage.postValue(task.getException().getMessage());
                             Log.w(TAG, "Error getting Receipt", task.getException());
-                        }
-                    });
-        }
-    }
-
-    /**
-     * Try to get the reminder associated with @param reminderId.
-     * If successful, currentReminder will be updated with reminder data.
-     * If not, currentReminder will be null.
-     *
-     * @param reminderId reminderId to get from the database.
-     */
-
-    public void updateCurrentReminder(String reminderId) {
-        if (currentHome.getValue() != null) {
-
-            // 1. Get the reminder related to this home
-
-            firestore.collection(HOME_COLLECTION)
-                    .document(currentHome.getValue().getId())
-                    .collection(REMINDER_COLLECTION)
-                    .document(reminderId)
-                    .get()
-                    .addOnCompleteListener(task -> {
-                        if (task.isSuccessful()) {
-
-                            // 2. Create the reminder
-
-                            DocumentSnapshot document = task.getResult();
-                            Reminder reminder = new Reminder(
-                                    document.getId(),
-                                    document.getString(REMINDER_NAME),
-                                    document.getString(REMINDER_FREQUENCY),
-                                    document.getDate(REMINDER_DATE)
-                            );
-
-                            // 3. Post reminder value
-
-                            currentReminder.postValue(reminder);
-                        } else {
-                            resultMessage.postValue(task.getException().getMessage());
                         }
                     });
         }
@@ -563,11 +503,13 @@ public class Database {
         return currentReceipt;
     }
 
-    public MutableLiveData<Notification> getCurrentNotification() { return currentNotification; }
+    public MutableLiveData<Notification> getCurrentNotification() {
+        return currentNotification;
+    }
 
-    public MutableLiveData<Reminder> getCurrentReminder () { return currentReminder; }
-
-    public MutableLiveData<ArrayList<Home>> getSearchResult() {return searchResult; }
+    public MutableLiveData<ArrayList<Home>> getSearchResult() {
+        return searchResult;
+    }
 
     //========================================= Log in/Sign up Methods
 
@@ -602,20 +544,24 @@ public class Database {
                                     currentUser.postValue(user);
                                 } else {
                                     resultMessage.postValue(task2.getException().getLocalizedMessage());
-                                    currentUser.postValue(null);
                                 }
                             });
                         }
                     } else {
                         resultMessage.postValue(task.getException().getLocalizedMessage());
-                        currentUser.postValue(null);
                     }
                 });
     }
 
     public void signOut() {
+        currentUser.setValue(null);
+        resultMessage.setValue(null);
+        currentMember.setValue(null);
+        currentHome.setValue(null);
+        currentReceipt.setValue(null);
+        currentNotification.setValue(null);
+        searchResult.setValue(null);
         firebaseAuth.signOut();
-        currentUser.postValue(null);
     }
 
     public void loginWithGoogle(String idToken) {
@@ -626,7 +572,6 @@ public class Database {
                 currentUser.postValue(user);
             } else {
                 resultMessage.postValue(task.getException().getLocalizedMessage());
-                currentUser.postValue(null);
             }
         });
     }
@@ -680,7 +625,6 @@ public class Database {
                     .addOnSuccessListener(aVoid -> {
                         Log.d(TAG, "Reminder successfully deleted!");
                         resultMessage.postValue(application.getString(R.string.reminder_deleted_message));
-                        currentReminder.postValue(null);
                     })
 
                     .addOnFailureListener(e -> {
@@ -751,6 +695,7 @@ public class Database {
                             Map<String, Object> itemMap = new HashMap<>();
                             itemMap.put(ITEM_NAME, item.getName());
                             itemMap.put(ITEM_PRICE, item.getPrice());
+
                             documentReference.collection(ITEM_COLLECTION)
                                     .add(item);
                         }
@@ -771,9 +716,24 @@ public class Database {
                     .document(receiptId)
                     .delete()
                     .addOnSuccessListener(aVoid -> {
+
+                        firestore.collection(HOME_COLLECTION)
+                                .document(currentHome.getValue().getId())
+                                .collection(RECEIPT_COLLECTION)
+                                .document(receiptId)
+                                .collection(ITEM_COLLECTION)
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                        queryDocumentSnapshot.getReference().delete();
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+
+                                });
+
                         Log.d(TAG, "Receipt successfully deleted!");
                         resultMessage.postValue("Receipt successfully deleted!");
-                        currentReceipt.postValue(null);
                     })
                     .addOnFailureListener(e -> {
                         resultMessage.postValue(e.getMessage());
@@ -811,29 +771,48 @@ public class Database {
                     .update(data)
                     .addOnSuccessListener(aVoid -> {
 
-                        // 3. Update items
+                        // 3. Delete All Items in the Receipt
 
-                        for (Item item : updatedReceipt.getItems()) {
-                            Map<String, Object> newItem = new HashMap<>();
-                            newItem.put(ITEM_NAME, item.getName());
-                            newItem.put(ITEM_PRICE, item.getPrice());
+                        firestore.collection(HOME_COLLECTION)
+                                .document(currentHome.getValue().getId())
+                                .collection(RECEIPT_COLLECTION)
+                                .document(updatedReceipt.getId())
+                                .collection(ITEM_COLLECTION)
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                                        queryDocumentSnapshot.getReference().delete();
+                                    }
 
-                            firestore.collection(HOME_COLLECTION)
-                                    .document(currentHome.getValue().getId())
-                                    .collection(RECEIPT_COLLECTION)
-                                    .document(updatedReceipt.getId())
-                                    .collection(ITEM_COLLECTION)
-                                    .document(item.getId())
-                                    .update(newItem)
-                                    .addOnSuccessListener(aVoid1 -> {
-                                        Log.d(TAG, "Receipt successfully updated!");
-                                        resultMessage.postValue(application.getString(R.string.receipt_updated_message));
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        Log.w(TAG, "Error updating item collection", e);
-                                        resultMessage.postValue(e.getMessage());
-                                    });
-                        }
+                                    // 4. Add all items
+
+                                    for (Item item : updatedReceipt.getItems()) {
+                                        Map<String, Object> newItem = new HashMap<>();
+                                        newItem.put(ITEM_NAME, item.getName());
+                                        newItem.put(ITEM_PRICE, item.getPrice());
+
+                                        firestore.collection(HOME_COLLECTION)
+                                                .document(currentHome.getValue().getId())
+                                                .collection(RECEIPT_COLLECTION)
+                                                .document(updatedReceipt.getId())
+                                                .collection(ITEM_COLLECTION)
+                                                .add(newItem)
+                                                .addOnSuccessListener(aVoid1 -> {
+                                                    Log.d(TAG, "Receipt successfully updated!");
+                                                    resultMessage.postValue(application.getString(R.string.receipt_updated_message));
+                                                })
+                                                .addOnFailureListener(e -> {
+                                                    Log.w(TAG, "Error updating item collection", e);
+                                                    resultMessage.postValue(e.getMessage());
+                                                });
+                                    }
+
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.w(TAG, "Error updating item collection", e);
+                                    resultMessage.postValue(e.getMessage());
+                                });
+
                     })
                     .addOnFailureListener(e -> {
                         Log.w(TAG, "Error updating receipt Collection", e);
@@ -855,7 +834,7 @@ public class Database {
         Map<String, Object> data = new HashMap<>();
         data.put(HOME_NAME, adminNotification.getHomeName());
         data.put(NOTIFICATION_TYPE, UserNotification.TYPE_DECLINE);
-        data.put(USER_EMAIL, adminNotification.getUserEmail());
+        data.put(USER_ID, adminNotification.getUserId());
         data.put(HOME_ID, adminNotification.getHomeId());
 
         firestore.collection(USER_NOTIFICATION_COLLECTION)
@@ -878,16 +857,32 @@ public class Database {
 
         // 2. Add Notification to the user
 
-        Map<String, Object> data = new HashMap<>();
-        data.put(HOME_NAME, adminNotification.getHomeName());
-        data.put(NOTIFICATION_TYPE, UserNotification.TYPE_ACCEPT);
-        data.put(USER_EMAIL, adminNotification.getUserEmail());
-        data.put(HOME_ID, adminNotification.getHomeId());
+        Map<String, Object> user_notification = new HashMap<>();
+        user_notification.put(HOME_NAME, adminNotification.getHomeName());
+        user_notification.put(NOTIFICATION_TYPE, UserNotification.TYPE_ACCEPT);
+        user_notification.put(USER_ID, adminNotification.getUserId());
+        user_notification.put(HOME_ID, adminNotification.getHomeId());
 
         firestore.collection(USER_NOTIFICATION_COLLECTION)
-                .add(data)
+                .add(user_notification)
                 .addOnSuccessListener(documentReference -> {
-                    resultMessage.postValue(application.getString(R.string.join_request_accepted_message));
+
+                    Map<String, Object> homeUserData = new HashMap<>();
+                    homeUserData.put(HOME_NAME, adminNotification.getHomeName());
+                    homeUserData.put(HOME_ID, adminNotification.getHomeId());
+                    homeUserData.put(MEMBER_ID, adminNotification.getUserId());
+                    homeUserData.put(MEMBER_NAME, adminNotification.getUserName());
+                    homeUserData.put(MEMBER_ROLE, Member.MEMBER_ROLE);
+
+                    firestore.collection(HOME_USER_COLLECTION)
+                            .add(homeUserData)
+                            .addOnSuccessListener(documentReference1 -> {
+                                resultMessage.postValue(application.getString(R.string.join_request_accepted_message));
+                            })
+                            .addOnFailureListener(e -> {
+                                resultMessage.postValue(e.getMessage());
+                                Log.w(TAG, "acceptRequestToJoin: ", e);
+                            });
                 })
                 .addOnFailureListener(e -> {
                     resultMessage.postValue(e.getMessage());
@@ -896,8 +891,11 @@ public class Database {
     }
 
     private void deleteNotificationFromHome(AdminNotification adminNotification) {
-        firestore.collection(NOTIFICATION_COLLECTION)
-                .whereEqualTo(USER_EMAIL, adminNotification.getUserEmail())
+
+        firestore.collection(HOME_COLLECTION)
+                .document(adminNotification.getHomeId())
+                .collection(NOTIFICATION_COLLECTION)
+                .whereEqualTo(USER_ID, adminNotification.getUserId())
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
@@ -910,53 +908,17 @@ public class Database {
                 });
     }
 
-    public void removeMemberFromHome(String memberId) {
-        if (currentHome.getValue() != null) {
-            firestore.collection(HOME_USER_COLLECTION)
-                    .whereEqualTo(MEMBER_ID, memberId)
-                    .whereEqualTo(HOME_ID, currentHome.getValue().getId())
-                    .get()
-                    .addOnSuccessListener(queryDocumentSnapshots -> {
-                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                            firestore.collection(HOME_USER_COLLECTION)
-                                    .document(queryDocumentSnapshot.getId())
-                                    .delete();
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "removeMemberFromHome: ", e);
-                    });
-        }
-    }
-
-    public void inviteUser(String userEmail) {
-        if (currentHome.getValue() != null) {
-
-            Map<String, Object> data = new HashMap<>();
-            data.put(HOME_NAME, currentHome.getValue().getName());
-            data.put(NOTIFICATION_TYPE, UserNotification.TYPE_INVITATION);
-            data.put(USER_EMAIL, userEmail);
-            data.put(HOME_ID, currentHome.getValue().getId());
-
-            firestore.collection(USER_NOTIFICATION_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue(application.getString(R.string.invitation_sent_message));
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "inviteUser: ", e);
-                    });
-        }
-    }
-
     public void deleteHome() {
         if (currentHome.getValue() != null) {
+
+            // 1. Delete home collection
+
             firestore.collection(HOME_COLLECTION)
                     .document(currentHome.getValue().getId())
                     .delete()
                     .addOnSuccessListener(aVoid -> {
+
+                        // 2. Delete home_user collection related to this home
 
                         firestore.collection(HOME_USER_COLLECTION)
                                 .whereEqualTo(HOME_ID, currentHome.getValue().getId())
@@ -967,8 +929,73 @@ public class Database {
                                                 .document(queryDocumentSnapshot.getId())
                                                 .delete();
                                     }
-                                    resultMessage.postValue(application.getString(R.string.home_deleted_message));
-                                    Log.i(TAG, "Home was deleted successfully");
+
+                                    // 3. Delete receipts related to this home
+
+                                    firestore.collection(HOME_COLLECTION)
+                                            .document(currentHome.getValue().getId())
+                                            .collection(RECEIPT_COLLECTION)
+                                            .get()
+                                            .addOnSuccessListener(receiptDocuments -> {
+
+                                                // 4. Delete items of this receipt
+
+                                                for (QueryDocumentSnapshot receiptDocument : receiptDocuments) {
+                                                    receiptDocument
+                                                            .getReference()
+                                                            .collection(ITEM_COLLECTION)
+                                                            .get()
+                                                            .addOnSuccessListener(itemDocuments -> {
+                                                                for (QueryDocumentSnapshot itemDocument : itemDocuments) {
+                                                                    itemDocument.getReference().delete();
+                                                                }
+                                                            }).addOnFailureListener(e -> {
+                                                        resultMessage.postValue(e.getMessage());
+                                                        Log.i(TAG, "Error by deleting Home");
+                                                    });
+                                                    receiptDocument.getReference().delete();
+                                                }
+
+                                                // 5. Delete all reminders related to this home
+
+                                                firestore.collection(HOME_COLLECTION)
+                                                        .document(currentHome.getValue().getId())
+                                                        .collection(REMINDER_COLLECTION)
+                                                        .get()
+                                                        .addOnSuccessListener(reminderDocuments -> {
+                                                            for (QueryDocumentSnapshot reminderDocument : reminderDocuments) {
+                                                                reminderDocument.getReference().delete();
+                                                            }
+
+                                                            // 5. Delete all notifications related to this home
+
+                                                            firestore.collection(HOME_COLLECTION)
+                                                                    .document(currentHome.getValue().getId())
+                                                                    .collection(NOTIFICATION_COLLECTION)
+                                                                    .get()
+                                                                    .addOnSuccessListener(notificationDocuments -> {
+                                                                        for (QueryDocumentSnapshot notificationDocument : notificationDocuments) {
+                                                                            notificationDocument.getReference().delete();
+                                                                        }
+                                                                        resultMessage.postValue(application.getString(R.string.home_deleted_message));
+                                                                        currentHome.postValue(null);
+                                                                        Log.i(TAG, "Home was deleted successfully");
+                                                                    })
+                                                                    .addOnFailureListener(e -> {
+                                                                        resultMessage.postValue(e.getMessage());
+                                                                        Log.i(TAG, "Error by deleting Home");
+                                                                    });
+
+                                                        })
+                                                        .addOnFailureListener(e -> {
+                                                            resultMessage.postValue(e.getMessage());
+                                                            Log.i(TAG, "Error by deleting Home");
+                                                        });
+                                            })
+                                            .addOnFailureListener(e -> {
+                                                resultMessage.postValue(e.getMessage());
+                                                Log.i(TAG, "Error by deleting Home");
+                                            });
                                 })
                                 .addOnFailureListener(e -> {
                                     resultMessage.postValue(e.getMessage());
@@ -984,40 +1011,41 @@ public class Database {
 
     public void updateHome(Home newHome) {
 
-        // 1. Update home name and home visibility
         firestore.collection(HOME_COLLECTION)
                 .document(newHome.getId())
                 .update(HOME_NAME, newHome.getName(),
                         HOME_VISIBILITY, newHome.getVisibility())
                 .addOnSuccessListener(aVoid -> {
 
-                    // 2. Check if there is a deleted members and delete them from the user_home collection
-                    // 3. Update the user_home collection with the new home name and new member roles.
-
                     firestore.collection(HOME_USER_COLLECTION)
                             .whereEqualTo(HOME_ID, newHome.getId())
                             .get()
                             .addOnSuccessListener(queryDocumentSnapshots -> {
                                 for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-                                    String queryMemberId = queryDocumentSnapshot.getString(MEMBER_ID);
-                                    Member m = getMember(newHome.getMember_role().keySet(), queryMemberId);
-                                    if (m != null) { // Member still there > don't delete + update
-                                        queryDocumentSnapshot
-                                                .getReference()
-                                                .update(MEMBER_NAME, m.getName(),
-                                                        MEMBER_ROLE, newHome.getMember_role().get(m))
-                                                .addOnSuccessListener(aVoid1 -> {
-                                                    currentHome.postValue(newHome);
-                                                })
-                                                .addOnFailureListener(e -> {
-                                                    resultMessage.postValue(e.getMessage());
-                                                    Log.i(TAG, "updateHome: ", e);
-                                                });
-                                    } else { // Member removed so delete it form the user_home collection
-                                        queryDocumentSnapshot.getReference().delete();
-                                    }
-
+                                    queryDocumentSnapshot.getReference().delete();
                                 }
+
+                                for (Member newMember : newHome.getMember_role().keySet()) {
+                                    Boolean memberRole = newHome.getMember_role().get(newMember);
+
+                                    Map<String, Object> data = new HashMap<>();
+                                    data.put(HOME_ID, newHome.getId());
+                                    data.put(HOME_NAME, newHome.getName());
+                                    data.put(MEMBER_ID, newMember.getId());
+                                    data.put(MEMBER_NAME, newMember.getName());
+                                    data.put(MEMBER_ROLE, memberRole);
+
+                                    firestore.collection(HOME_USER_COLLECTION)
+                                            .add(data)
+                                            .addOnFailureListener(e -> {
+                                                resultMessage.postValue(e.getMessage());
+                                                Log.i(TAG, "updateHome: ", e);
+                                            });
+                                }
+
+                                currentHome.postValue(newHome);
+                                resultMessage.postValue(application.getString(R.string.home_updated_message));
+
                             })
                             .addOnFailureListener(e -> {
                                 resultMessage.postValue(e.getMessage());
@@ -1029,7 +1057,6 @@ public class Database {
                     Log.i(TAG, "updateHome: ", e);
                 });
     }
-
 
     //========================================= Member Functions
 
@@ -1052,18 +1079,22 @@ public class Database {
                         firestore.collection(HOME_USER_COLLECTION)
                                 .whereEqualTo(HOME_ID, currentHome.getValue().getId())
                                 .get()
-                                .addOnSuccessListener(queryDocumentSnapshots1 -> {
-                                    if (queryDocumentSnapshots.isEmpty()) { // home is empty > delete it
-                                        firestore.collection(HOME_COLLECTION)
-                                                .document(currentHome.getValue().getId())
-                                                .delete();
-                                        resultMessage.postValue(application.getString(R.string.member_left_home_message));
+                                .addOnSuccessListener(homeUserDocuments -> {
+                                    boolean homeUserIsEmpty = true;
+                                    for (QueryDocumentSnapshot q : homeUserDocuments) {
+                                        homeUserIsEmpty = false;
+                                        break;
+                                    }
+                                    if (homeUserIsEmpty) {
+                                        deleteHome();
+                                    } else {
 
-                                    } else { // home is not empty > check if there is an admin
-                                        Boolean thereIsNoAdmin = true;
+                                        // 3. Check if the user left was the last admin. If so make new Admin
 
-                                        for (QueryDocumentSnapshot queryDocumentSnapshot1 : queryDocumentSnapshots) {
-                                            Boolean memberRole = queryDocumentSnapshot1.getBoolean(MEMBER_ROLE);
+                                        boolean thereIsNoAdmin = true;
+
+                                        for (QueryDocumentSnapshot homeUserDocument : homeUserDocuments) {
+                                            Boolean memberRole = homeUserDocument.getBoolean(MEMBER_ROLE);
                                             if (memberRole == Member.ADMIN_ROLE) { // there is an admin
                                                 thereIsNoAdmin = false;
                                                 break;
@@ -1071,8 +1102,8 @@ public class Database {
                                         }
 
                                         if (thereIsNoAdmin) {
-                                            for (QueryDocumentSnapshot queryDocumentSnapshot1 : queryDocumentSnapshots) {
-                                                queryDocumentSnapshot1
+                                            for (QueryDocumentSnapshot homeUserDocument : homeUserDocuments) {
+                                                homeUserDocument
                                                         .getReference()
                                                         .update(MEMBER_ROLE, Member.ADMIN_ROLE)
                                                         .addOnSuccessListener(aVoid -> {
@@ -1082,9 +1113,9 @@ public class Database {
                                                             resultMessage.postValue(e.getMessage());
                                                             Log.w(TAG, "leaveHome: ", e);
                                                         });
+                                                break;
                                             }
                                         }
-
                                     }
                                 })
                                 .addOnFailureListener(e -> {
@@ -1101,50 +1132,14 @@ public class Database {
         }
     }
 
-    public void getStatistics() {
-    }
-
-    public void acceptInvitation(UserNotification userNotification) {
-        // 1. delete notification form user notification collection
-
-        deleteUserNotification(userNotification);
-
-        // 2. add user to home_user collection as member
-
-        if(currentMember.getValue() != null){
-
-            Map<String, Object> data = new HashMap<>();
-            data.put(HOME_ID, userNotification.getHomeId());
-            data.put(HOME_NAME, userNotification.getHomeName());
-            data.put(MEMBER_ID, currentMember.getValue().getId());
-            data.put(MEMBER_NAME, currentMember.getValue().getName());
-            data.put(MEMBER_ROLE, Member.MEMBER_ROLE);
-
-            firestore.collection(HOME_USER_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue("User added to home successfully");
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "acceptInvitation: ", e);
-                    });
-        }
-    }
-
-    public void declineInvitation(UserNotification userNotification) {
-        // 1. delete notification form user notification collection
-        deleteUserNotification(userNotification);
-    }
-
     public void deleteUserNotification(UserNotification userNotification) {
         if (currentMember.getValue() != null) {
             firestore.collection(USER_NOTIFICATION_COLLECTION)
                     .whereEqualTo(HOME_ID, userNotification.getHomeId())
-                    .whereEqualTo(USER_EMAIL, currentMember.getValue().getEmailAddress())
+                    .whereEqualTo(USER_ID, currentMember.getValue().getId())
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-                        for(QueryDocumentSnapshot queryDocumentSnapshot: queryDocumentSnapshots){
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                             queryDocumentSnapshot.getReference().delete();
                         }
                     })
@@ -1160,26 +1155,47 @@ public class Database {
 
     public void sendJoinRequest(String homeId) {
         if (currentMember.getValue() != null) {
-            String userEmail = currentMember.getValue().getEmailAddress();
+            String userId = currentMember.getValue().getId();
             String userName = currentMember.getValue().getName();
             Map<String, Object> data = new HashMap<>();
-            data.put(USER_EMAIL, userEmail);
+            data.put(USER_ID, userId);
             data.put(USER_NAME, userName);
+
+            // check if there is a unanswered request first
+            // if yes don't add new request
 
             firestore.collection(HOME_COLLECTION)
                     .document(homeId)
                     .collection(NOTIFICATION_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
-                        resultMessage.postValue("The request was sent successfully");
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "declineRequestToJoin: ", e);
-                    });
+                    .whereEqualTo(USER_ID, userId)
+                    .get()
+                    .addOnSuccessListener(queryDocumentSnapshots -> {
+                        boolean thereIsARequest = false;
+                        for (QueryDocumentSnapshot q : queryDocumentSnapshots) {
+                            thereIsARequest = true;
+                        }
+                        if (!thereIsARequest) {
+                            firestore.collection(HOME_COLLECTION)
+                                    .document(homeId)
+                                    .collection(NOTIFICATION_COLLECTION)
+                                    .add(data)
+                                    .addOnSuccessListener(documentReference -> {
+                                        resultMessage.postValue(application.getString(R.string.request_sent_successfully));
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        resultMessage.postValue(e.getMessage());
+                                        Log.w(TAG, "sendJoinRequest: ", e);
+                                    });
+                        } else {
+                            resultMessage.postValue("You sent a join request to this Home before");
+                        }
+
+                    }).addOnFailureListener(e -> {
+                resultMessage.postValue(e.getMessage());
+                Log.w(TAG, "sendJoinRequest: ", e);
+            });
         }
     }
-
 
     /**
      * Try to update the information of the currently logged in user.
@@ -1199,7 +1215,6 @@ public class Database {
          */
 
         if (localUri != null) { // new Photo >> delete old photo (if there is one) + update new one + update member
-//            Uri image = Uri.fromFile(new File(String.valueOf(localUri)));
             StorageReference photoRef = imageStorageRef.child(newMember.getId());
             UploadTask uploadTask = photoRef.putFile(localUri);
 
@@ -1210,11 +1225,9 @@ public class Database {
                         })
                         .addOnFailureListener(e -> {
                             resultMessage.postValue(e.getMessage());
-//                            Log.w(TAG, "updateMember: ",e);
                         });
             }).addOnFailureListener(e -> {
                 resultMessage.postValue(e.getMessage());
-//                Log.w(TAG, "updateMember: ",e);
             });
         } else {
             updateMemberWithNewUri(newMember, null);
@@ -1305,19 +1318,15 @@ public class Database {
     }
 
     public void searchHome(String homeCode) {
-
-        if(currentMember.getValue() != null){
+        if (currentMember.getValue() != null) {
 
             // 1. Search for all homes with this code
-
             ArrayList<Home> homes = new ArrayList<>();
 
             firestore.collection(HOME_COLLECTION)
                     .whereEqualTo(HOME_CODE, homeCode)
                     .get()
                     .addOnSuccessListener(queryDocumentSnapshots -> {
-
-
                         for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
                             Boolean homeVisibility = queryDocumentSnapshot.getBoolean(HOME_VISIBILITY);
                             // 2. Ignore private homes
@@ -1328,7 +1337,7 @@ public class Database {
                             String homeId = queryDocumentSnapshot.getId();
                             Home home = new Home(homeId, homeName);
                             // 3. if user is member in this home ignore it
-                            if(isMember(home)){
+                            if (isMember(home)) {
                                 continue;
                             }
                             homes.add(home);
@@ -1347,7 +1356,6 @@ public class Database {
         searchResult.postValue(null);
     }
 
-
     /**
      * Try to create a new Home associated with the currentMember.
      * If successful, a new Home for the currentMember is created.
@@ -1364,7 +1372,12 @@ public class Database {
 
             Map<String, Object> data = new HashMap<>();
             data.put(HOME_NAME, homeName);
-            data.put(HOME_VISIBILITY, isPrivate);
+
+            if (isPrivate) {
+                data.put(HOME_VISIBILITY, Home.VISIBILITY_PRIVATE);
+            } else {
+                data.put(HOME_VISIBILITY, Home.VISIBILITY_PUBLIC);
+            }
             data.put(HOME_CODE, homeCode);
 
             firestore.collection(HOME_COLLECTION)
@@ -1417,28 +1430,17 @@ public class Database {
         return null;
     }
 
-    private Member getMember(Set<Member> keySet, String queryMemberId) {
-        for (Member m : keySet) {
-            if (m.getId().equals(queryMemberId)) {
-                return m;
-            }
-        }
-        return null;
-    }
-
     private boolean isMember(Home home) {
-        boolean isMember =false;
+        boolean isMember = false;
 
-        if(currentMember.getValue() != null){
-            for (Home memberHome: currentMember.getValue().getHome_role().keySet()) {
-                if (memberHome.getId().equals(home.getId())){
+        if (currentMember.getValue() != null) {
+            for (Home memberHome : currentMember.getValue().getHome_role().keySet()) {
+                if (memberHome.getId().equals(home.getId())) {
                     isMember = true;
                     break;
                 }
             }
         }
-
         return isMember;
     }
-
 }

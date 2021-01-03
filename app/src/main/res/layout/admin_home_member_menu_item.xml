@@ -1,32 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/admin"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="start|end">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="50dp"
+    android:layout_width="match_parent">
 
     <TextView
-        android:id="@+id/item_name"
+        android:id="@+id/home_edit_member_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/name" />
+        android:text="@string/name"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.SwitchCompat
         android:id="@+id/admin_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_width="99dp"
+        android:layout_height="17dp"
+        android:layout_weight="0.1"
         android:gravity="end"
-        android:text="@string/admin" />
+        android:text="@string/admin"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.782"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521" />
 
     <ImageView
-        android:id="@+id/delete_item"
-        android:layout_width="40dp"
+        android:id="@+id/home_edit_delete_member"
+        android:layout_width="23dp"
         android:layout_height="23dp"
-        android:layout_weight="1"
+        android:layout_weight="0.2"
         android:contentDescription="@string/delete_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/admin_switch"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/delete_icon" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    android:id="@+id/admin"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:gravity="start|end">-->
+
+
+
+<!--</LinearLayout>-->

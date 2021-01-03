@@ -8,6 +8,8 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.mabem.homebook.R;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -29,4 +31,12 @@ public class Util {
         editor.putBoolean(activity.getResources().getString(R.string.saved_remember_me_preference), isChecked);
         editor.apply();
     }
+
+    public static Double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        BigDecimal bd = new BigDecimal(Double.toString(value));
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
 }

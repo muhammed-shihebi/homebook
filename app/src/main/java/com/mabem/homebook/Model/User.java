@@ -43,20 +43,8 @@ public class User implements Serializable {
         return emailAddress;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public Uri getImageURI() {
         return imageURI;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
     }
 
     public void setImageURI(Uri imageURI) {

@@ -40,15 +40,15 @@ public class AddNewHomeFragment extends Fragment {
                 homesViewModel.setShouldShowResultMessage(true);
             }
             homesViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                if(homesViewModel.getShouldShowResultMessage()){
-                    Toast.makeText(requireContext(), homesViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(v).navigate(R.id.action_addNewHomeFragment_to_mainFragment);
+                if(s != null){
+                    if(homesViewModel.getShouldShowResultMessage()){
+                        Toast.makeText(requireContext(), homesViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                        Navigation.findNavController(v).navigate(R.id.action_addNewHomeFragment_to_mainFragment);
+                    }
+                    homesViewModel.setShouldShowResultMessage(false);
                 }
-                homesViewModel.setShouldShowResultMessage(false);
             });
         });
-
-
 
         return createHomeBinding.getRoot();
     }

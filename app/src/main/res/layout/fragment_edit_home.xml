@@ -28,29 +28,6 @@
         app:layout_constraintVertical_bias="0.113"
         tools:layout_constraintCircleRadius="50dp" />
 
-    <EditText
-        android:id="@+id/invite_email"
-        android:layout_width="232dp"
-        android:layout_height="39dp"
-        android:autofillHints=""
-        android:background="@drawable/rounded_edit_text"
-        android:ellipsize="none"
-        android:ems="50"
-        android:fadingEdge="horizontal"
-        android:hint="@string/email"
-        android:inputType="textEmailAddress"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp"
-        android:shadowColor="#FAF3F3"
-        app:layout_constraintBottom_toTopOf="@+id/save_home_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
-        app:layout_constraintVertical_bias="0.963"
-        tools:layout_constraintCircleRadius="50dp"
-        tools:ignore="TextFields" />
-
     <CheckBox
         android:id="@+id/private_checkbox"
         android:layout_width="wrap_content"
@@ -92,20 +69,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/invite_button"
-        android:layout_width="76dp"
-        android:layout_height="42dp"
-        android:layout_marginBottom="156dp"
-        android:text="@string/invite"
-        android:textAllCaps="false"
-        app:backgroundTint="#857C23"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.862"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/logo"
         android:layout_width="92dp"
@@ -144,19 +107,6 @@
         app:layout_constraintVertical_bias="0.612" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/invite_member"
-        android:textColor="#8C8C8C"
-        app:layout_constraintBottom_toTopOf="@+id/invite_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.155"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="0.911" />
-
-    <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -173,7 +123,7 @@
         android:id="@+id/scrollView2"
         android:layout_width="346dp"
         android:layout_height="229dp"
-        android:background="@drawable/rounded_edit_text"
+        android:background="@drawable/rounded_edit_box"
         app:layout_constraintBottom_toTopOf="@+id/save_home_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"

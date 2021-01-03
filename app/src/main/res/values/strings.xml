@@ -27,7 +27,7 @@
     <string name="members">Members</string>
     <string name="invite_member">Invite New Member</string>
     <string name="invite">Invite</string>
-    <string name="delete_home">Delete Home</string>
+    <string name="delete_home">Delete</string>
     <string name="log_in_with_facebook">Log in with Facebook</string>
     <string name="or">OR</string>
     <string name="sign_up_with_google">Sign up with Google</string>
@@ -50,7 +50,7 @@
     <string name="set">Set</string>
     <string name="cancel">Cancel</string>
     <string name="date">Date</string>
-    <string name="time">Time</string>
+    <string name="date_time">Date and Time</string>
     <string name="notifications">Notifications</string>
     <string name="other">Other</string>
     <string name="my_homes">My Homes</string>
@@ -59,9 +59,9 @@
     <string name="edit">Edit</string>
     <string name="admin">Admin</string>
     <string name="home_info">Home Info</string>
-    <string name="leave_home">Leave Home</string>
+    <string name="leave_home">Leave</string>
     <string name="search">Search</string>
-    <string name="enter_home_code">Enter Home-Code</string>
+    <string name="enter_home_code">Home-Code</string>
     <string name="items">Items</string>
     <string name="item">Item</string>
     <string name="add_item">Add Item</string>
@@ -69,6 +69,13 @@
     <string name="price">Price</string>
     <string name="accept">Accept</string>
     <string name="decline">Decline</string>
+    <string name="statistics">Statistics</string>
+    <string name="show_for">Show for</string>
+    <string name="total_home_expenses">Total home expenses</string>
+    <string name="your_total_expenses">Your total expenses</string>
+    <string name="everyone_should_pay">Everyone should pay</string>
+    <string name="you_should_pay">You should still pay</string>
+    <string name="you_should_get">You should still get</string>
     <string name="details">Details</string>
     <string name="is_added">is Added</string>
     <string name="code">Code</string>
@@ -87,17 +94,16 @@
     <string name="nur">Muhammednur ŞEHEBİ</string>
     <string name="mabem">Mulham ALIBRAHIM, Ecesu ARSLAN, Abdurrahman ODABAŞI, Batıkan Bora ORMANCI, Muhammednur ŞEHEBİ</string>
 
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_new_home">Create new Home</string>
     <string name="new_home_created_successfully">New Home was successfully created.</string>
-    <string name="please_enter_name_for_home_message">Please Enter a Name for the new Home.</string>
+    <string name="please_enter_name_for_home_message">Please Enter a Name for the Home.</string>
     <string name="new_reminder_added_message">The new Reminder Was added Successfully</string>
     <string name="reminder_deleted_message">Reminder successfully deleted!</string>
     <string name="reminder_updated_message">Reminder successfully updated!</string>
     <string name="new_receipt_added_message">A new Receipt was added successfully!</string>
     <string name="receipt_updated_message">Receipt updated successfully!</string>
+    <string name="home_updated_message">Home updated successfully!</string>
     <string name="home_deleted_message">Home was deleted successfully</string>
 
 
@@ -112,11 +118,44 @@
     <string name="join_request_accepted_message">The join request was accepted successfully</string>
     <string name="invitation_sent_message">Invitation sent successfully</string>
     <string name="member_left_home_message">Member left home successfully</string>
-    <string name="invitation_message">invited you to join their home</string>
     <string name="join_request_text">wants to join</string>
     <string name="home_accepted_you_text">accepted your join request</string>
     <string name="home_declined_you_text">declined your join request</string>
     <string name="ok">OK</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="remove_member_warning">Remove this member?</string>
+    <string name="delete_receipt_warning">Delete this receipt?</string>
+    <string name="delete_home_warning">Delete this home?</string>
+    <string name="delete_reminder_warning">Delete this reminder?</string>
+    <string name="make_admin_warning">Make this member admin?</string>
+    <string name="leave_home_warning">Leave this home?</string>
+    <string name="warning">Warning</string>
+    <string name="home_feed">Home Feed</string>
+    <string name="receipt_info">Receipt Info</string>
+    <string name="manage_receipt">Manage Receipt</string>
+    <string name="reminders">Reminders</string>
+    <string name="this_month">This Month</string>
+    <string name="last_month">Last Month</string>
 
+    <string name="remove_last_member_warning_message">You can not remove the last member of the home! </string>
+
+    <string name="delete_last_admin_warning_message">You can not remove the last admin from the home! </string>
+    <string name="remove_member_warning_message">Are you sure that you want to remove this member from the home?</string>
+    <string name="make_admin_warning_message">Are you sure that you want to make this member admin?</string>
+    <string name="remove_last_admin_warning_message">You can not make the last admin of the home a normal member!</string>
+    <string name="delete_receipt_warning_message">Are you sure that you want to delete this receipt?</string>
+    <string name="delete_home_warning_message">Are you sure that you want to delete this home?\n\nAll receipts and reminders of this home will be also deleted!</string>
+    <string name="delete_reminder_warning_message">Are you sure that you want to delete this reminder?</string>
+    <string name="leave_home_warning_message">Are you sure that you want to leave this home?</string>
+    <string name="edit_email_warning_message">To edit your Email-Address, please relog in!</string>
+    <string name="please_enter_name_for_receipt_message">Please enter a name for the receipt.</string>
+    <string name="please_enter_name_for_reminder_message">Please enter a name for the reminder.</string>
+    <string name="please_enter_item_message">Please enter the item(s) of the receipt.</string>
+    <string name="please_enter_date_of_receipt_message">Please enter the date of the receipt.</string>
+    <string name="please_enter_date_of_reminder_message">Please enter the date of the reminder.</string>
+    <string name="no_text_sharing_app">There is no app that can handle text sharing</string>
+    <string name="delete">Delete</string>
+    <string name="request_sent_successfully">The request was sent successfully</string>
 
 </resources>

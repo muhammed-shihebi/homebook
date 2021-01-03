@@ -1,5 +1,9 @@
 package com.mabem.homebook.Fragments.Main.Home;
 
+import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -34,6 +38,8 @@ public class HomeInfoFragment extends Fragment {
     private HomeViewModel homeViewModel;
     private HashMap<Member,Boolean> members_role = new HashMap<Member,Boolean>();
     private RecyclerView.Adapter adapter;
+    private String homeCode;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,56 +53,89 @@ public class HomeInfoFragment extends Fragment {
 
         homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
+            if(h != null){
+                homeCode = h.getCode();
 
-            fragmentHomeInfoBinding.homeinfoName.setText(h.getName());
-            fragmentHomeInfoBinding.homeinfoCode.setText(h.getCode());
+                fragmentHomeInfoBinding.homeinfoName.setText(h.getName());
+                fragmentHomeInfoBinding.homeinfoCode.setText(h.getCode());
 
-            members_role.clear();
-            members_role = h.getMember_role();
+                members_role.clear();
+                members_role = h.getMember_role();
 
-            Log.d("demo1", members_role.isEmpty()+"");
+                Log.d("demo1", members_role.isEmpty()+"");
 
-            ArrayList<Member> admins = new ArrayList<Member>();
-            ArrayList<Member> normalmembers = new ArrayList<Member>();
-            ArrayList<Member> allMembers = new ArrayList<>();
-            for(Member m : members_role.keySet()){
-                allMembers.add(m);
+                ArrayList<Member> admins = new ArrayList<Member>();
+                ArrayList<Member> normalmembers = new ArrayList<Member>();
+                ArrayList<Member> allMembers = new ArrayList<>();
+                for(Member m : members_role.keySet()){
+                    allMembers.add(m);
+                }
+
+                for(int i = 0; i < allMembers.size(); i++){
+                    if(members_role.get(allMembers.get(i)).equals(true)){
+                        admins.add(allMembers.get(i));
+                    }else if(members_role.get(allMembers.get(i)).equals(false)){
+                        normalmembers.add(allMembers.get(i));
+                    }
+                }
+
+                Collections.sort(admins, new Comparator<Member>() {
+                    @Override
+                    public int compare(Member o1, Member o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+                Collections.sort(normalmembers, new Comparator<Member>() {
+                    @Override
+                    public int compare(Member o1, Member o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+
+                adapter = new HomeInfoAdapter(getContext(), admins, normalmembers, members_role.size());
+                fragmentHomeInfoBinding.homeinfoMemberlist.setAdapter(adapter);
             }
-
-            for(int i = 0; i < allMembers.size(); i++){
-                if(members_role.get(allMembers.get(i)).equals(true)){
-                    admins.add(allMembers.get(i));
-                }else if(members_role.get(allMembers.get(i)).equals(false)){
-                    normalmembers.add(allMembers.get(i));
-                }
-            }
-
-            Collections.sort(admins, new Comparator<Member>() {
-                @Override
-                public int compare(Member o1, Member o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-            Collections.sort(normalmembers, new Comparator<Member>() {
-                @Override
-                public int compare(Member o1, Member o2) {
-                    return o1.getName().compareTo(o2.getName());
-                }
-            });
-
-            adapter = new HomeInfoAdapter(getContext(), admins, normalmembers, members_role.size());
-            fragmentHomeInfoBinding.homeinfoMemberlist.setAdapter(adapter);
         });
 
 
         fragmentHomeInfoBinding.homeinfoLeaveButton.setOnClickListener(v -> {
-            homeViewModel.leaveHome();
-            Toast.makeText(requireContext(), R.string.member_left_home_message, Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.leave_home_warning)
+                    .setMessage(R.string.leave_home_warning_message)
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {}
+                    })
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            homeViewModel.leaveHome();
+                            homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
+                                if(s != null){
+                                    Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
+                                    Navigation.findNavController(v).navigate(R.id.action_homeInfoFragment_to_mainFragment);
+                                }
+                            });
+                        }
+                    });
+            AlertDialog mDialog = builder.create();
+            mDialog.show();
         });
+
+
+        fragmentHomeInfoBinding.shareButton.setOnClickListener(v -> {
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("test/plain")
+                    .putExtra(Intent.EXTRA_TEXT, homeCode);
+            try {
+                startActivity(shareIntent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(getContext(), R.string.no_text_sharing_app, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return fragmentHomeInfoBinding.getRoot();
     }
-
 
 }

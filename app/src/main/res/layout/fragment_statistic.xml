@@ -1,14 +1,185 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Fragments.Main.Home.StatisticFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="#2B2F38"
+        tools:context=".Fragments.Main.Home.StatisticFragment">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/title3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/statistics"
+            android:textColor="#ACA325"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/logo3"
+            app:layout_constraintStart_toEndOf="@+id/logo3"
+            app:layout_constraintTop_toTopOf="@+id/logo3" />
+
+        <ImageView
+            android:id="@+id/logo3"
+            android:layout_width="92dp"
+            android:layout_height="80dp"
+            android:contentDescription="@string/App_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.106"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.046"
+            app:srcCompat="@drawable/logo" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/show_for"
+            android:textColor="#9A9797"
+            app:layout_constraintBottom_toTopOf="@+id/layout_spinner"
+            app:layout_constraintEnd_toEndOf="@+id/layout_spinner"
+            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintStart_toStartOf="@+id/layout_spinner" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="100dp"
+            android:text="@string/total_home_expenses"
+            android:textColor="#B1ACAC"
+            app:layout_constraintEnd_toStartOf="@+id/total_amount"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo3" />
+
+        <TextView
+            android:id="@+id/textView15"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/your_total_expenses"
+            android:textColor="#B1ACAC"
+            app:layout_constraintEnd_toStartOf="@+id/self_amount"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <TextView
+            android:id="@+id/you_should_pay_get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/you_should_pay"
+            android:textColor="#B1ACAC"
+            app:layout_constraintEnd_toStartOf="@+id/should_pay_get_amount"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView17" />
+
+        <TextView
+            android:id="@+id/textView17"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/everyone_should_pay"
+            android:textColor="#B1ACAC"
+            app:layout_constraintEnd_toStartOf="@+id/everyone_amount"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+        <FrameLayout
+            android:id="@+id/layout_spinner"
+            android:layout_width="178dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="140dp"
+            android:background="@drawable/rounded_edit_box"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <Spinner
+                android:id="@+id/month_spinner"
+                android:layout_width="163dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:backgroundTint="#FFFFFF"
+                android:fontFamily="sans-serif"
+                android:foreground="@drawable/ic_drop_down"
+                android:foregroundGravity="center_vertical|right"
+                android:spinnerMode="dropdown"
+                android:text="Frequency"
+                android:textAlignment="textStart"
+                android:textColor="#00000000"
+                android:textSize="22sp" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="80dp"
+            android:text="0.00"
+            android:textColor="#B1ACAC"
+            app:layout_constraintBottom_toBottomOf="@+id/textView14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView14"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/self_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="48dp"
+            android:layout_marginEnd="80dp"
+            android:text="0.00"
+            android:textColor="#B1ACAC"
+            app:layout_constraintBottom_toBottomOf="@+id/textView15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="@+id/textView15"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/everyone_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="76dp"
+            android:layout_marginEnd="80dp"
+            android:text="0.00"
+            android:textColor="#B1ACAC"
+            app:layout_constraintBottom_toBottomOf="@+id/textView17"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="@+id/textView17"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/should_pay_get_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="84dp"
+            android:layout_marginEnd="80dp"
+            android:text="0.00"
+            android:textColor="#B1ACAC"
+            app:layout_constraintBottom_toBottomOf="@+id/you_should_pay_get"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintTop_toTopOf="@+id/you_should_pay_get"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

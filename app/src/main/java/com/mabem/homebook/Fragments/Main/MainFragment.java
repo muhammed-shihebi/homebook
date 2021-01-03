@@ -16,7 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.mabem.homebook.Adapters.MyhomesAdapter;
 import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.MainFragmentBinding;
 
@@ -32,7 +34,7 @@ public class MainFragment extends Fragment {
     private static final String MAIN_FRAGMENT_TAG = "Main Fragment";
 
     private MainFragmentBinding mainBinding;
-    private HomeViewModel HomesViewModel;
+    private HomeViewModel homesViewModel;
     private ArrayList list = new ArrayList();
     private RecyclerView.Adapter adapter;
 
@@ -40,17 +42,21 @@ public class MainFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        ((NavigationDrawer) getActivity()).enableNavDrawer();
 
         mainBinding = DataBindingUtil.inflate(inflater, R.layout.main_fragment, container, false);
-        HomesViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        homesViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         mainBinding.myHomes.setHasFixedSize(true);
         mainBinding.myHomes.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        HomesViewModel.updateCurrentMember();
+        homesViewModel.updateCurrentMember();
 
-        HomesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
+        homesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
             if(member != null){
+
+                ((NavigationDrawer) getActivity()).setCurrentMember(member);
+
                 list.clear();
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
                 for(Home home : memberHomes.keySet()){

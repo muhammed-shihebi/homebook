@@ -11,16 +11,12 @@
         <item name="colorOnSecondary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-
         <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <item name="android:textColorSecondary">@color/gold</item>
     </style>
-
-<!--    To change the color of the hamburger icon    -->
-
+    <!--    To change the color of the hamburger icon    -->
     <style name="DrawerArrowStyle" parent="@style/Widget.AppCompat.DrawerArrowToggle">
         <item name="spinBars">true</item>
         <item name="color">@color/gold</item>
     </style>
-
 </resources>
