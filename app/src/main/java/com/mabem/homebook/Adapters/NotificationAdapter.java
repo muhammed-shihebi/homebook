@@ -115,7 +115,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
         public void populate(UserNotification userNotification){
-            if(userNotification.getTyp().equals(UserNotification.TYPE_ACCEPT)){
+            if(userNotification.getType().equals(UserNotification.TYPE_ACCEPT)){
                 firstName.setText(userNotification.getHomeName());
                 secondName.setVisibility(View.INVISIBLE);
                 notText.setText(R.string.home_accepted_you_text);
@@ -133,7 +133,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     clickListener.onOKClicked(userNotification, getAdapterPosition());
                 });
 
-            }else if(userNotification.getTyp().equals(UserNotification.TYPE_DECLINE)) {
+            }else if(userNotification.getType().equals(UserNotification.TYPE_DECLINE)) {
                 firstName.setText(userNotification.getHomeName());
                 secondName.setVisibility(View.INVISIBLE);
                 declineText.setVisibility(View.INVISIBLE);
