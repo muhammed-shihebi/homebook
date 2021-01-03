@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         loadLocale();
         //========================================= Init DataBinding

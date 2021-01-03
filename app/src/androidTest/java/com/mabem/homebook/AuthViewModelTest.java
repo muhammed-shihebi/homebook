@@ -12,6 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import com.mabem.homebook.Model.User;
 import com.mabem.homebook.ViewModels.AuthViewModel;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -23,7 +24,7 @@ import static org.junit.Assert.assertEquals;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 @RunWith(AndroidJUnit4.class)
-public class InstrumentedTest {
+public class AuthViewModelTest {
 
     /**
      * This is an instrumented and an integration test.
@@ -33,14 +34,22 @@ public class InstrumentedTest {
      * This function will assert than that the returned user has the expected attributes.
      */
 
-    @Test
-    public void logInTestCase() {
+    Application application;
+    AuthViewModel authViewModel;
+
+    @Before
+    public void setUp() throws Exception {
+        // what should happen before running each test case
 
         // Get an instance of the application to initialize the authViewModel with it
-        Application application = (Application) ApplicationProvider.getApplicationContext();
+        application = (Application) ApplicationProvider.getApplicationContext();
 
         // Initialize the authViewModel
-        AuthViewModel authViewModel = new AuthViewModel(application);
+        authViewModel = new AuthViewModel(application);
+    }
+
+    @Test
+    public void logInTestCase() {
 
         // Create the expected user
         User expectedUser = new User(
@@ -62,10 +71,10 @@ public class InstrumentedTest {
         Observer<User> currentUserObserver = new Observer<User>() {
             @Override
             public void onChanged(User user) {
-                returnedUserValueChanged[0] = true;
-
                 // @user could be null if something was wrong when getting the user from the database
                 returnedUser[0] = user;
+
+                returnedUserValueChanged[0] = true;
 
                 // Remove the observer
                 authViewModel.getCurrentUser().removeObserver(this);
