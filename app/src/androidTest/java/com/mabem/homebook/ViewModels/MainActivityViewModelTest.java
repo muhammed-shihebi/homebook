@@ -1,4 +1,4 @@
-package com.mabem.homebook;
+package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
 import android.os.Handler;

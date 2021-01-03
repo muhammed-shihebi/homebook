@@ -1,16 +1,17 @@
 package com.mabem.homebook;
 
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Utils.Util;
+
 import org.junit.Test;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.*;
 
-/**
- * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
 
-// These tests are run on the local computer, so no emulator required.
 
 /**
  * Characteristics of a good unit test
@@ -21,9 +22,16 @@ import static org.junit.Assert.*;
  *     Timely.
  */
 
-public class ExampleUnitTest {
+public class UtilTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void valueWithThreeDecimalPlacesRoundedAsExpected_returnsTrue() {
+        Double value = 10.232;
+        int places = 2;
+        Double expected = 10.23;
+        assertThat(Util.round(value, places)).isEqualTo(expected);
+
     }
+
+
+
 }
