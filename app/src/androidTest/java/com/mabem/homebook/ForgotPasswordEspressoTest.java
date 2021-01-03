@@ -22,7 +22,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 @LargeTest // Because we have many test cases inside (UnitTests are SmallTest, integrated test-> MediumTest, UITest -> LargeTest
 @FixMethodOrder (MethodSorters.NAME_ASCENDING) // So that we run tests in ascending order (of their names)
 
-public class SeeSettingsEspressoTest {
+public class ForgotPasswordEspressoTest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = // Means that test case should start its execution with the main activity
@@ -46,7 +46,7 @@ public class SeeSettingsEspressoTest {
 
     @Test
     public void canSeeSettings() {
-        onView(withText("Settings")).check(matches(isDisplayed()));
+        onView(withText("Forgot Passsword")).check(matches(isDisplayed()));
     }
 
 
