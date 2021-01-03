@@ -10,29 +10,19 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <ScrollView
-            android:id="@+id/scrollView2"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_homes"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_edit_box"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/home_menu_item">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/my_homes"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:listitem="@layout/home_menu_item">
-                </androidx.recyclerview.widget.RecyclerView>
-            </LinearLayout>
-        </ScrollView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

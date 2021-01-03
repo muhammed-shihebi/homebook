@@ -1,23 +1,18 @@
 package com.mabem.homebook.Fragments.Main.Home;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.mabem.homebook.Model.Home;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
@@ -25,27 +20,20 @@ import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentStatisticBinding;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.lang.Math;
 
 public class StatisticFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-
 
     private FragmentStatisticBinding fragmentStatisticBinding;
     private HomeViewModel homeViewModel;
     private Member currentMember;
     private ArrayList<Receipt> receipts = new ArrayList<>();
 
-
     private int month = 0;
     private int year = 0;
     private Calendar cal;
     private int numMembers = 1;
-    private boolean flag = false;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,8 +52,8 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
         ArrayList<String> months = new ArrayList<String>();
         months.add(getContext().getResources().getString(R.string.this_month));
         months.add(getContext().getResources().getString(R.string.last_month));
-        for(int i = 0; i < 10; i++){
-            months.add(thisMonth+"");
+        for (int i = 0; i < 10; i++) {
+            months.add(thisMonth + "");
             thisMonth--;
             thisMonth = ((((thisMonth) % 12) + 12) % 12);
         }
@@ -83,7 +71,7 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
 
         homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-            if(h != null && h.getMember_role().size() != 0){
+            if (h != null && h.getMember_role().size() != 0) {
                 receipts = h.getReceipts();
                 numMembers = h.getMember_role().size();
                 calculateStatistics(getContext().getResources().getString(R.string.this_month));
@@ -100,51 +88,51 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
 
     @SuppressLint("SetTextI18n")
     private void calculateStatistics(String selectedMonth) {
-        if(!receipts.isEmpty()){
+        if (!receipts.isEmpty()) {
             Double totalHomeExpense = 0.0;
             Double totalSelf = 0.0;
             double onEachMember = 0.0;
-            double absoluteShouldGetOrPay =  0.0;
+            double absoluteShouldGetOrPay = 0.0;
 
             int selectedMon;
-            if(selectedMonth.equals(getContext().getResources().getString(R.string.this_month))){
+            if (selectedMonth.equals(getContext().getResources().getString(R.string.this_month))) {
                 selectedMon = month;
-            }else if(selectedMonth.equals(getContext().getResources().getString(R.string.last_month))){
+            } else if (selectedMonth.equals(getContext().getResources().getString(R.string.last_month))) {
                 selectedMon = ((((month - 1) % 12) + 12) % 12);
-            }else{
+            } else {
                 selectedMon = ((((Integer.parseInt(selectedMonth) - 1) % 12) + 12) % 12);
             }
 
-            for(Receipt receipt : receipts){
+            for (Receipt receipt : receipts) {
                 cal.setTime(receipt.getDate());
-                if(selectedMon <= month){
-                    if( cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year) ){
+                if (selectedMon <= month) {
+                    if (cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year)) {
                         totalHomeExpense += receipt.getTotal();
-                        if(receipt.getMemberId().equals(currentMember.getId())){
+                        if (receipt.getMemberId().equals(currentMember.getId())) {
                             totalSelf += receipt.getTotal();
                         }
                     }
-                }else{
-                    if( cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year-1) ){
+                } else {
+                    if (cal.get(Calendar.MONTH) == selectedMon && (cal.get(Calendar.YEAR) == year - 1)) {
                         totalHomeExpense += receipt.getTotal();
-                        if(receipt.getMemberId().equals(currentMember.getId())){
+                        if (receipt.getMemberId().equals(currentMember.getId())) {
                             totalSelf += receipt.getTotal();
                         }
                     }
                 }
             }
 
-            onEachMember = totalHomeExpense/numMembers;
+            onEachMember = totalHomeExpense / numMembers;
 
-            if((onEachMember < Double.MAX_VALUE && onEachMember > Double.MIN_VALUE) || onEachMember == 0.0){
+            if ((onEachMember < Double.MAX_VALUE && onEachMember > Double.MIN_VALUE) || onEachMember == 0.0) {
 
                 double shouldGetOrPay = totalSelf - onEachMember;
                 absoluteShouldGetOrPay = Math.abs(totalSelf - onEachMember);
 
-                if(shouldGetOrPay > 0){
+                if (shouldGetOrPay > 0) {
                     fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_get));
                     fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.GREEN);
-                }else{
+                } else {
                     fragmentStatisticBinding.youShouldPayGet.setText(getContext().getResources().getString(R.string.you_should_pay));
                     fragmentStatisticBinding.youShouldPayGet.setTextColor(Color.RED);
                 }

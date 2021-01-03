@@ -39,7 +39,6 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData<Member> getCurrentMember() {
         return currentMember;
     }
-
     public LiveData<Home> getCurrentHome() {
         return currentHome;
     }
@@ -89,7 +88,6 @@ public class HomeViewModel extends AndroidViewModel {
         database.deleteHome();
     }
 
-
     public void updateCurrentReceipt(String id){
         resultMessage.setValue(null);
         database.updateCurrentReceipt(id);
@@ -107,7 +105,6 @@ public class HomeViewModel extends AndroidViewModel {
         database.deleteReceipt(id);
     }
 
-
     public void updateReminder(Reminder r) {
         resultMessage.setValue(null);
         database.updateReminder(r);
@@ -120,7 +117,6 @@ public class HomeViewModel extends AndroidViewModel {
         resultMessage.setValue(null);
         database.deleteReminder(id);
     }
-
 
     public boolean getShouldShowResultMessage() {
         return shouldShowResultMessage;

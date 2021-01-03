@@ -58,7 +58,7 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/receiptinfo_items_list"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         tools:listitem="@layout/receipt_menu_item">
 
                     </androidx.recyclerview.widget.RecyclerView>
