@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     private DrawerLayout drawerLayout;
     private MainActivityBinding mainActivityBinding;
     private Toolbar toolbar;
-    private MainActivityViewModel mainActivityViewModel;
+    private MainActivityViewModel mainActivityViewModel; // what about using ViewModelFactory?
     private NavController navController;
     private EditText search_edit_text;
 
