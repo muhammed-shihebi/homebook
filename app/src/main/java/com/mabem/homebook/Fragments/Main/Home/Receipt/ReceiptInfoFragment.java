@@ -17,6 +17,7 @@ import com.mabem.homebook.Adapters.ReceiptinfoAdapter;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentReceiptInfoBinding;
 
@@ -39,6 +40,8 @@ public class ReceiptInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         fragmentReceiptInfoBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_receipt_info, container, false);
 

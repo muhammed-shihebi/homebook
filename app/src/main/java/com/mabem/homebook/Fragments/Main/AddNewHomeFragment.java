@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentCreateHomeBinding;
 
@@ -25,6 +26,7 @@ public class AddNewHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         createHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_home, container, false);
 

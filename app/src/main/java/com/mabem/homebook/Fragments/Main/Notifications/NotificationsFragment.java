@@ -14,6 +14,7 @@ import com.mabem.homebook.Model.AdminNotification;
 import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.UserNotification;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.NotificationMenuItemListener;
 import com.mabem.homebook.ViewModels.NotificationViewModel;
 import com.mabem.homebook.databinding.FragmentNotificationsBinding;
@@ -33,6 +34,8 @@ public class NotificationsFragment extends Fragment implements NotificationMenuI
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         notificationsBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_notifications, container, false);
 

@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentStatisticBinding;
@@ -37,6 +38,9 @@ public class StatisticFragment extends Fragment implements AdapterView.OnItemSel
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
+
         fragmentStatisticBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_statistic, container, false);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 

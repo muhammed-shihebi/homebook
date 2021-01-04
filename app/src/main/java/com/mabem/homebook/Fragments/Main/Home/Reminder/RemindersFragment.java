@@ -18,6 +18,7 @@ import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentRemindersBinding;
 
@@ -43,6 +44,8 @@ public class RemindersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         fragmentRemindersBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_reminders, container, false);
 

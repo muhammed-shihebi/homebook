@@ -26,6 +26,7 @@ import androidx.navigation.Navigation;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentRemiderSetBinding;
 
@@ -63,6 +64,8 @@ public class ReminderSetFragment extends Fragment implements AdapterView.OnItemS
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         reminderSetBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_remider_set, container, false);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);

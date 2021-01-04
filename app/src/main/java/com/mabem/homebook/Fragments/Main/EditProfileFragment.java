@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentEditProfileBinding;
 
@@ -54,7 +55,7 @@ public class EditProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         editProfileBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_profile, container, false);
 

@@ -147,5 +147,7 @@
     <string name="delete_home_warning_message">Sind Sie sicher, dass Sie diese Wohnung löschen möchten?\n\nAlle Rechnungen und Erinnerungen dieser Wohnung werden auch gelöscht!</string>
     <string name="this_month">Dieser Monat</string>
     <string name="last_month">Letzter Monat</string>
+    <string name="code_of">Code von</string>
+
 
 </resources>

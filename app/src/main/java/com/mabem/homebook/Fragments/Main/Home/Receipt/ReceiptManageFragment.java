@@ -57,6 +57,9 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
+
         fragmentManageReceiptBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_manage_receipt, container, false);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 

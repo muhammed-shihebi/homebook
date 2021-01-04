@@ -25,6 +25,7 @@ import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.EditHomeMemberListener;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentEditHomeBinding;
 
@@ -41,18 +42,16 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
     private HomeViewModel homeViewModel;
     private RecyclerView.Adapter adapter;
     private HashMap<Member,Boolean> members_role = new HashMap<Member,Boolean>();
-    private String homeCode;
     private ArrayList<Member> allMembers;
     private boolean isPrivate = false;
     private Home currentHome;
 
-
-
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
+
         fragmentEditHomeBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_edit_home, container, false);
 
         fragmentEditHomeBinding.homeEditMembersList.setHasFixedSize(true);
@@ -64,7 +63,6 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
             if(h != null){
                 currentHome = h;
-                homeCode = h.getCode();
                 isPrivate = !h.getVisibility();
 
                 fragmentEditHomeBinding.privateCheckbox.setChecked(isPrivate);
@@ -120,7 +118,7 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
             if(name.isEmpty()){
                 Toast.makeText(requireContext(), R.string.please_enter_name_for_home_message, Toast.LENGTH_SHORT).show();
             }else{
-                Home h = new Home(currentHome.getId(), name, homeCode, !isPrivate, currentHome.getReceipts());
+                Home h = new Home(currentHome.getId(), name, currentHome.getCode(), !isPrivate, currentHome.getReceipts());
                 h.setMember_role(members_role);
                 homeViewModel.updateHome(h);
                 homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
@@ -182,11 +180,12 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
         });
 
         fragmentEditHomeBinding.homeEditShareButton.setOnClickListener(v -> {
-            Intent shareIntent = new Intent(Intent.ACTION_SEND);
-            shareIntent.setType("test/plain")
-                    .putExtra(Intent.EXTRA_TEXT, homeCode);
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, getString(R.string.code_of) + " " + currentHome.getName() + ": " + currentHome.getCode());
+            sendIntent.setType("text/plain");
             try {
-                startActivity(shareIntent);
+                startActivity(sendIntent);
             } catch (ActivityNotFoundException e) {
                 Toast.makeText(getContext(), R.string.no_text_sharing_app, Toast.LENGTH_SHORT).show();
             }

@@ -157,5 +157,6 @@
     <string name="no_text_sharing_app">There is no app that can handle text sharing</string>
     <string name="delete">Delete</string>
     <string name="request_sent_successfully">The request was sent successfully</string>
+    <string name="code_of">Code of</string>
 
 </resources>

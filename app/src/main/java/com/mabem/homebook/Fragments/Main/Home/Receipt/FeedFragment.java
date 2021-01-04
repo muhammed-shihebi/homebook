@@ -29,6 +29,7 @@ import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;
 import com.mabem.homebook.databinding.FragmentFeedBinding;
 import com.mabem.homebook.databinding.FragmentManageReceiptBinding;
@@ -54,6 +55,9 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
+
         fragmentFeedBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_feed, container, false);
 
         fragmentFeedBinding.myReceipts.setHasFixedSize(true);

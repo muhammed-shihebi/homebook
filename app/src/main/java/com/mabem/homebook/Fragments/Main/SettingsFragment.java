@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.mabem.homebook.R;
+import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.AuthViewModel;
 import com.mabem.homebook.databinding.FragmentSettingsBinding;
 
@@ -35,6 +36,8 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ((NavigationDrawer) getActivity()).disableNavDrawer();
 
         //========================================= Set up DataBinding
         authViewModel = new ViewModelProvider(this).get(AuthViewModel.class);
