@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.mabem.homebook.Fragments.Main.MainFragment"
+        android:name="com.mabem.homebook.Views.Main.MainFragment"
         android:label="@string/my_homes"
         tools:layout="@layout/main_fragment">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.FeedFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.Receipt.FeedFragment"
         android:label="@string/home_feed"
         tools:layout="@layout/fragment_feed">
         <action
@@ -57,7 +57,7 @@
 
     <fragment
         android:id="@+id/remindersFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Reminder.RemindersFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.Reminder.RemindersFragment"
         android:label="@string/reminders"
         tools:layout="@layout/fragment_reminders">
         <action
@@ -67,13 +67,13 @@
 
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Notifications.NotificationsFragment"
+        android:name="com.mabem.homebook.Views.Main.Notifications.NotificationsFragment"
         android:label="@string/notifications"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/addNewHomeFragment"
-        android:name="com.mabem.homebook.Fragments.Main.AddNewHomeFragment"
+        android:name="com.mabem.homebook.Views.Main.AddNewHomeFragment"
         android:label="@string/add_new_home"
         tools:layout="@layout/fragment_create_home">
         <action
@@ -85,7 +85,7 @@
 
     <fragment
         android:id="@+id/editHomeFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.EditHomeFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.EditHomeFragment"
         android:label="@string/edit_home"
         tools:layout="@layout/fragment_edit_home" >
         <action
@@ -97,7 +97,7 @@
 
     <fragment
         android:id="@+id/homeInfoFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.HomeInfoFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.HomeInfoFragment"
         android:label="@string/home_info"
         tools:layout="@layout/fragment_home_info">
         <action
@@ -109,7 +109,7 @@
 
     <fragment
         android:id="@+id/manageReceiptFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.Receipt.ReceiptManageFragment"
         android:label="@string/manage_receipt"
         tools:layout="@layout/fragment_manage_receipt">
         <action
@@ -121,7 +121,7 @@
 
     <fragment
         android:id="@+id/editProfileFragment"
-        android:name="com.mabem.homebook.Fragments.Main.EditProfileFragment"
+        android:name="com.mabem.homebook.Views.Main.EditProfileFragment"
         android:label="@string/edit_profile"
         tools:layout="@layout/fragment_edit_profile">
         <action
@@ -133,13 +133,13 @@
 
     <fragment
         android:id="@+id/statisticFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.StatisticFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.StatisticFragment"
         android:label="@string/statistics"
         tools:layout="@layout/fragment_statistic" />
 
     <fragment
         android:id="@+id/reminderSetFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Reminder.ReminderSetFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.Reminder.ReminderSetFragment"
         android:label="@string/reminder_set"
         tools:layout="@layout/fragment_remider_set">
         <action
@@ -151,7 +151,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.mabem.homebook.Fragments.SignIn.SplashFragment"
+        android:name="com.mabem.homebook.Views.SignIn.SplashFragment"
         android:label="Splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -168,7 +168,7 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.mabem.homebook.Fragments.SignIn.LoginFragment"
+        android:name="com.mabem.homebook.Views.SignIn.LoginFragment"
         android:label="@string/log_in"
         tools:layout="@layout/login_fragment">
         <action
@@ -183,7 +183,7 @@
 
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.mabem.homebook.Fragments.SignIn.SignUpFragment"
+        android:name="com.mabem.homebook.Views.SignIn.SignUpFragment"
         android:label="@string/sign_up"
         tools:layout="@layout/sign_up_fragment">
         <action
@@ -200,13 +200,13 @@
 
     <fragment
         android:id="@+id/aboutFragment"
-        android:name="com.mabem.homebook.Fragments.Main.AboutFragment"
+        android:name="com.mabem.homebook.Views.Main.AboutFragment"
         android:label="@string/about"
         tools:layout="@layout/fragment_about" />
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.mabem.homebook.Fragments.Main.SettingsFragment"
+        android:name="com.mabem.homebook.Views.Main.SettingsFragment"
         android:label="@string/settings"
         tools:layout="@layout/fragment_settings">
         <action
@@ -219,7 +219,7 @@
 
     <fragment
         android:id="@+id/receiptInfoFragment"
-        android:name="com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment"
+        android:name="com.mabem.homebook.Views.Main.Home.Receipt.ReceiptInfoFragment"
         android:label="@string/receipt_info"
         tools:layout="@layout/fragment_receipt_info" />
 

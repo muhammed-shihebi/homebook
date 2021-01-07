@@ -2,19 +2,17 @@ package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
 import android.net.Uri;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.mabem.homebook.Database.Database;
-import com.mabem.homebook.Model.Home;
-import com.mabem.homebook.Model.Member;
-import com.mabem.homebook.Model.Receipt;
-import com.mabem.homebook.Model.Reminder;
-import com.mabem.homebook.Model.User;
+import com.mabem.homebook.Model.Database.Database;
+import com.mabem.homebook.Model.Objects.Home;
+import com.mabem.homebook.Model.Objects.Member;
+import com.mabem.homebook.Model.Objects.Receipt;
+import com.mabem.homebook.Model.Objects.Reminder;
 
 public class HomeViewModel extends AndroidViewModel {
 

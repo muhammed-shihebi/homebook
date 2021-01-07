@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/add_reminder_background"
-        tools:context=".Fragments.Main.Home.Reminder.ReminderSetFragment">
+        tools:context=".Views.Main.Home.Reminder.ReminderSetFragment">
 
         <ImageView
             android:id="@+id/reminder_set_logo_image_view"

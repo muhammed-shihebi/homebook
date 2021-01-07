@@ -1,19 +1,14 @@
 package com.mabem.homebook.ViewModels;
 
 import android.app.Application;
-import android.util.Log;
-import android.widget.ListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-import com.mabem.homebook.Database.Database;
-import com.mabem.homebook.Model.Home;
-import com.mabem.homebook.Model.Member;
-import com.mabem.homebook.Model.User;
+import com.mabem.homebook.Model.Database.Database;
+import com.mabem.homebook.Model.Objects.Home;
 
 import java.util.ArrayList;
 

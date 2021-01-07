@@ -1,7 +1,6 @@
 package com.mabem.homebook.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,12 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Fragments.Main.Home.EditHomeFragment;
-import com.mabem.homebook.Model.Item;
-import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Objects.Member;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.EditHomeMemberListener;
-import com.mabem.homebook.Utils.ReceiptManagerItemListener;
 
 import java.util.ArrayList;
 

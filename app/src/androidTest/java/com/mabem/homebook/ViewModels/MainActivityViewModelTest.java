@@ -7,12 +7,9 @@ import android.os.Looper;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
-import com.mabem.homebook.Model.Home;
-import com.mabem.homebook.Model.Member;
-import com.mabem.homebook.Model.User;
-import com.mabem.homebook.ViewModels.AuthViewModel;
-import com.mabem.homebook.ViewModels.HomeViewModel;
-import com.mabem.homebook.ViewModels.MainActivityViewModel;
+import com.mabem.homebook.Model.Objects.Home;
+import com.mabem.homebook.Model.Objects.Member;
+import com.mabem.homebook.Model.Objects.User;
 
 import org.junit.Test;
 

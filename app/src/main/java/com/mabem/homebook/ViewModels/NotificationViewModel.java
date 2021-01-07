@@ -7,11 +7,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.mabem.homebook.Database.Database;
-import com.mabem.homebook.Model.AdminNotification;
-import com.mabem.homebook.Model.Member;
-import com.mabem.homebook.Model.Notification;
-import com.mabem.homebook.Model.UserNotification;
+import com.mabem.homebook.Model.Database.Database;
+import com.mabem.homebook.Model.Objects.AdminNotification;
+import com.mabem.homebook.Model.Objects.Notification;
+import com.mabem.homebook.Model.Objects.UserNotification;
 
 public class NotificationViewModel extends AndroidViewModel {
 

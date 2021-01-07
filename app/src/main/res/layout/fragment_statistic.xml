@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#2B2F38"
-        tools:context=".Fragments.Main.Home.StatisticFragment">
+        tools:context=".Views.Main.Home.StatisticFragment">
 
         <TextView
             android:id="@+id/title3"

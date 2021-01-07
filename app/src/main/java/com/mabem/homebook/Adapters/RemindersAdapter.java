@@ -11,8 +11,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Fragments.Main.Home.Reminder.ReminderSetFragment;
-import com.mabem.homebook.Model.Reminder;
+import com.mabem.homebook.Views.Main.Home.Reminder.ReminderSetFragment;
+import com.mabem.homebook.Model.Objects.Reminder;
 import com.mabem.homebook.R;
 
 import java.util.ArrayList;

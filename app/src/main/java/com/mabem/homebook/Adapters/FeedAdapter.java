@@ -5,16 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptInfoFragment;
-import com.mabem.homebook.Fragments.Main.Home.Receipt.ReceiptManageFragment;
-import com.mabem.homebook.Model.Item;
-import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptInfoFragment;
+import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptManageFragment;
+import com.mabem.homebook.Model.Objects.Receipt;
 import com.mabem.homebook.R;
 
 import java.text.DateFormat;

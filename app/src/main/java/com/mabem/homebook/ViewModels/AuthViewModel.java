@@ -7,8 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.mabem.homebook.Database.Database;
-import com.mabem.homebook.Model.User;
+import com.mabem.homebook.Model.Database.Database;
+import com.mabem.homebook.Model.Objects.User;
 
 public class AuthViewModel extends AndroidViewModel {
     private final Database database;

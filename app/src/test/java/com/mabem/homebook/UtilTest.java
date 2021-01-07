@@ -1,16 +1,10 @@
 package com.mabem.homebook;
 
-import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Utils.Util;
 
 import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.*;
-
 
 
 /**

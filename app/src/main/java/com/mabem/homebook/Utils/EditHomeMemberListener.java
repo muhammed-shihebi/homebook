@@ -1,6 +1,6 @@
 package com.mabem.homebook.Utils;
 
-import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Objects.Member;
 
 public interface EditHomeMemberListener {
     public void onDeleteClicked(Member member, int position);

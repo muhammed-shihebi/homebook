@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Fragments.Main.Notifications.NotificationsFragment" >
+        tools:context=".Views.Main.Notifications.NotificationsFragment" >
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/my_notifications"

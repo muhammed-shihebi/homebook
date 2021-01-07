@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Fragments.SignIn.SplashFragment"
+        tools:context=".Views.SignIn.SplashFragment"
         android:background="#2B2F38">
 
         <TextView
