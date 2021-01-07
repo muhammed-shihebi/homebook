@@ -12,6 +12,11 @@ import com.mabem.homebook.Model.Objects.AdminNotification;
 import com.mabem.homebook.Model.Objects.Notification;
 import com.mabem.homebook.Model.Objects.UserNotification;
 
+/**
+ * A ViewModel to link the NotificationFragment to the database
+ * and maintain the status of the data in the fragment
+ */
+
 public class NotificationViewModel extends AndroidViewModel {
 
     private final Database database;

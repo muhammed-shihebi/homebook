@@ -12,6 +12,11 @@ import com.mabem.homebook.Model.Objects.Home;
 
 import java.util.ArrayList;
 
+/**
+ * A ViewModel to link the MainActivity to the database
+ * and maintain the status of the data in the MainActivity
+ */
+
 public class MainActivityViewModel extends AndroidViewModel {
     private Database database;
     private final MutableLiveData<ArrayList<Home>> searchResults;

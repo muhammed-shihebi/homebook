@@ -14,6 +14,11 @@ import com.mabem.homebook.Model.Objects.Member;
 import com.mabem.homebook.Model.Objects.Receipt;
 import com.mabem.homebook.Model.Objects.Reminder;
 
+/**
+ * A ViewModel to link fragments after logging in to the database
+ * and maintain the status of the data in these fragments
+ */
+
 public class HomeViewModel extends AndroidViewModel {
 
     private final Database database;

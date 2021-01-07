@@ -33,6 +33,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * This class is dedicated to define an interface to communicate with the external database, image storage and authentication service.
+ * All these Services are Components of Firebase.
+ * */
+
 public class Database {
 
     //========================================= Home_User Collection
@@ -79,6 +84,11 @@ public class Database {
     private final FirebaseFirestore firestore = FirebaseFirestore.getInstance();
     private final StorageReference imageStorageRef = FirebaseStorage.getInstance().getReference(PROFILE_IMAGES);
 
+
+    /*
+    Object that can be observed from outside this class get the
+    results after  calling one of this class's functions.
+    */
     private final MutableLiveData<User> currentUser = new MutableLiveData<>();
     private final MutableLiveData<String> resultMessage = new MutableLiveData<>();
     private final MutableLiveData<Member> currentMember = new MutableLiveData<>();
@@ -200,6 +210,10 @@ public class Database {
                     }
                 });
     }
+
+    /**
+     * updateCurrentNotification will get the notification of the currentMember
+     */
 
     public void updateCurrentNotification() {
         if (currentMember.getValue() != null) {
@@ -513,6 +527,15 @@ public class Database {
 
     //========================================= Log in/Sign up Methods
 
+    /**
+     * Try to login with the given email and password.
+     * If the login was successful the currentUser and resultMessage will be updated
+     * If the login was unsuccessful the currentUser will not be updated and the resultMessage
+     * will be updated with the appropriate message
+     * @param email of the user
+     * @param password of the user
+     */
+
     public void loginWithEmail(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
@@ -526,6 +549,16 @@ public class Database {
                     }
                 });
     }
+
+    /**
+     * Try to sign up with the given email, password and name.
+     * If the sign up was successful the currentUser and resultMessage will be updated
+     * If the sign up was unsuccessful the currentUser will not be updated and the resultMessage
+     * will be updated with the appropriate message
+     * @param email of the new user
+     * @param password of the new user
+     * @param name of the new user
+     */
 
     public void signUpWithEmail(String email, String password, String name) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -553,6 +586,11 @@ public class Database {
                 });
     }
 
+    /**
+     * Sign out the current user
+     * All the LiveDate objects of the database will be null after this call
+     */
+
     public void signOut() {
         currentUser.setValue(null);
         resultMessage.setValue(null);
@@ -563,6 +601,14 @@ public class Database {
         searchResult.setValue(null);
         firebaseAuth.signOut();
     }
+
+    /**
+     * Try to login the user with the given idToken
+     * If the login was successful the currentUser and resultMessage will be updated
+     * If the login was unsuccessful the currentUser will not be updated and the resultMessage
+     * will be updated with the appropriate message
+     * @param idToken linked to the user's google account
+     */
 
     public void loginWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
@@ -576,6 +622,12 @@ public class Database {
         });
     }
 
+    /**
+     * Send an email with the needed information to reset the password of the account
+     * linked to this email.
+     * @param email linked with the account, which its password must be updated
+     */
+
     public void forgotPassword(String email) {
         firebaseAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
@@ -588,6 +640,11 @@ public class Database {
     }
 
     //========================================= Reminder Functions
+
+    /**
+     * Add the given reminder to the list of the reminders of the currentHome
+     * @param newReminder the new reminder to be added to the currentHome
+     */
 
     public void setReminder(Reminder newReminder) {
         if (currentHome.getValue() != null) {
@@ -615,6 +672,11 @@ public class Database {
         }
     }
 
+    /**
+     * Delete the reminder of the currentHome with the given Id
+     * @param reminderId of the reminder to be deleted
+     */
+
     public void deleteReminder(String reminderId) {
         if (currentHome.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
@@ -634,6 +696,11 @@ public class Database {
 
         }
     }
+
+    /**
+     * Update the given reminder of the currentHome
+     * @param updatedReminder the reminder to be updated
+     */
 
     public void updateReminder(Reminder updatedReminder) {
         Map<String, Object> data = new HashMap<>();
@@ -659,6 +726,11 @@ public class Database {
     }
 
     //========================================= Receipt Functions
+
+    /**
+     * Add new receipt to the currentHome
+     * @param receipt to be added
+     */
 
     public void addReceipt(Receipt receipt) {
         if (currentHome.getValue() != null && currentMember.getValue() != null) {
@@ -708,6 +780,11 @@ public class Database {
         }
     }
 
+    /**
+     * Delete the receipt of the currentHome with the given Id
+     * @param receiptId of the receipt to be deleted
+     */
+
     public void deleteReceipt(String receiptId) {
         if (currentHome.getValue() != null) {
             firestore.collection(HOME_COLLECTION)
@@ -742,6 +819,11 @@ public class Database {
 
         }
     }
+
+    /**
+     * Update the given receipt of the currentHome
+     * @param updatedReceipt the receipt to be updated
+     */
 
     public void updateReceipt(Receipt updatedReceipt) {
         if (currentHome.getValue() != null) {
@@ -823,6 +905,11 @@ public class Database {
 
     //========================================= Admin Functions
 
+    /**
+     * Decline the join request linked with the given AdminNotification
+     * @param adminNotification AdminNotification object with the request to be declined
+     */
+
     public void declineJoinRequest(AdminNotification adminNotification) {
 
         // 1. Delete the notification form the home
@@ -848,6 +935,11 @@ public class Database {
                 });
 
     }
+
+    /**
+     * Accept the join request linked with the given AdminNotification
+     * @param adminNotification AdminNotification object with the request to be accepted
+     */
 
     public void acceptJoinRequest(AdminNotification adminNotification) {
 
@@ -907,6 +999,10 @@ public class Database {
                     Log.w(TAG, "declineRequestToJoin: ", e);
                 });
     }
+
+    /**
+     * Delete the currentHome with all of the collections of data linked to it
+     */
 
     public void deleteHome() {
         if (currentHome.getValue() != null) {
@@ -1009,6 +1105,11 @@ public class Database {
         }
     }
 
+    /**
+     * Update the currentHome with new data packed int the given newHome object
+     * @param newHome is an object that contain the new data to update the currentHome
+     */
+
     public void updateHome(Home newHome) {
 
         firestore.collection(HOME_COLLECTION)
@@ -1059,6 +1160,10 @@ public class Database {
     }
 
     //========================================= Member Functions
+
+    /**
+     * Get the currentMember out of the currentHome
+     */
 
     public void leaveHome() {
         if (currentMember.getValue() != null && currentHome.getValue() != null) {
@@ -1132,6 +1237,11 @@ public class Database {
         }
     }
 
+    /**
+     * Delete the notification linked with the given UserNotification object
+     * @param userNotification object containing the notification to be deleted
+     */
+
     public void deleteUserNotification(UserNotification userNotification) {
         if (currentMember.getValue() != null) {
             firestore.collection(USER_NOTIFICATION_COLLECTION)
@@ -1152,6 +1262,11 @@ public class Database {
     }
 
     //========================================= User Functions
+
+    /**
+     * Send a join request to the home linked with the given Id
+     * @param homeId of the home to be send a join request to
+     */
 
     public void sendJoinRequest(String homeId) {
         if (currentMember.getValue() != null) {
@@ -1202,7 +1317,7 @@ public class Database {
      * If successful, information of the user are updated including the names in Receipts collections.
      * If unsuccessful, information are not updated and resultMessage is updated.
      *
-     * @param newMember
+     * @param newMember object containing the data of the Member to be updated
      */
 
     public void updateMember(Member newMember, Uri localUri) {
@@ -1316,6 +1431,13 @@ public class Database {
             });
         }
     }
+
+    /**
+     * Search for the home with the given homeCode
+     * If successful, the searchResult will be updated with the home
+     * If unsuccessful, the resultMessage will be updated with an appropriate message
+     * @param homeCode
+     */
 
     public void searchHome(String homeCode) {
         if (currentMember.getValue() != null) {
