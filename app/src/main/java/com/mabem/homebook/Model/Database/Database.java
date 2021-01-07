@@ -743,6 +743,8 @@ public class Database {
             data.put(MEMBER_NAME, currentMember.getValue().getName());
             data.put(RECEIPT_NAME, receipt.getName());
 
+
+
             double total = 0.0;
 
             // 2. calculate the total

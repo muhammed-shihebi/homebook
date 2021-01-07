@@ -29,7 +29,7 @@ public class AuthViewModelTest {
      * This is an instrumented and an integration test.
      * It will try to login a user using the email and the password of this user.
      * The user already exist in the database.
-     * To perform the database operations the functions available in the AuthViewModel are used.
+     * To perform the database operations, the functions available in the AuthViewModel are used.
      * This function will assert than that the returned user has the expected attributes.
      */
 
