@@ -180,19 +180,7 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
     private void loadLocale() {
         SharedPreferences prefs = getSharedPreferences("settings", Activity.MODE_PRIVATE);
         String lang = prefs.getString("my_lang", "");
-        setLocale(lang);
-    }
-
-    public void setLocale(String locale1) {
-        Locale locale = new Locale(locale1);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-
-        SharedPreferences.Editor editor = getSharedPreferences("settings", MODE_PRIVATE).edit();
-        editor.putString("my_lang", locale1);
-        editor.apply();
+        Util.setLocale(this, lang);
     }
 
     //========================================= NavDrawer Functions
