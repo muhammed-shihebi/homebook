@@ -28,8 +28,7 @@
             <item
                 android:id="@+id/loginFragment"
                 android:icon="@drawable/logout_icon"
-                android:title="@string/sign_out"
-                />
+                android:title="@string/sign_out" />
         </menu>
     </item>
 

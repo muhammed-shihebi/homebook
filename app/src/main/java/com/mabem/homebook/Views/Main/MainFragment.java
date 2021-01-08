@@ -52,13 +52,13 @@ public class MainFragment extends Fragment {
         homesViewModel.updateCurrentMember();
 
         homesViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
-            if(member != null){
+            if (member != null) {
 
                 ((NavigationDrawer) getActivity()).setCurrentMember(member);
 
                 list.clear();
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
-                for(Home home : memberHomes.keySet()){
+                for (Home home : memberHomes.keySet()) {
                     list.add(home);
                 }
                 Collections.sort(list, new Comparator<Home>() {

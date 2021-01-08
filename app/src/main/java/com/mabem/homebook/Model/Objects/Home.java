@@ -17,25 +17,17 @@ public class Home {
     private ArrayList<Reminder> reminders = new ArrayList<Reminder>();
     private ArrayList<Receipt> receipts = new ArrayList<Receipt>();
 
-    public Home(String id, String name){
+    public Home(String id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Home(String id, String name, String code, Boolean visibility, ArrayList<Receipt> receipts){
+    public Home(String id, String name, String code, Boolean visibility, ArrayList<Receipt> receipts) {
         this.id = id;
         this.name = name;
         this.code = code;
         this.visibility = visibility;
         this.receipts = receipts;
-    }
-
-    public void setMember_role(HashMap<Member, Boolean> member_role) {
-        this.member_role = member_role;
-    }
-
-    public void setReminders(ArrayList<Reminder> reminders) {
-        this.reminders = reminders;
     }
 
     public String getId() {
@@ -58,8 +50,16 @@ public class Home {
         return member_role;
     }
 
+    public void setMember_role(HashMap<Member, Boolean> member_role) {
+        this.member_role = member_role;
+    }
+
     public ArrayList<Reminder> getReminders() {
         return reminders;
+    }
+
+    public void setReminders(ArrayList<Reminder> reminders) {
+        this.reminders = reminders;
     }
 
     public ArrayList<Receipt> getReceipts() {

@@ -72,7 +72,6 @@
         app:layout_constraintTop_toBottomOf="@+id/about_text" />
 
 
-
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="205dp"

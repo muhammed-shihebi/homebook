@@ -1,6 +1,9 @@
 package com.mabem.homebook.Views.Main.Home.Reminder;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -8,10 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.mabem.homebook.Adapters.RemindersAdapter;
 import com.mabem.homebook.Model.Objects.Home;
@@ -29,17 +28,22 @@ import java.util.HashMap;
 
 public class RemindersFragment extends Fragment {
     private static final String REMINDERS_FRAGMENT_TAG = "Reminders Fragment";
-
+    private static String home_id = "";
     private FragmentRemindersBinding fragmentRemindersBinding;
     private HomeViewModel homeViewModel;
     private RecyclerView.Adapter adapter;
     private Home currentHome;
     private Member currentMember;
     private ArrayList<Reminder> reminders = new ArrayList();
-
-
-    private static String home_id = "";
     private boolean isAdmin = false;
+
+    public static String getHome_id() {
+        return home_id;
+    }
+
+    public static void setHome_id(String home_id) {
+        RemindersFragment.home_id = home_id;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,15 +59,15 @@ public class RemindersFragment extends Fragment {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         homeViewModel.getCurrentMember().observe(getViewLifecycleOwner(), member -> {
-            if(member != null){
+            if (member != null) {
                 currentMember = member;
                 HashMap<Home, Boolean> memberHomes = member.getHome_role();
-                for(Home h1 : memberHomes.keySet()){
-                    if( h1.getId().equals(home_id) ){
+                for (Home h1 : memberHomes.keySet()) {
+                    if (h1.getId().equals(home_id)) {
                         isAdmin = memberHomes.get(h1);
-                        if(isAdmin){
+                        if (isAdmin) {
                             fragmentRemindersBinding.reminderAddButton.setVisibility(View.VISIBLE);
-                        }else{
+                        } else {
                             fragmentRemindersBinding.reminderAddButton.setVisibility(View.GONE);
                         }
                         homeViewModel.updateHomeWithReminders();
@@ -75,7 +79,7 @@ public class RemindersFragment extends Fragment {
                             reminders.clear();
 
                             ArrayList<Reminder> r = h.getReminders();
-                            for(Reminder reminder : r){
+                            for (Reminder reminder : r) {
                                 reminders.add(reminder);
                             }
                             Collections.sort(reminders, new Comparator<Reminder>() {
@@ -100,13 +104,5 @@ public class RemindersFragment extends Fragment {
 
 
         return fragmentRemindersBinding.getRoot();
-    }
-
-    public static String getHome_id() {
-        return home_id;
-    }
-
-    public static void setHome_id(String home_id) {
-        RemindersFragment.home_id = home_id;
     }
 }

@@ -6,6 +6,12 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -13,13 +19,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
-import android.widget.Toast;
 
 import com.mabem.homebook.Adapters.ReceiptManageAdapter;
 import com.mabem.homebook.Model.Objects.Item;
@@ -38,21 +37,32 @@ import java.util.Calendar;
 public class ReceiptManageFragment extends Fragment implements ReceiptManagerItemListener {
 
     private static final String RECEIPT_MANAGE_FRAGMENT_TAG = "Receipt Manage Fragment";
-
-
+    private static boolean toEditFlag = false; //Admin or the member, who created this receipt, accesses a receipt
+    private static Receipt toEditReceipt;
     private FragmentManageReceiptBinding fragmentManageReceiptBinding;
     private HomeViewModel homeViewModel;
     private RecyclerView.Adapter adapter;
     private Member currentMember;
-
     private Calendar cal;
     private String receiptName = "";
     private Double total = 0.0;
     private ArrayList<Item> itemsOfReceipt = new ArrayList<>();
 
+    public static Receipt getToEditReceipt() {
+        return toEditReceipt;
+    }
 
-    private static boolean toEditFlag = false; //Admin or the member, who created this receipt, accesses a receipt
-    private static Receipt toEditReceipt;
+    public static void setToEditReceipt(Receipt toEditReceipt) {
+        ReceiptManageFragment.toEditReceipt = toEditReceipt;
+    }
+
+    public static boolean isToEditFlag() {
+        return toEditFlag;
+    }
+
+    public static void setToEditFlag(boolean toEditFlag) {
+        ReceiptManageFragment.toEditFlag = toEditFlag;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -72,20 +82,20 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
             }
         });
 
-        if(toEditFlag){
+        if (toEditFlag) {
             fragmentManageReceiptBinding.receiptManageReceiptName.setText(toEditReceipt.getName());
             cal = Calendar.getInstance();
             cal.setTime(toEditReceipt.getDate());
-            fragmentManageReceiptBinding.receiptManageDateButton.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
+            fragmentManageReceiptBinding.receiptManageDateButton.setText(cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR));
             total = toEditReceipt.getTotal();
             fragmentManageReceiptBinding.receiptManageTotal.setText(toEditReceipt.getTotal().toString());
 
             homeViewModel.updateCurrentReceipt(toEditReceipt.getId());
             homeViewModel.getCurrentReceipt().observe(getViewLifecycleOwner(), r -> {
-                if(r != null){
+                if (r != null) {
                     itemsOfReceipt.clear();
                     ArrayList<Item> i = r.getItems();
-                    for(Item item : i){
+                    for (Item item : i) {
                         itemsOfReceipt.add(item);
                     }
                     adapter = new ReceiptManageAdapter(getContext(), itemsOfReceipt, this);
@@ -93,7 +103,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                 }
             });
 
-        }else{
+        } else {
             itemsOfReceipt.clear();
             adapter = new ReceiptManageAdapter(getContext(), itemsOfReceipt, this);
             fragmentManageReceiptBinding.receiptManageItemList.setAdapter(adapter);
@@ -110,7 +120,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
             DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog_MinWidth, new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                    fragmentManageReceiptBinding.receiptManageDateButton.setText(dayOfMonth+"/"+(month+1)+"/"+year);
+                    fragmentManageReceiptBinding.receiptManageDateButton.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
                     cal.set(year, month, dayOfMonth);
 
                     Log.d("Demo", cal.getTime().toString());
@@ -124,7 +134,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
         fragmentManageReceiptBinding.receiptManageAddItemButton.setOnClickListener(v -> {
             String name = fragmentManageReceiptBinding.receiptManageItemName.getText().toString().trim();
             String price = fragmentManageReceiptBinding.receiptManageItemPrice.getText().toString().trim();
-            if(!name.isEmpty() && !price.isEmpty()) {
+            if (!name.isEmpty() && !price.isEmpty()) {
                 Double d = Double.parseDouble(price);
                 Item i = new Item(name, d);
                 onAddingItem(i);
@@ -132,43 +142,43 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
         });
 
         fragmentManageReceiptBinding.receiptManageSaveButton.setOnClickListener(v -> {
-            if(isToEditFlag()){
-                if(!fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty() && !itemsOfReceipt.isEmpty()){
+            if (isToEditFlag()) {
+                if (!fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty() && !itemsOfReceipt.isEmpty()) {
                     receiptName = fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim();
                     Receipt updated = new Receipt(toEditReceipt.getId(), receiptName, cal.getTime(), total, toEditReceipt.getMemberName(), toEditReceipt.getMemberId());
                     updated.setItems(itemsOfReceipt);
                     homeViewModel.updateReceipt(updated);
                     homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                        if(s != null){
+                        if (s != null) {
                             Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
                         }
                     });
-                }else{
-                    if(fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()){
+                } else {
+                    if (fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()) {
                         Toast.makeText(requireContext(), R.string.please_enter_name_for_receipt_message, Toast.LENGTH_SHORT).show();
-                    }else if(itemsOfReceipt.isEmpty()){
+                    } else if (itemsOfReceipt.isEmpty()) {
                         Toast.makeText(requireContext(), R.string.please_enter_item_message, Toast.LENGTH_SHORT).show();
                     }
                 }
-            }else{
-                if(!fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty() && !itemsOfReceipt.isEmpty() && (cal != null) ){
+            } else {
+                if (!fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty() && !itemsOfReceipt.isEmpty() && (cal != null)) {
                     receiptName = fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim();
                     Receipt r = new Receipt("", receiptName, cal.getTime(), total, currentMember.getName(), currentMember.getId());
                     r.setItems(itemsOfReceipt);
                     homeViewModel.addReceipt(r);
                     homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                        if(s != null){
+                        if (s != null) {
                             Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                             Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
                         }
                     });
-                }else{
-                    if(fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()){
+                } else {
+                    if (fragmentManageReceiptBinding.receiptManageReceiptName.getText().toString().trim().isEmpty()) {
                         Toast.makeText(requireContext(), R.string.please_enter_name_for_receipt_message, Toast.LENGTH_SHORT).show();
-                    }else if(itemsOfReceipt.isEmpty()){
+                    } else if (itemsOfReceipt.isEmpty()) {
                         Toast.makeText(requireContext(), R.string.please_enter_item_message, Toast.LENGTH_SHORT).show();
-                    }else if(cal == null){
+                    } else if (cal == null) {
                         Toast.makeText(requireContext(), R.string.please_enter_date_of_receipt_message, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -176,7 +186,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
         });
 
         fragmentManageReceiptBinding.receiptManageDeleteButton.setOnClickListener(v -> {
-            if(isToEditFlag()) {
+            if (isToEditFlag()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.delete_receipt_warning)
                         .setMessage(R.string.delete_receipt_warning_message)
@@ -190,7 +200,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                             public void onClick(DialogInterface dialog, int which) {
                                 homeViewModel.deleteReceipt(toEditReceipt.getId());
                                 homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                                    if(s != null){
+                                    if (s != null) {
                                         Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                                         Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
                                     }
@@ -199,7 +209,7 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
                         });
                 AlertDialog mDialog = builder.create();
                 mDialog.show();
-            }else{
+            } else {
                 Navigation.findNavController(v).navigate(R.id.action_manageReceiptFragment_to_feedFragment);
             }
         });
@@ -217,24 +227,6 @@ public class ReceiptManageFragment extends Fragment implements ReceiptManagerIte
         fragmentManageReceiptBinding.receiptManageItemPrice.setText("");
         Util.hideKeyboard(getActivity());
     }
-
-
-    public static Receipt getToEditReceipt() {
-        return toEditReceipt;
-    }
-
-    public static void setToEditReceipt(Receipt toEditReceipt) {
-        ReceiptManageFragment.toEditReceipt = toEditReceipt;
-    }
-
-    public static boolean isToEditFlag() {
-        return toEditFlag;
-    }
-
-    public static void setToEditFlag(boolean toEditFlag) {
-        ReceiptManageFragment.toEditFlag = toEditFlag;
-    }
-
 
     @Override
     public void onDeleteClicked(Item item, int position) {

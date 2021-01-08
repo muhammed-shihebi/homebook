@@ -3,7 +3,6 @@ package com.mabem.homebook.ViewModels;
 import android.app.Application;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
@@ -120,7 +119,7 @@ public class HomeViewModelTest {
                         homeViewModel.getCurrentHome().observeForever(new Observer<Home>() {
                             @Override
                             public void onChanged(Home home) {
-                                if(currentHome[0] != home){
+                                if (currentHome[0] != home) {
 //                                    Log.i("unique", "addReceipt: 5");
                                     for (Receipt receipt : home.getReceipts()) {
 //                                        Log.i("unique", "addReceipt: 5 " + receipt.getName());
@@ -142,7 +141,7 @@ public class HomeViewModelTest {
         while (!statusChanged[0]) {
         }
 
-        // Asserts to make sure the expected home is the same as the returned home
+        // Asserts to make sure the expected receipt is the same as the returned receipt
         assertEquals(expectedReceipt[0].getDate(), returnedReceipt[0].getDate());
         assertEquals(expectedReceipt[0].getTotal(), returnedReceipt[0].getTotal());
         assertEquals(expectedReceipt[0].getMemberId(), returnedReceipt[0].getMemberId());
@@ -157,5 +156,4 @@ public class HomeViewModelTest {
             homeViewModel.deleteReceipt(returnedReceipt[0].getId());
         });
     }
-
 }

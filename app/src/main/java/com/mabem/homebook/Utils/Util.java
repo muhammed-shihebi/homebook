@@ -10,13 +10,12 @@ import com.mabem.homebook.R;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Util {
 
     /**
      * Hide the keyboard form the screen if it was visible
+     *
      * @param activity the activity in which to hide the keyboard
      */
 
@@ -33,7 +32,8 @@ public class Util {
 
     /**
      * Save the preference of the remember me checkbox
-     * @param activity the activity in which to save the preference
+     *
+     * @param activity  the activity in which to save the preference
      * @param isChecked indicates if the remember me checkbox was checked or not
      */
 
@@ -46,7 +46,8 @@ public class Util {
 
     /**
      * Round the give double value by "places" places
-     * @param value the double value to be rounded
+     *
+     * @param value  the double value to be rounded
      * @param places the number of places after the coma
      * @return the rounded double value
      */

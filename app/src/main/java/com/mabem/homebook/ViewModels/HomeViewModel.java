@@ -42,22 +42,25 @@ public class HomeViewModel extends AndroidViewModel {
     public LiveData<Member> getCurrentMember() {
         return currentMember;
     }
+
     public LiveData<Home> getCurrentHome() {
         return currentHome;
     }
+
     public LiveData<Receipt> getCurrentReceipt() {
         return currentReceipt;
     }
+
     public LiveData<String> getResultMessage() {
         return resultMessage;
     }
 
-    public void updateUser(Member m, Uri localUri){
+    public void updateUser(Member m, Uri localUri) {
         resultMessage.setValue(null);
         database.updateMember(m, localUri);
     }
 
-    public void updateCurrentMember(){
+    public void updateCurrentMember() {
         resultMessage.setValue(null);
         database.updateCurrentMember();
     }
@@ -67,43 +70,52 @@ public class HomeViewModel extends AndroidViewModel {
         resultMessage.setValue(null);
         database.createHome(homeName, isPrivate);
     }
-    public void updateCurrentHome(String id){
+
+    public void updateCurrentHome(String id) {
         database.updateCurrentHome(id);
     }
-    public void updateHomeWithMembers(){
+
+    public void updateHomeWithMembers() {
         resultMessage.setValue(null);
         database.updateHomeWithMembers();
     }
-    public void updateHomeWithReminders(){
+
+    public void updateHomeWithReminders() {
         resultMessage.setValue(null);
         database.updateHomeWithReminders();
     }
-    public void leaveHome(){
+
+    public void leaveHome() {
         resultMessage.setValue(null);
         database.leaveHome();
     }
+
     public void updateHome(Home h) {
         resultMessage.setValue(null);
         database.updateHome(h);
     }
+
     public void deleteHome() {
         resultMessage.setValue(null);
         database.deleteHome();
     }
 
-    public void updateCurrentReceipt(String id){
+    public void updateCurrentReceipt(String id) {
         resultMessage.setValue(null);
         database.updateCurrentReceipt(id);
     }
-    public void addReceipt(Receipt r){
+
+    public void addReceipt(Receipt r) {
         resultMessage.setValue(null);
         database.addReceipt(r);
     }
-    public void updateReceipt(Receipt r){
+
+    public void updateReceipt(Receipt r) {
         resultMessage.setValue(null);
         database.updateReceipt(r);
     }
-    public void deleteReceipt(String id){
+
+    public void deleteReceipt(String id) {
         resultMessage.setValue(null);
         database.deleteReceipt(id);
     }
@@ -112,11 +124,13 @@ public class HomeViewModel extends AndroidViewModel {
         resultMessage.setValue(null);
         database.updateReminder(r);
     }
+
     public void setReminder(Reminder r) {
         resultMessage.setValue(null);
         database.setReminder(r);
     }
-    public void deleteReminder(String id){
+
+    public void deleteReminder(String id) {
         resultMessage.setValue(null);
         database.deleteReminder(id);
     }
@@ -124,10 +138,10 @@ public class HomeViewModel extends AndroidViewModel {
     public boolean getShouldShowResultMessage() {
         return shouldShowResultMessage;
     }
+
     public void setShouldShowResultMessage(boolean shouldShowResultMessage) {
         this.shouldShowResultMessage = shouldShowResultMessage;
     }
-
 
 
 }

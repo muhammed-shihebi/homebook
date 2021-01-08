@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.mabem.homebook.Model.Objects.Member;
 import com.mabem.homebook.R;
 
 import java.util.ArrayList;
 
-public class HomeInfoAdapter extends RecyclerView.Adapter<HomeInfoAdapter.ViewHolder>{
-
+public class HomeInfoAdapter extends RecyclerView.Adapter<HomeInfoAdapter.ViewHolder> {
 
     private final Context context;
     private final ArrayList<Member> admins;
@@ -40,13 +40,13 @@ public class HomeInfoAdapter extends RecyclerView.Adapter<HomeInfoAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull HomeInfoAdapter.ViewHolder holder, int position) {
         int numAdmins = admins.size();
-        Log.d("Position", position+"");
+        Log.d("Position", position + "");
 
-        if(position < admins.size()){
+        if (position < admins.size()) {
             holder.memberName.setText(admins.get(position).getName());
             holder.memberRole.setText(R.string.admin);
-        }else{
-            holder.memberName.setText(normalMembers.get(position-numAdmins).getName());
+        } else {
+            holder.memberName.setText(normalMembers.get(position - numAdmins).getName());
             holder.memberRole.setText(" ");
         }
         Log.d("membername", holder.memberName.getText().toString());

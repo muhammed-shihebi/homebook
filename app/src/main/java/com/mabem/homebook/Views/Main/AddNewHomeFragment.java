@@ -1,16 +1,15 @@
 package com.mabem.homebook.Views.Main;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
@@ -35,15 +34,15 @@ public class AddNewHomeFragment extends Fragment {
         createHomeBinding.saveHomeButton.setOnClickListener(v -> {
             Boolean isPrivate = createHomeBinding.privateCheckbox.isChecked();
             String homeName = createHomeBinding.homeName.getText().toString().trim();
-            if(homeName.isEmpty()){
+            if (homeName.isEmpty()) {
                 Toast.makeText(requireContext(), R.string.please_enter_name_for_home_message, Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 homesViewModel.addNewHome(homeName, isPrivate);
                 homesViewModel.setShouldShowResultMessage(true);
             }
             homesViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                if(s != null){
-                    if(homesViewModel.getShouldShowResultMessage()){
+                if (s != null) {
+                    if (homesViewModel.getShouldShowResultMessage()) {
                         Toast.makeText(requireContext(), homesViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(v).navigate(R.id.action_addNewHomeFragment_to_mainFragment);
                     }

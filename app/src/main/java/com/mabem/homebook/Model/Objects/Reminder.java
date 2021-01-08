@@ -1,6 +1,7 @@
 package com.mabem.homebook.Model.Objects;
 
 import java.util.Date;
+
 public class Reminder {
 
     public static final String ONCE = "Once";

@@ -26,7 +26,7 @@ public class User implements Serializable {
         this.imageURI = imageURI;
     }
 
-    public User (String name, String id){
+    public User(String name, String id) {
         this.name = name;
         this.id = id;
     }

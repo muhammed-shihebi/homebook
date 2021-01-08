@@ -22,12 +22,12 @@ public class Member extends User {
         this.home_role = home_role;
     }
 
-    public Member(User user,  HashMap<Home, Boolean> home_role){
+    public Member(User user, HashMap<Home, Boolean> home_role) {
         super(user.getId(), user.getName(), user.getEmailAddress(), user.getImageURI());
         this.home_role = home_role;
     }
 
-    public Member(String name, String id){
+    public Member(String name, String id) {
         super(name, id);
     }
 
@@ -47,8 +47,8 @@ public class Member extends User {
     }
 
     public Boolean isThisMemberAdmin(Home currentHome) {
-        for(Home h:  home_role.keySet()){
-            if(h.getId().equals(currentHome.getId()) && home_role.get(h)){
+        for (Home h : home_role.keySet()) {
+            if (h.getId().equals(currentHome.getId()) && home_role.get(h)) {
                 return true;
             }
         }

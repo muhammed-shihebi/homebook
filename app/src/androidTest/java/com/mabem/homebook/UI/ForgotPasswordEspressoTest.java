@@ -21,8 +21,10 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 
 @RunWith(AndroidJUnit4.class) // Because we want to use the junit4 testing framework
-@LargeTest // Because we have many test cases inside (UnitTests are SmallTest, integrated test-> MediumTest, UITest -> LargeTest
-@FixMethodOrder (MethodSorters.NAME_ASCENDING) // So that we run tests in ascending order (of their names)
+@LargeTest
+// Because we have many test cases inside (UnitTests are SmallTest, integrated test-> MediumTest, UITest -> LargeTest
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+// So that we run tests in ascending order (of their names)
 
 public class ForgotPasswordEspressoTest {
 
@@ -35,9 +37,9 @@ public class ForgotPasswordEspressoTest {
         // what should happen before running each test case
 
 
-
         //onView(withText(containsString("A4"))).inRoot(isPlatformPopup()).check(matches(isDisplayed())); // GIBI BIR SEYLER YAPIP ANLAMAK GEREKIYOR ASLINDA ACIK MI SU AN
     }
+
     @After
     public void tearDown() throws Exception {
         // Do after each test case
@@ -50,8 +52,6 @@ public class ForgotPasswordEspressoTest {
     public void canSeeSettings() {
         onView(withText("Forgot Passsword")).check(matches(isDisplayed()));
     }
-
-
 
 
 }

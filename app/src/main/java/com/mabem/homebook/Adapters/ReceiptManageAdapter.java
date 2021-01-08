@@ -23,7 +23,6 @@ public class ReceiptManageAdapter extends RecyclerView.Adapter<ReceiptManageAdap
     ArrayList<Item> items;
 
 
-
     public ReceiptManageAdapter(Context context, ArrayList<Item> items, ReceiptManagerItemListener receiptManagerItemListener) {
         this.context = context;
         this.items = items;

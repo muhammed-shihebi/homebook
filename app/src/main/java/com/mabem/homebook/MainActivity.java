@@ -30,13 +30,13 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
-import com.mabem.homebook.Views.Main.EditProfileFragment;
-import com.mabem.homebook.Views.Main.SearchedHomeDialog;
 import com.mabem.homebook.Model.Objects.Member;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.SearchResultListener;
 import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.MainActivityViewModel;
+import com.mabem.homebook.Views.Main.EditProfileFragment;
+import com.mabem.homebook.Views.Main.SearchedHomeDialog;
 import com.mabem.homebook.databinding.MainActivityBinding;
 
 import java.util.Locale;

@@ -60,8 +60,8 @@ public class SignUpFragment extends Fragment {
             }
         });
 
-        authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message->{
-            if(message != null){
+        authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
                 Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
                 signUpBinding.progressBar2.setVisibility(View.GONE);
             }

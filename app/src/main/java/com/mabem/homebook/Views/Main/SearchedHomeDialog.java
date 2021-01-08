@@ -44,7 +44,7 @@ public class SearchedHomeDialog extends DialogFragment {
                 });
 
 
-        if(!searchResult.isEmpty()){
+        if (!searchResult.isEmpty()) {
             builder.setSingleChoiceItems(homeNames, 0, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -57,7 +57,7 @@ public class SearchedHomeDialog extends DialogFragment {
             }).setNegativeButton(R.string.cancel, (dialog, id) -> {
                 searchResultListener.onOkPressed();
             });
-        }else {
+        } else {
             builder.setMessage("No Home found!");
         }
 

@@ -44,11 +44,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.notification_menu_item, parent, false);
 
-        if(viewType == USER_NOTIFICATION){
+        if (viewType == USER_NOTIFICATION) {
             return new UserViewHolder(itemView, notificationMenuItemListener);
         }
 
-        if(viewType == ADMIN_NOTIFICATION){
+        if (viewType == ADMIN_NOTIFICATION) {
             return new AdminViewHolder(itemView, notificationMenuItemListener);
         }
 
@@ -57,11 +57,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof UserViewHolder){
+        if (holder instanceof UserViewHolder) {
             ((UserViewHolder) holder).populate(userNotifications.get(position));
         }
 
-        if(holder instanceof AdminViewHolder){
+        if (holder instanceof AdminViewHolder) {
             ((AdminViewHolder) holder).populate(adminNotifications.get(position - userNotifications.size()));
         }
     }
@@ -74,11 +74,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemViewType(int position) {
-        if(position < userNotifications.size()){
+        if (position < userNotifications.size()) {
             return USER_NOTIFICATION;
         }
 
-        if(position - userNotifications.size() < adminNotifications.size()){
+        if (position - userNotifications.size() < adminNotifications.size()) {
             return ADMIN_NOTIFICATION;
         }
 
@@ -86,7 +86,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
 
-    public class UserViewHolder extends RecyclerView.ViewHolder{
+    public class UserViewHolder extends RecyclerView.ViewHolder {
 
         private TextView firstName;
         private TextView secondName;
@@ -114,8 +114,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         }
 
-        public void populate(UserNotification userNotification){
-            if(userNotification.getType().equals(UserNotification.TYPE_ACCEPT)){
+        public void populate(UserNotification userNotification) {
+            if (userNotification.getType().equals(UserNotification.TYPE_ACCEPT)) {
                 firstName.setText(userNotification.getHomeName());
                 secondName.setVisibility(View.INVISIBLE);
                 notText.setText(R.string.home_accepted_you_text);
@@ -133,7 +133,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     clickListener.onOKClicked(userNotification, getAdapterPosition());
                 });
 
-            }else if(userNotification.getType().equals(UserNotification.TYPE_DECLINE)) {
+            } else if (userNotification.getType().equals(UserNotification.TYPE_DECLINE)) {
                 firstName.setText(userNotification.getHomeName());
                 secondName.setVisibility(View.INVISIBLE);
                 declineText.setVisibility(View.INVISIBLE);
@@ -153,7 +153,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-    public class AdminViewHolder extends RecyclerView.ViewHolder{
+    public class AdminViewHolder extends RecyclerView.ViewHolder {
 
         private TextView firstName;
         private TextView secondName;
@@ -181,7 +181,7 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             this.clickListener = clickListener;
         }
 
-        public void populate(AdminNotification adminNotification){
+        public void populate(AdminNotification adminNotification) {
             firstName.setText(adminNotification.getUserName());
             secondName.setText(adminNotification.getHomeName());
             notText.setText(R.string.join_request_text);
@@ -192,10 +192,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             acceptText.setOnClickListener(v -> {
                 clickListener.onAcceptJoinRequest(adminNotification, getAdapterPosition());
             });
-            declineButton.setOnClickListener(v ->{
+            declineButton.setOnClickListener(v -> {
                 clickListener.onDeclineJoinRequest(adminNotification, getAdapterPosition());
             });
-            declineText.setOnClickListener(v ->{
+            declineText.setOnClickListener(v -> {
                 clickListener.onDeclineJoinRequest(adminNotification, getAdapterPosition());
             });
         }

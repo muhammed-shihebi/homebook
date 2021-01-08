@@ -20,10 +20,10 @@
                 android:layout_marginBottom="32dp"
                 android:clickable="true"
                 android:visibility="gone"
-                tools:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/new_home_icon" />
+                app:srcCompat="@drawable/new_home_icon"
+                tools:visibility="visible" />
 
             <ScrollView
                 android:layout_width="match_parent"

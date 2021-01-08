@@ -39,6 +39,10 @@ public class Receipt {
         return items;
     }
 
+    public void setItems(ArrayList<Item> items) {
+        this.items = items;
+    }
+
     public String getMemberName() {
         return memberName;
     }
@@ -49,10 +53,6 @@ public class Receipt {
 
     public Double getTotal() {
         return total;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
     }
 
     @Override

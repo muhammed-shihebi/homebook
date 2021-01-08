@@ -20,8 +20,8 @@ import java.util.ArrayList;
 public class EditHomeAdapter extends RecyclerView.Adapter<EditHomeAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<Member> allMembers;
-    private int numAdmins;
     EditHomeMemberListener editHomeMemberListener;
+    private int numAdmins;
     private Member currentMember;
 
     public EditHomeAdapter(Context context, ArrayList<Member> allMembers, int numAdmins, EditHomeMemberListener editHomeMemberListener) {
@@ -36,7 +36,7 @@ public class EditHomeAdapter extends RecyclerView.Adapter<EditHomeAdapter.ViewHo
     public EditHomeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_home_member_menu_item, parent, false);
-        return new EditHomeAdapter.ViewHolder(v,editHomeMemberListener);
+        return new EditHomeAdapter.ViewHolder(v, editHomeMemberListener);
     }
 
     @Override
@@ -66,32 +66,32 @@ public class EditHomeAdapter extends RecyclerView.Adapter<EditHomeAdapter.ViewHo
 
         public void populate(int position) {
             memberName.setText(allMembers.get(position).getName());
-            if(position < numAdmins){
+            if (position < numAdmins) {
                 admin.setChecked(true);
-            }else{
+            } else {
                 admin.setChecked(false);
             }
 
             delete.setOnClickListener(v -> {
                 currentMember = allMembers.get(getAdapterPosition());
-                if(admin.isChecked() && numAdmins == 1){
+                if (admin.isChecked() && numAdmins == 1) {
                     listener.onDeletingLastAdmin();
-                }else{
+                } else {
                     listener.onDeleteClicked(currentMember, getAdapterPosition());
                 }
             });
 
             admin.setOnClickListener(v -> {
-                if(admin.isChecked()){
+                if (admin.isChecked()) {
                     currentMember = allMembers.get(getAdapterPosition());
                     listener.onAdminSwitchClicked(currentMember, false);
                     numAdmins++;
-                }else{
-                    if((numAdmins-1) == 0){
+                } else {
+                    if ((numAdmins - 1) == 0) {
                         admin.setChecked(true);
                         currentMember = allMembers.get(getAdapterPosition());
                         listener.onAdminSwitchClicked(currentMember, true);
-                    }else{
+                    } else {
                         currentMember = allMembers.get(getAdapterPosition());
                         listener.onAdminSwitchClicked(currentMember, false);
                         numAdmins--;

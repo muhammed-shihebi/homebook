@@ -21,11 +21,11 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.mabem.homebook.Views.Main.EditProfileFragment;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.AuthViewModel;
+import com.mabem.homebook.Views.Main.EditProfileFragment;
 import com.mabem.homebook.databinding.LoginFragmentBinding;
 
 public class LoginFragment extends Fragment {
@@ -74,8 +74,8 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message->{
-            if(message != null){
+        authViewModel.getResultMessage().observe(getViewLifecycleOwner(), message -> {
+            if (message != null) {
                 Toast.makeText(requireActivity(), message, Toast.LENGTH_SHORT).show();
                 loginBinding.progressBar.setVisibility(View.GONE);
             }

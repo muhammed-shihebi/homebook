@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Views.Main.Home.Receipt.FeedFragment;
 import com.mabem.homebook.Model.Objects.Home;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Views.Main.Home.Receipt.FeedFragment;
 
 import java.util.ArrayList;
 
@@ -45,17 +46,17 @@ public class MyhomesAdapter extends RecyclerView.Adapter<MyhomesAdapter.ViewHold
         return this.list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         private Button homename;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             homename = itemView.findViewById(R.id.home_button);
 
-            homename.setOnClickListener(v ->{
+            homename.setOnClickListener(v -> {
                 Navigation.findNavController(v).navigate(R.id.action_mainFragment_to_feedFragment);
-                for(Home h : list){
-                    if(homename.getText().equals(h.getName())){
+                for (Home h : list) {
+                    if (homename.getText().equals(h.getName())) {
                         FeedFragment.setHome_id(h.getId());
                     }
                 }

@@ -1,16 +1,15 @@
 package com.mabem.homebook.Views.Main.Home.Receipt;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.mabem.homebook.Adapters.ReceiptinfoAdapter;
 import com.mabem.homebook.Model.Objects.Item;
@@ -27,12 +26,19 @@ import java.util.ArrayList;
 public class ReceiptInfoFragment extends Fragment {
 
     private static final String RECEIPT_INFO_FRAGMENT_TAG = "Receipt Info Fragment";
-
+    private static Receipt currentReceipt;
     private FragmentReceiptInfoBinding fragmentReceiptInfoBinding;
     private HomeViewModel homeViewModel;
     private ArrayList items = new ArrayList();
     private RecyclerView.Adapter adapter;
-    private static Receipt currentReceipt;
+
+    public static Receipt getReceipt() {
+        return currentReceipt;
+    }
+
+    public static void setReceipt(Receipt receipt) {
+        ReceiptInfoFragment.currentReceipt = receipt;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,16 +59,16 @@ public class ReceiptInfoFragment extends Fragment {
         fragmentReceiptInfoBinding.receiptinfoDate.setText(sdf.format(currentReceipt.getDate().getTime()));
 
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-            if(h != null){
+            if (h != null) {
                 ArrayList<Receipt> receipts = h.getReceipts();
-                for(Receipt receipt : receipts){
-                    if(receipt.equals(currentReceipt)){
+                for (Receipt receipt : receipts) {
+                    if (receipt.equals(currentReceipt)) {
                         homeViewModel.updateCurrentReceipt(receipt.getId());
                         homeViewModel.getCurrentReceipt().observe(getViewLifecycleOwner(), r -> {
-                            if(r != null){
+                            if (r != null) {
                                 items.clear();
                                 ArrayList<Item> i = r.getItems();
-                                for(Item item : i){
+                                for (Item item : i) {
                                     items.add(item);
                                 }
                                 adapter = new ReceiptinfoAdapter(getContext(), items);
@@ -76,13 +82,5 @@ public class ReceiptInfoFragment extends Fragment {
 
         return fragmentReceiptInfoBinding.getRoot();
 
-    }
-
-    public static Receipt getReceipt() {
-        return currentReceipt;
-    }
-
-    public static void setReceipt(Receipt receipt) {
-        ReceiptInfoFragment.currentReceipt = receipt;
     }
 }

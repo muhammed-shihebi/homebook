@@ -36,7 +36,7 @@ import java.util.UUID;
 /**
  * This class is dedicated to define an interface to communicate with the external database, image storage and authentication service.
  * All these Services are Components of Firebase.
- * */
+ */
 
 public class Database {
 
@@ -532,7 +532,8 @@ public class Database {
      * If the login was successful the currentUser and resultMessage will be updated
      * If the login was unsuccessful the currentUser will not be updated and the resultMessage
      * will be updated with the appropriate message
-     * @param email of the user
+     *
+     * @param email    of the user
      * @param password of the user
      */
 
@@ -555,9 +556,10 @@ public class Database {
      * If the sign up was successful the currentUser and resultMessage will be updated
      * If the sign up was unsuccessful the currentUser will not be updated and the resultMessage
      * will be updated with the appropriate message
-     * @param email of the new user
+     *
+     * @param email    of the new user
      * @param password of the new user
-     * @param name of the new user
+     * @param name     of the new user
      */
 
     public void signUpWithEmail(String email, String password, String name) {
@@ -607,6 +609,7 @@ public class Database {
      * If the login was successful the currentUser and resultMessage will be updated
      * If the login was unsuccessful the currentUser will not be updated and the resultMessage
      * will be updated with the appropriate message
+     *
      * @param idToken linked to the user's google account
      */
 
@@ -625,6 +628,7 @@ public class Database {
     /**
      * Send an email with the needed information to reset the password of the account
      * linked to this email.
+     *
      * @param email linked with the account, which its password must be updated
      */
 
@@ -643,6 +647,7 @@ public class Database {
 
     /**
      * Add the given reminder to the list of the reminders of the currentHome
+     *
      * @param newReminder the new reminder to be added to the currentHome
      */
 
@@ -674,6 +679,7 @@ public class Database {
 
     /**
      * Delete the reminder of the currentHome with the given Id
+     *
      * @param reminderId of the reminder to be deleted
      */
 
@@ -699,6 +705,7 @@ public class Database {
 
     /**
      * Update the given reminder of the currentHome
+     *
      * @param updatedReminder the reminder to be updated
      */
 
@@ -729,6 +736,7 @@ public class Database {
 
     /**
      * Add new receipt to the currentHome
+     *
      * @param receipt to be added
      */
 
@@ -742,7 +750,6 @@ public class Database {
             data.put(MEMBER_ID, currentMember.getValue().getId());
             data.put(MEMBER_NAME, currentMember.getValue().getName());
             data.put(RECEIPT_NAME, receipt.getName());
-
 
 
             double total = 0.0;
@@ -784,6 +791,7 @@ public class Database {
 
     /**
      * Delete the receipt of the currentHome with the given Id
+     *
      * @param receiptId of the receipt to be deleted
      */
 
@@ -824,6 +832,7 @@ public class Database {
 
     /**
      * Update the given receipt of the currentHome
+     *
      * @param updatedReceipt the receipt to be updated
      */
 
@@ -909,6 +918,7 @@ public class Database {
 
     /**
      * Decline the join request linked with the given AdminNotification
+     *
      * @param adminNotification AdminNotification object with the request to be declined
      */
 
@@ -940,6 +950,7 @@ public class Database {
 
     /**
      * Accept the join request linked with the given AdminNotification
+     *
      * @param adminNotification AdminNotification object with the request to be accepted
      */
 
@@ -1109,6 +1120,7 @@ public class Database {
 
     /**
      * Update the currentHome with new data packed int the given newHome object
+     *
      * @param newHome is an object that contain the new data to update the currentHome
      */
 
@@ -1241,6 +1253,7 @@ public class Database {
 
     /**
      * Delete the notification linked with the given UserNotification object
+     *
      * @param userNotification object containing the notification to be deleted
      */
 
@@ -1267,6 +1280,7 @@ public class Database {
 
     /**
      * Send a join request to the home linked with the given Id
+     *
      * @param homeId of the home to be send a join request to
      */
 
@@ -1438,6 +1452,7 @@ public class Database {
      * Search for the home with the given homeCode
      * If successful, the searchResult will be updated with the home
      * If unsuccessful, the resultMessage will be updated with an appropriate message
+     *
      * @param homeCode
      */
 

@@ -11,14 +11,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Views.Main.Home.Reminder.ReminderSetFragment;
 import com.mabem.homebook.Model.Objects.Reminder;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Views.Main.Home.Reminder.ReminderSetFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.ViewHolder>{
+public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.ViewHolder> {
     private final Context context;
     private final ArrayList<Reminder> list;
     private boolean isAdmin;
@@ -70,24 +70,24 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
             reminderName.setText(r.getName().trim());
             Calendar cal = Calendar.getInstance();
             cal.setTime(r.getDate());
-            reminderDate.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.YEAR));
+            reminderDate.setText(cal.get(Calendar.DAY_OF_MONTH) + "/" + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.YEAR));
             String hour = "";
             String minute = "";
-            if(cal.get(Calendar.MINUTE) < 10){
-                minute = "0"+cal.get(Calendar.MINUTE);
-            }else{
-                minute = cal.get(Calendar.MINUTE)+"";
+            if (cal.get(Calendar.MINUTE) < 10) {
+                minute = "0" + cal.get(Calendar.MINUTE);
+            } else {
+                minute = cal.get(Calendar.MINUTE) + "";
             }
-            if(cal.get(Calendar.HOUR_OF_DAY) < 10){
-                hour = "0"+cal.get(Calendar.HOUR_OF_DAY);
-            }else{
-                hour = cal.get(Calendar.HOUR_OF_DAY)+"";
+            if (cal.get(Calendar.HOUR_OF_DAY) < 10) {
+                hour = "0" + cal.get(Calendar.HOUR_OF_DAY);
+            } else {
+                hour = cal.get(Calendar.HOUR_OF_DAY) + "";
             }
-            reminderTime.setText(hour+":"+minute);
+            reminderTime.setText(hour + ":" + minute);
             reminderFrequency.setText(r.getFrequency());
 
             shape.setOnClickListener(v -> {
-                if(isAdmin){
+                if (isAdmin) {
                     Navigation.findNavController(v).navigate(R.id.action_remindersFragment_to_reminderSetFragment);
                     ReminderSetFragment.setToEditReminder(r);
                     ReminderSetFragment.setToEditFlag(true);
@@ -95,12 +95,6 @@ public class RemindersAdapter extends RecyclerView.Adapter<RemindersAdapter.View
             });
         }
     }
-
-
-
-
-
-
 
 
 }

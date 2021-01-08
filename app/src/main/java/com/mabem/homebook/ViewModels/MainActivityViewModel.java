@@ -18,10 +18,9 @@ import java.util.ArrayList;
  */
 
 public class MainActivityViewModel extends AndroidViewModel {
-    private Database database;
     private final MutableLiveData<ArrayList<Home>> searchResults;
     private final MutableLiveData<String> resultMessage;
-
+    private Database database;
     private boolean showResultDialog = false;
 
     public MainActivityViewModel(@NonNull Application application) {
@@ -31,19 +30,23 @@ public class MainActivityViewModel extends AndroidViewModel {
         resultMessage = database.getResultMessage();
     }
 
-    public LiveData<ArrayList<Home>> getSearchResult() { return searchResults; }
+    public LiveData<ArrayList<Home>> getSearchResult() {
+        return searchResults;
+    }
 
-    public LiveData<String> getResultMessage() {return resultMessage; }
+    public LiveData<String> getResultMessage() {
+        return resultMessage;
+    }
 
-    public void signOut(){
+    public void signOut() {
         database.signOut();
     }
 
-    public void updateCurrentUser(){
+    public void updateCurrentUser() {
         database.updateCurrentUser();
     }
 
-    public void searchHome(String homeCode){
+    public void searchHome(String homeCode) {
         database.searchHome(homeCode);
     }
 
@@ -60,7 +63,7 @@ public class MainActivityViewModel extends AndroidViewModel {
     public void setShowResultDialog(boolean showResultDialog) {
         this.showResultDialog = showResultDialog;
     }
-    
+
     public void clearSearchResults() {
         database.clearSearchResults();
     }

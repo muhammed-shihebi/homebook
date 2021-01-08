@@ -5,6 +5,10 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -12,11 +16,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.mabem.homebook.Adapters.EditHomeAdapter;
 import com.mabem.homebook.Model.Objects.Home;
@@ -39,7 +38,7 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
     private FragmentEditHomeBinding fragmentEditHomeBinding;
     private HomeViewModel homeViewModel;
     private RecyclerView.Adapter adapter;
-    private HashMap<Member,Boolean> members_role = new HashMap<Member,Boolean>();
+    private HashMap<Member, Boolean> members_role = new HashMap<Member, Boolean>();
     private ArrayList<Member> allMembers;
     private boolean isPrivate = false;
     private Home currentHome;
@@ -59,7 +58,7 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
 
         homeViewModel.updateHomeWithMembers();
         homeViewModel.getCurrentHome().observe(getViewLifecycleOwner(), h -> {
-            if(h != null){
+            if (h != null) {
                 currentHome = h;
                 isPrivate = !h.getVisibility();
 
@@ -73,14 +72,14 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                 ArrayList<Member> admins = new ArrayList<Member>();
                 ArrayList<Member> normalmembers = new ArrayList<Member>();
                 allMembers = new ArrayList<>();
-                for(Member m : members_role.keySet()){
+                for (Member m : members_role.keySet()) {
                     allMembers.add(m);
                 }
 
-                for(int i = 0; i < allMembers.size(); i++){
-                    if(members_role.get(allMembers.get(i)).equals(true)){
+                for (int i = 0; i < allMembers.size(); i++) {
+                    if (members_role.get(allMembers.get(i)).equals(true)) {
                         admins.add(allMembers.get(i));
-                    }else if(members_role.get(allMembers.get(i)).equals(false)){
+                    } else if (members_role.get(allMembers.get(i)).equals(false)) {
                         normalmembers.add(allMembers.get(i));
                     }
                 }
@@ -113,14 +112,14 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
 
         fragmentEditHomeBinding.homeEditSaveButton.setOnClickListener(v -> {
             String name = fragmentEditHomeBinding.homeEditName.getText().toString().trim();
-            if(name.isEmpty()){
+            if (name.isEmpty()) {
                 Toast.makeText(requireContext(), R.string.please_enter_name_for_home_message, Toast.LENGTH_SHORT).show();
-            }else{
+            } else {
                 Home h = new Home(currentHome.getId(), name, currentHome.getCode(), !isPrivate, currentHome.getReceipts());
                 h.setMember_role(members_role);
                 homeViewModel.updateHome(h);
                 homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                    if(s != null){
+                    if (s != null) {
                         Toast.makeText(requireContext(), s, Toast.LENGTH_SHORT).show();
                         Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
                     }
@@ -135,14 +134,15 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                     .setMessage(R.string.delete_home_warning_message)
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {}
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
                     })
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             homeViewModel.deleteHome();
                             homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                                if(s != null){
+                                if (s != null) {
                                     Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                                     Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
                                 }
@@ -159,14 +159,15 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                     .setMessage(R.string.leave_home_warning_message)
                     .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {}
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
                     })
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             homeViewModel.leaveHome();
                             homeViewModel.getResultMessage().observe(getViewLifecycleOwner(), s -> {
-                                if(s != null){
+                                if (s != null) {
                                     Toast.makeText(requireContext(), homeViewModel.getResultMessage().getValue(), Toast.LENGTH_SHORT).show();
                                     Navigation.findNavController(v).navigate(R.id.action_editHomeFragment_to_mainFragment);
                                 }
@@ -194,7 +195,7 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
 
     @Override
     public void onDeleteClicked(Member member, int position) {
-        if(allMembers.size() > 1) {
+        if (allMembers.size() > 1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.remove_member_warning)
                     .setMessage(R.string.remove_member_warning_message)
@@ -213,13 +214,14 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                     });
             AlertDialog mDialog = builder.create();
             mDialog.show();
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.warning)
                     .setMessage(R.string.remove_last_member_warning_message)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {}
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
                     });
             AlertDialog mDialog = builder.create();
             mDialog.show();
@@ -228,7 +230,7 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
 
     @Override
     public void onAdminSwitchClicked(Member member, boolean warning) {
-        if(!warning) {
+        if (!warning) {
             for (Member m : members_role.keySet()) {
                 if (m.equals(member)) {
                     boolean oldRole = members_role.get(m);
@@ -236,13 +238,14 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                 }
             }
 
-        }else{
+        } else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.warning)
                     .setMessage(R.string.remove_last_admin_warning_message)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {}
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
                     });
             AlertDialog mDialog = builder.create();
             mDialog.show();
@@ -256,7 +259,8 @@ public class EditHomeFragment extends Fragment implements EditHomeMemberListener
                 .setMessage(R.string.delete_last_admin_warning_message)
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {}
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
                 });
         AlertDialog mDialog = builder.create();
         mDialog.show();

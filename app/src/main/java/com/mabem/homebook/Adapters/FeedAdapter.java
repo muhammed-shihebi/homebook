@@ -10,10 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptInfoFragment;
-import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptManageFragment;
+
 import com.mabem.homebook.Model.Objects.Receipt;
 import com.mabem.homebook.R;
+import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptInfoFragment;
+import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptManageFragment;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -74,11 +75,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
             memberName.setText(receipt.getMemberName());
 
             shape.setOnClickListener(v -> {
-                if(isAdmin || member_id.equals(receipt.getMemberId())){
+                if (isAdmin || member_id.equals(receipt.getMemberId())) {
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_manageReceiptFragment);
                     ReceiptManageFragment.setToEditReceipt(receipt);
                     ReceiptManageFragment.setToEditFlag(true);
-                }else{
+                } else {
                     Navigation.findNavController(v).navigate(R.id.action_feedFragment_to_receiptInfoFragment);
                     ReceiptInfoFragment.setReceipt(receipt);
                     ReceiptManageFragment.setToEditFlag(false);
