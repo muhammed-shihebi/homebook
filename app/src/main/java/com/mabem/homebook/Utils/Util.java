@@ -1,8 +1,11 @@
 package com.mabem.homebook.Utils;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -10,8 +13,7 @@ import com.mabem.homebook.R;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.Locale;
 
 public class Util {
 
@@ -56,6 +58,51 @@ public class Util {
         BigDecimal bd = new BigDecimal(Double.toString(value));
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    /**
+     * Show the dialog to select the preferred language
+     * @param activity the activity in which to show the dialog
+     */
+
+    public static void showChangeLanguageDialog(Activity activity) {
+        final String[] lang = {"English", "Deutsch"};
+
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Select a Language")
+                .setSingleChoiceItems(lang, -1, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if(which == 0){
+                            setLocale(activity, "en");
+                            activity.recreate();
+                        }else if(which == 1){
+                            setLocale(activity,"de");
+                            activity.recreate();
+                        }
+
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog mDialog = builder.create();
+        mDialog.show();
+    }
+
+    /**
+     * Save the preference of the selected preferred language
+     * @param activity the activity in which to save the preference
+     * @param language the string of the selected preferred language
+     */
+    public static void setLocale(Activity activity, String language) {
+        Locale locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        activity.getBaseContext().getResources().updateConfiguration(config, activity.getBaseContext().getResources().getDisplayMetrics());
+
+        SharedPreferences.Editor editor = activity.getSharedPreferences("settings",  activity.MODE_PRIVATE).edit();
+        editor.putString("my_lang",language);
+        editor.apply();
     }
 
 }

@@ -1,9 +1,5 @@
 package com.mabem.homebook.Views.Main;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,10 +14,9 @@ import android.widget.Toast;
 
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
+import com.mabem.homebook.Utils.Util;
 import com.mabem.homebook.ViewModels.AuthViewModel;
 import com.mabem.homebook.databinding.FragmentSettingsBinding;
-
-import java.util.Locale;
 
 public class SettingsFragment extends Fragment {
 
@@ -57,53 +52,13 @@ public class SettingsFragment extends Fragment {
         });
 
         settingsBinding.languageButton.setOnClickListener(v ->{
-            showChangeLanguageDialog();
+            Util.showChangeLanguageDialog(getActivity());
         });
 
         settingsBinding.aboutButton.setOnClickListener(v ->{
             Navigation.findNavController(v).navigate(R.id.aboutFragment);
         });
 
-
-
         return settingsBinding.getRoot();
     }
-
-    private void showChangeLanguageDialog() {
-        final String[] lang = {"English", "Deutsch"};
-
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Select a Language")
-                .setSingleChoiceItems(lang, -1, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(which == 0){
-                            setLocale("en");
-                            getActivity().recreate();
-                        }else if(which == 1){
-                            setLocale("de");
-                            getActivity().recreate();
-                        }
-
-                        dialog.dismiss();
-                    }
-                });
-        AlertDialog mDialog = builder.create();
-        mDialog.show();
-    }
-
-    public void setLocale(String locale1) {
-        Locale locale = new Locale(locale1);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        getActivity().getBaseContext().getResources().updateConfiguration(config, getActivity().getBaseContext().getResources().getDisplayMetrics());
-
-        SharedPreferences.Editor editor = getActivity().getSharedPreferences("settings",  getActivity().MODE_PRIVATE).edit();
-        editor.putString("my_lang",locale1);
-        editor.apply();
-    }
-
-
-
 }
