@@ -10,9 +10,9 @@
 
         <Button
             android:id="@+id/receipt_manage_date_button"
-            android:layout_width="183dp"
-            android:layout_height="39dp"
-            android:layout_marginTop="60dp"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight=".50"
             android:background="@drawable/rounded_edit_text"
             android:text="@string/date"
             android:textAlignment="textStart"
@@ -22,11 +22,12 @@
             app:icon="@drawable/calendar_icon"
             app:iconGravity="end"
             app:iconTint="#2B2B2B"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintBottom_toBottomOf="@+id/receipt_manage_receipt_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.195"
+            app:layout_constraintEnd_toStartOf="@+id/guideline11"
+            app:layout_constraintHorizontal_weight="0.4"
             app:layout_constraintStart_toEndOf="@+id/receipt_manage_receipt_name"
-            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintTop_toTopOf="@+id/receipt_manage_receipt_name"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
@@ -69,7 +70,7 @@
 
         <EditText
             android:id="@+id/receipt_manage_item_name"
-            android:layout_width="187dp"
+            android:layout_width="0dp"
             android:layout_height="33dp"
             android:layout_marginStart="36dp"
             android:autofillHints=""
@@ -83,15 +84,18 @@
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             app:layout_constraintBottom_toTopOf="@+id/receipt_manage_save_button"
+            app:layout_constraintEnd_toStartOf="@+id/receipt_manage_item_price"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.288"
+            app:layout_constraintVertical_bias="0.343"
             tools:ignore="TextFields"
             tools:layout_constraintCircleRadius="50dp" />
 
         <EditText
             android:id="@+id/receipt_manage_item_price"
-            android:layout_width="94dp"
+            android:layout_width="0dp"
             android:layout_height="33dp"
             android:layout_marginStart="8dp"
             android:autofillHints=""
@@ -105,9 +109,11 @@
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             app:layout_constraintBottom_toTopOf="@+id/receipt_manage_save_button"
+            app:layout_constraintEnd_toStartOf="@+id/receipt_manage_add_item_button"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/receipt_manage_item_name"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
-            app:layout_constraintVertical_bias="0.288"
+            app:layout_constraintVertical_bias="0.343"
             tools:ignore="TextFields"
             tools:layout_constraintCircleRadius="50dp" />
 
@@ -162,39 +168,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="346dp"
-            android:layout_height="229dp"
-            android:background="@drawable/rounded_edit_box"
-            app:layout_constraintBottom_toTopOf="@+id/receipt_manage_delete_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintVertical_bias="0.43">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/receipt_manage_item_list"
-                    android:layout_width="300dp"
-                    android:layout_height="210dp"
-                    android:layout_marginStart="24dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="24dp"
-                    android:layout_marginBottom="10dp"
-                    tools:listitem="@layout/receipt_manage_menu_item" />
-
-            </LinearLayout>
-        </ScrollView>
-
         <EditText
             android:id="@+id/receipt_manage_receipt_name"
-            android:layout_width="155dp"
+            android:layout_width="0dp"
             android:layout_height="35dp"
             android:layout_marginTop="4dp"
             android:autofillHints=""
@@ -207,11 +183,12 @@
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             app:layout_constraintBottom_toTopOf="@+id/textView5"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.125"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/receipt_manage_date_button"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintHorizontal_weight="0.4"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.233"
             tools:layout_constraintCircleRadius="50dp" />
 
         <ImageView
@@ -219,11 +196,11 @@
             android:layout_width="33dp"
             android:layout_height="37dp"
             android:src="@drawable/add_receipt_icon"
-            app:layout_constraintBottom_toTopOf="@+id/receipt_manage_save_button"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/receipt_manage_item_price"
+            app:layout_constraintEnd_toStartOf="@+id/guideline11"
             app:layout_constraintHorizontal_bias="0.188"
             app:layout_constraintStart_toEndOf="@+id/receipt_manage_item_price"
-            app:layout_constraintTop_toBottomOf="@+id/textView6"
+            app:layout_constraintTop_toTopOf="@+id/receipt_manage_item_price"
             app:layout_constraintVertical_bias="0.219" />
 
         <ImageView
@@ -242,14 +219,13 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/total"
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView3"
             app:layout_constraintEnd_toStartOf="@+id/receipt_manage_total"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/imageView3"
+            app:layout_constraintVertical_bias="0.75" />
 
         <TextView
             android:id="@+id/receipt_manage_total"
@@ -258,10 +234,54 @@
             android:layout_marginEnd="76dp"
             android:text="0.00"
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toTopOf="@+id/textView6"
+            app:layout_constraintBottom_toBottomOf="@+id/textView7"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            app:layout_constraintTop_toTopOf="@+id/textView7"
             app:layout_constraintVertical_bias="0.8" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="205dp"
+            android:background="@drawable/rounded_edit_box"
+            app:layout_constraintBottom_toTopOf="@+id/receipt_manage_delete_button"
+            app:layout_constraintEnd_toStartOf="@+id/guideline11"
+            app:layout_constraintHorizontal_bias="0.438"
+            app:layout_constraintStart_toStartOf="@+id/guideline6"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintVertical_bias="0.418">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/receipt_manage_item_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginStart="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="24dp"
+                    android:layout_marginBottom="10dp"
+                    tools:listitem="@layout/receipt_manage_menu_item" />
+
+            </LinearLayout>
+        </ScrollView>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.93" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
