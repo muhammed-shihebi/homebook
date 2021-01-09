@@ -9,9 +9,23 @@
         android:layout_height="match_parent"
         android:background="@drawable/create_home_background">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.93" />
+
         <Button
             android:id="@+id/homeinfo_leave_button"
-            android:layout_width="143dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginBottom="100dp"
             android:text="@string/leave_home"
@@ -19,8 +33,8 @@
             app:backgroundTint="#85232C"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintStart_toStartOf="@+id/guideline3" />
 
         <ImageView
             android:id="@+id/logo"
@@ -41,7 +55,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_info"
             android:textColor="#ACA325"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/logo"
             app:layout_constraintStart_toEndOf="@+id/logo"
             app:layout_constraintTop_toTopOf="@+id/logo" />
@@ -79,21 +93,21 @@
             android:text="@string/members"
             android:textColor="#8C8C8C"
             app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.127"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="0.078"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/homeinfo_name" />
 
         <ScrollView
             android:id="@+id/scrollView2"
-            android:layout_width="335dp"
+            android:layout_width="0dp"
             android:layout_height="234dp"
             android:layout_marginBottom="64dp"
             android:background="@drawable/rounded_edit_box"
             app:layout_constraintBottom_toTopOf="@+id/homeinfo_leave_button"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline4"
             app:layout_constraintHorizontal_bias="0.492"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline3"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:layout_constraintVertical_bias="0.678">
 
@@ -104,7 +118,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/homeinfo_memberlist"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="210dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
