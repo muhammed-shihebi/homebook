@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
-import com.mabem.homebook.Model.Objects.User;
+import com.mabem.homebook.Model.User;
 
 import org.junit.Before;
 import org.junit.Test;

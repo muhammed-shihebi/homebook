@@ -8,9 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Model.Database.Database;
-import com.mabem.homebook.Model.Objects.AdminNotification;
-import com.mabem.homebook.Model.Objects.Notification;
-import com.mabem.homebook.Model.Objects.UserNotification;
+import com.mabem.homebook.Model.AdminNotification;
+import com.mabem.homebook.Model.Notification;
+import com.mabem.homebook.Model.UserNotification;
 
 /**
  * A ViewModel to link the NotificationFragment to the database

@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Model.Database.Database;
-import com.mabem.homebook.Model.Objects.User;
+import com.mabem.homebook.Model.User;
 
 /**
  * A ViewModel to link the fragments Login, SignUp, Splash to the database

@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Model.Objects.Receipt;
+import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptInfoFragment;
 import com.mabem.homebook.Views.Main.Home.Receipt.ReceiptManageFragment;

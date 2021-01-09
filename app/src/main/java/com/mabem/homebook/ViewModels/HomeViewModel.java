@@ -9,10 +9,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Model.Database.Database;
-import com.mabem.homebook.Model.Objects.Home;
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Receipt;
-import com.mabem.homebook.Model.Objects.Reminder;
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.Reminder;
 
 /**
  * A ViewModel to link fragments after logging in to the database

@@ -10,8 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.mabem.homebook.Adapters.NotificationAdapter;
-import com.mabem.homebook.Model.Objects.AdminNotification;
-import com.mabem.homebook.Model.Objects.UserNotification;
+import com.mabem.homebook.Model.AdminNotification;
+import com.mabem.homebook.Model.UserNotification;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.NotificationMenuItemListener;

@@ -11,8 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Model.Objects.AdminNotification;
-import com.mabem.homebook.Model.Objects.UserNotification;
+import com.mabem.homebook.Model.AdminNotification;
+import com.mabem.homebook.Model.UserNotification;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NotificationMenuItemListener;
 

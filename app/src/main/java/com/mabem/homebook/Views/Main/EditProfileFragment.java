@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
-import com.mabem.homebook.Model.Objects.Member;
+import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;

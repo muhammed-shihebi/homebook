@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.mabem.homebook.Model.Objects.Home;
+import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.SearchResultListener;
 

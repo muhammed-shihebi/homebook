@@ -7,10 +7,10 @@ import android.os.Looper;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
-import com.mabem.homebook.Model.Objects.Home;
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Receipt;
-import com.mabem.homebook.Model.Objects.User;
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
 
 import org.junit.After;
@@ -26,7 +26,7 @@ public class HomeViewModelTest {
      * This is an instrumented and an integration test.
      * It will try to add a new Receipt to an existing home and then delete it
      * To perform the database operations, the functions available in the MainActivityViewModel are used.
-     * This function will assert than that the receipt is added correctly
+     * This function will assert that the receipt is added correctly
      */
 
 

@@ -49,7 +49,7 @@ public class Util {
     /**
      * Round the give double value by "places" places
      * @param value the double value to be rounded
-     * @param places the number of places after the coma
+     * @param places the number of places after the comma
      * @return the rounded double value
      */
 

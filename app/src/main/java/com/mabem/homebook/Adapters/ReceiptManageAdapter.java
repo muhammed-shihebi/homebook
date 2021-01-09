@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Model.Objects.Item;
+import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.ReceiptManagerItemListener;
 

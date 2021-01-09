@@ -1,4 +1,4 @@
-package com.mabem.homebook.Model;
+package com.mabem.homebook.Model.Objects;
 
 import com.mabem.homebook.Model.Objects.Home;
 
@@ -12,7 +12,7 @@ import static com.google.common.truth.Truth.assertThat;
  * Compare two equal 'Home' s
  * Compare two notes with all values other than 'code' and 'id' are different
  * Compare home with another object
- * .... Should I test all getter and setters?
+ * .... Should I test all getter and setters? Debatable, but no.
  */
 
 public class HomeTest {
@@ -45,11 +45,11 @@ public class HomeTest {
     }
 
     @Test
-    public void homeDifferentAsGivenObjectOfDifferentClass_returnsFalse() {
+    public void homeDifferentAsGivenObjectOfDifferentClassWithSimilarAttributes_returnsFalse() {
 
         class NotHome {
             String id = "11";
-            String name = "different";
+            String name = "example1";
             String code = "22";
         }
         NotHome nh = new NotHome();
@@ -57,7 +57,7 @@ public class HomeTest {
     }
 
     @Test
-    public void homeIdEqualToGivenId_returnsTrue() {
+    public void IdEqualToGivenId_returnsTrue() {
         assertThat(h.getId()).isEqualTo("11");
     }
 
