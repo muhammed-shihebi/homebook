@@ -36,13 +36,42 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
-            app:layout_constraintBottom_toTopOf="@+id/home_edit_save_button"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.165"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/logo"
-            app:layout_constraintVertical_bias="0.113"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:layout_constraintVertical_bias="0.01"
             tools:layout_constraintCircleRadius="50dp" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="223dp"
+            android:background="@drawable/rounded_edit_box"
+            app:layout_constraintBottom_toTopOf="@+id/home_edit_share_button"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/home_edit_name"
+            app:layout_constraintVertical_bias="0.428">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/home_edit_members_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp"
+                    tools:listitem="@layout/admin_home_member_menu_item" />
+            </LinearLayout>
+        </ScrollView>
 
         <CheckBox
             android:id="@+id/private_checkbox"
@@ -132,10 +161,10 @@
             android:textColor="#8C8C8C"
             app:layout_constraintBottom_toTopOf="@+id/home_edit_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.114"
+            app:layout_constraintHorizontal_bias="0.096"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo"
-            app:layout_constraintVertical_bias="0.612" />
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/textView5"
@@ -149,35 +178,6 @@
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/home_edit_name"
             app:layout_constraintVertical_bias="0.82" />
-
-        <ScrollView
-            android:id="@+id/scrollView2"
-            android:layout_width="0dp"
-            android:layout_height="223dp"
-            android:background="@drawable/rounded_edit_box"
-            app:layout_constraintBottom_toTopOf="@+id/home_edit_save_button"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toStartOf="@+id/guideline"
-            app:layout_constraintTop_toBottomOf="@+id/home_edit_name"
-            app:layout_constraintVertical_bias="0.428">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_edit_members_list"
-                    android:layout_width="match_parent"
-                    android:layout_height="227dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="10dp"
-                    tools:listitem="@layout/admin_home_member_menu_item" />
-            </LinearLayout>
-        </ScrollView>
 
         <TextView
             android:id="@+id/textView11"
