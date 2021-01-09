@@ -27,13 +27,14 @@
             android:id="@+id/homeinfo_leave_button"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="64dp"
             android:text="@string/leave_home"
             android:textAllCaps="false"
             app:backgroundTint="#85232C"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline4"
+            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="@+id/guideline3" />
 
         <ImageView
@@ -80,8 +81,8 @@
             android:text="@string/code"
             android:textColor="#8C8C8C"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.775"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.61"
+            app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
 
         <TextView
@@ -119,7 +120,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/homeinfo_memberlist"
                     android:layout_width="match_parent"
-                    android:layout_height="210dp"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="10dp"
@@ -135,9 +136,9 @@
             android:layout_marginTop="16dp"
             android:text="@string/name"
             android:textColor="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.114"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/homeinfo_code"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <TextView

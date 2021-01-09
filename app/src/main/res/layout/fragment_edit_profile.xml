@@ -8,11 +8,26 @@
         android:layout_height="match_parent"
         android:background="#2B2F38">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.93" />
+
         <EditText
             android:id="@+id/profile_name"
-            android:layout_width="242dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
-            android:layout_marginTop="344dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
             android:autofillHints=""
             android:background="@drawable/rounded_edit_text"
             android:ellipsize="none"
@@ -24,18 +39,18 @@
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             app:layout_constraintBottom_toTopOf="@+id/profile_email"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline16"
             app:layout_constraintHorizontal_bias="0.473"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.259"
+            app:layout_constraintStart_toStartOf="@+id/guideline13"
+            app:layout_constraintTop_toBottomOf="@+id/card"
             tools:layout_constraintCircleRadius="50dp" />
 
         <EditText
             android:id="@+id/profile_email"
-            android:layout_width="242dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
-            android:layout_marginTop="440dp"
+            android:layout_marginStart="35dp"
+            android:layout_marginEnd="35dp"
             android:autofillHints=""
             android:background="@drawable/rounded_edit_text"
             android:ellipsize="none"
@@ -46,26 +61,25 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline16"
             app:layout_constraintHorizontal_bias="0.473"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_constraintCircleRadius="50dp" />
+            app:layout_constraintStart_toStartOf="@+id/guideline13"
+            tools:layout_constraintCircleRadius="50dp"
+            tools:layout_editor_absoluteY="440dp" />
 
         <Button
             android:id="@+id/save_button"
             android:layout_width="109dp"
             android:layout_height="64dp"
-            android:layout_marginBottom="88dp"
+            android:layout_marginBottom="48dp"
             android:text="@string/save"
             android:textAllCaps="false"
             app:backgroundTint="#857C23"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profile_email"
-            app:layout_constraintVertical_bias="1.0" />
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/title"

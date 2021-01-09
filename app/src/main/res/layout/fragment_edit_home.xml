@@ -24,8 +24,8 @@
 
         <EditText
             android:id="@+id/home_edit_name"
-            android:layout_width="205dp"
-            android:layout_height="39dp"
+            android:layout_width="0dp"
+            android:layout_height="43dp"
             android:autofillHints=""
             android:background="@drawable/rounded_edit_text"
             android:ellipsize="none"
@@ -37,8 +37,8 @@
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             app:layout_constraintBottom_toTopOf="@+id/scrollView2"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintEnd_toStartOf="@+id/private_checkbox"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@+id/textView"
             app:layout_constraintVertical_bias="0.01"
@@ -48,6 +48,7 @@
             android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="223dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/rounded_edit_box"
             app:layout_constraintBottom_toTopOf="@+id/home_edit_share_button"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
@@ -83,51 +84,52 @@
             app:buttonTint="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="@+id/home_edit_name"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintHorizontal_bias="0.229"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/home_edit_name"
             app:layout_constraintTop_toTopOf="@+id/home_edit_name"
             app:layout_constraintVertical_bias="0.0" />
 
         <Button
-            android:id="@+id/home_edit_save_button"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginBottom="100dp"
-            android:text="@string/save"
-            android:textAllCaps="false"
-            app:backgroundTint="#857C23"
-            app:cornerRadius="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="@+id/guideline" />
-
-        <Button
             android:id="@+id/home_edit_delete_button"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
+            android:layout_marginStart="44dp"
             android:layout_marginBottom="44dp"
             android:text="@string/delete_home"
             android:textAllCaps="false"
             app:backgroundTint="#85232C"
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
-            app:layout_constraintStart_toStartOf="@+id/guideline" />
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/home_edit_save_button" />
+
+        <Button
+            android:id="@+id/home_edit_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/save"
+            android:textAllCaps="false"
+            app:backgroundTint="#857C23"
+            app:cornerRadius="50dp"
+            app:layout_constraintBottom_toTopOf="@+id/home_edit_delete_button"
+            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/home_edit_share_button" />
 
         <Button
             android:id="@+id/home_edit_leave_button"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginBottom="44dp"
             android:text="@string/leave_home"
             android:textAllCaps="false"
             app:backgroundTint="#85232C"
             app:cornerRadius="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/home_edit_delete_button"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintHorizontal_bias="0.85"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_bias="0.78"
+            app:layout_constraintStart_toEndOf="@+id/home_edit_delete_button" />
 
         <ImageView
             android:id="@+id/logo"
@@ -208,6 +210,7 @@
             android:id="@+id/home_edit_share_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/home_edit_code"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
             app:layout_constraintHorizontal_bias="0.1"
