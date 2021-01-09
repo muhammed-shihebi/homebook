@@ -56,6 +56,7 @@
             android:id="@+id/save_button"
             android:layout_width="109dp"
             android:layout_height="64dp"
+            android:layout_marginBottom="88dp"
             android:text="@string/save"
             android:textAllCaps="false"
             app:backgroundTint="#857C23"
@@ -64,7 +65,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_email"
-            app:layout_constraintVertical_bias="0.351" />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/title"

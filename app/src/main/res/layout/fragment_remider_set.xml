@@ -10,6 +10,20 @@
         android:background="@drawable/add_reminder_background"
         tools:context=".Views.Main.Home.Reminder.ReminderSetFragment">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.07" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.93" />
+
         <ImageView
             android:id="@+id/reminder_set_logo_image_view"
             android:layout_width="92dp"
@@ -38,7 +52,7 @@
 
         <EditText
             android:id="@+id/reminder_set_name"
-            android:layout_width="325dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_marginTop="240dp"
             android:autofillHints=""
@@ -51,16 +65,16 @@
             android:paddingEnd="15dp"
             android:shadowColor="#FAF3F3"
             android:textColor="@color/black"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_constraintCircleRadius="50dp" />
 
 
         <Button
             android:id="@+id/reminder_date_picker_button"
-            android:layout_width="325dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_edit_text"
@@ -75,27 +89,28 @@
             app:icon="@drawable/calendar_icon"
             app:iconGravity="end"
             app:iconTint="#2B2B2B"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
             app:layout_constraintHorizontal_bias="0.497"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/reminder_set_name"
             app:strokeColor="#000000" />
 
         <FrameLayout
             android:id="@+id/layout_spinner"
-            android:layout_width="325dp"
+            android:layout_width="0dp"
             android:layout_height="42dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/rounded_edit_box"
             app:layout_constraintBottom_toTopOf="@+id/reminder_set_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline7"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/guideline5"
             app:layout_constraintTop_toBottomOf="@+id/reminder_date_picker_button"
             tools:ignore="MissingConstraints">
 
             <Spinner
                 android:id="@+id/reminder_frequency_spinner"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="15dp"
@@ -112,7 +127,7 @@
 
         <Button
             android:id="@+id/reminder_set_button"
-            android:layout_width="142dp"
+            android:layout_width="wrap_content"
             android:layout_height="55dp"
             android:layout_marginTop="24dp"
             android:text="@string/set"
@@ -121,23 +136,21 @@
             app:cornerRadius="50dp"
             app:layout_constraintBottom_toTopOf="@+id/reminder_delete_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layout_spinner" />
 
         <Button
             android:id="@+id/reminder_delete_button"
-            android:layout_width="142dp"
+            android:layout_width="wrap_content"
             android:layout_height="55dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="112dp"
             android:text="@string/delete"
             android:textAllCaps="false"
             app:backgroundTint="#85232c"
             app:cornerRadius="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/reminder_set_button" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
