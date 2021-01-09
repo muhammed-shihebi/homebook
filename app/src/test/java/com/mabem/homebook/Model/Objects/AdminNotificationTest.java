@@ -33,7 +33,7 @@ public class AdminNotificationTest {
 
 
     @Test
-    public void adminNotificationUserIdEqualToGivenUserId_returnsTrue() {
+    public void UserIdEqualToGivenUserId_returnsTrue() {
         assertThat(an.getUserId()).isEqualTo("11");
     }
 

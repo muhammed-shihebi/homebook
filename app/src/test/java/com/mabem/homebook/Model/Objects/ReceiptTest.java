@@ -38,7 +38,7 @@ public class ReceiptTest {
     }
 
     @Test
-    public void ReceiptWithSameIdAndNameAndDateEqualToGivenReceipt_returnsTrue() {
+    public void receiptWithSameIdAndNameAndDateEqualToGivenReceipt_returnsTrue() {
         Double newTotal = total + 12;
         r2 = new Receipt(id,name, date, newTotal, "not" + memberName, "not" + memberId);
 

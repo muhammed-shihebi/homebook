@@ -48,7 +48,7 @@ public class ItemTest {
     }
 
     @Test
-    public void itemIdEqualToGivenId_returnsTrue() {
+    public void IdEqualToGivenId_returnsTrue() {
         assertThat(it.getId()).isEqualTo("11");
     }
 

@@ -57,7 +57,7 @@ public class HomeTest {
     }
 
     @Test
-    public void homeIdEqualToGivenId_returnsTrue() {
+    public void IdEqualToGivenId_returnsTrue() {
         assertThat(h.getId()).isEqualTo("11");
     }
 
