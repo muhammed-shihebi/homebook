@@ -1,4 +1,4 @@
-package com.mabem.homebook.Model.Objects;
+package com.mabem.homebook.Model;
 
 import android.net.Uri;
 

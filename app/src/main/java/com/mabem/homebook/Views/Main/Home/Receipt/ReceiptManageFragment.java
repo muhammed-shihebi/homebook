@@ -21,9 +21,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mabem.homebook.Adapters.ReceiptManageAdapter;
-import com.mabem.homebook.Model.Objects.Item;
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Receipt;
+import com.mabem.homebook.Model.Item;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.ReceiptManagerItemListener;

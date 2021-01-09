@@ -1,7 +1,7 @@
 package com.mabem.homebook.Utils;
 
-import com.mabem.homebook.Model.Objects.AdminNotification;
-import com.mabem.homebook.Model.Objects.UserNotification;
+import com.mabem.homebook.Model.AdminNotification;
+import com.mabem.homebook.Model.UserNotification;
 
 public interface NotificationMenuItemListener {
 

@@ -23,8 +23,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Reminder;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Reminder;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;

@@ -13,8 +13,8 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Receipt;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.Util;

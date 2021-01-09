@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mabem.homebook.Model.Objects.Member;
+import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.EditHomeMemberListener;
 

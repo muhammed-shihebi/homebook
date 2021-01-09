@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mabem.homebook.Adapters.MyhomesAdapter;
-import com.mabem.homebook.Model.Objects.Home;
+import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;

@@ -7,10 +7,10 @@ import android.os.Looper;
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
-import com.mabem.homebook.Model.Objects.Home;
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Receipt;
-import com.mabem.homebook.Model.Objects.User;
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
+import com.mabem.homebook.Model.User;
 import com.mabem.homebook.R;
 
 import org.junit.After;

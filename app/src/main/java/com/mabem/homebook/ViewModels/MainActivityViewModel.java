@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.mabem.homebook.Model.Database.Database;
-import com.mabem.homebook.Model.Objects.Home;
+import com.mabem.homebook.Model.Home;
 
 import java.util.ArrayList;
 

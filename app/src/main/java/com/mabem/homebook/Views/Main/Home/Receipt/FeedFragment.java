@@ -18,9 +18,9 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.mabem.homebook.Adapters.FeedAdapter;
-import com.mabem.homebook.Model.Objects.Home;
-import com.mabem.homebook.Model.Objects.Member;
-import com.mabem.homebook.Model.Objects.Receipt;
+import com.mabem.homebook.Model.Home;
+import com.mabem.homebook.Model.Member;
+import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.R;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.ViewModels.HomeViewModel;

@@ -3,10 +3,10 @@ package com.mabem.homebook;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -30,7 +30,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.bumptech.glide.Glide;
-import com.mabem.homebook.Model.Objects.Member;
+import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Utils.NavigationDrawer;
 import com.mabem.homebook.Utils.SearchResultListener;
 import com.mabem.homebook.Utils.Util;
@@ -38,8 +38,6 @@ import com.mabem.homebook.ViewModels.MainActivityViewModel;
 import com.mabem.homebook.Views.Main.EditProfileFragment;
 import com.mabem.homebook.Views.Main.SearchedHomeDialog;
 import com.mabem.homebook.databinding.MainActivityBinding;
-
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SearchResultListener, NavigationDrawer {
 
@@ -110,11 +108,14 @@ public class MainActivity extends AppCompatActivity implements SearchResultListe
 
         //========================================= Handle sign out button
 
-        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(menuItem -> {
-            search_edit_text.setText("");
-            mainActivityViewModel.signOut();
-            navController.popBackStack();
-            return false;
+        mainActivityBinding.navView.getMenu().findItem(R.id.loginFragment).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                search_edit_text.setText("");
+                mainActivityViewModel.signOut();
+                navController.popBackStack();
+                return false;
+            }
         });
 
         //========================================= Search Home

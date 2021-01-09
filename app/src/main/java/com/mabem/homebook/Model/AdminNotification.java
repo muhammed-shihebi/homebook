@@ -1,4 +1,4 @@
-package com.mabem.homebook.Model.Objects;
+package com.mabem.homebook.Model;
 
 public class AdminNotification {
     private String userId;
