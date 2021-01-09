@@ -26,7 +26,7 @@ public class HomeViewModelTest {
      * This is an instrumented and an integration test.
      * It will try to add a new Receipt to an existing home and then delete it
      * To perform the database operations, the functions available in the MainActivityViewModel are used.
-     * This function will assert than that the receipt is added correctly
+     * This function will assert that the receipt is added correctly
      */
 
 

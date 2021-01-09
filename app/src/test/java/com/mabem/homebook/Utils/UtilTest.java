@@ -1,4 +1,4 @@
-package com.mabem.homebook;
+package com.mabem.homebook.Utils;
 
 import com.mabem.homebook.Utils.Util;
 
