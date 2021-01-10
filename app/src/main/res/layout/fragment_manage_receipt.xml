@@ -273,12 +273,6 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="24dp"
                     android:layout_marginBottom="10dp"
-                    android:clipToPadding="false"
-                    app:layout_constraintBottom_toTopOf="@+id/imageView3"
-                    app:layout_constraintEnd_toStartOf="@+id/guideline11"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="@+id/guideline6"
-                    app:layout_constraintTop_toBottomOf="@+id/receipt_manage_receipt_name"
                     tools:listitem="@layout/receipt_manage_menu_item" />
 
             </LinearLayout>
