@@ -6,6 +6,7 @@ import android.os.Looper;
 
 import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
+import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.mabem.homebook.Model.Home;
 import com.mabem.homebook.Model.Member;
@@ -16,11 +17,13 @@ import com.mabem.homebook.R;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
+@RunWith(AndroidJUnit4.class)
 public class HomeViewModelTest {
 
     // Initialize Objects
@@ -40,6 +43,7 @@ public class HomeViewModelTest {
     // returnedReceipt will hold the receipt returned from the database
     // It will be used to verify that returned receipt is the same as the expected one
     Receipt returnedReceipt = new Receipt();
+    Receipt expectedReceipt = new Receipt();
 
     @Before
     public void setUp() {
@@ -47,9 +51,10 @@ public class HomeViewModelTest {
         String userEmail = "homebooktester@gmail.com";
         String userPassword = "123123123";
 
-        authViewModel.loginWithEmail(userEmail, userPassword);
-
         new Handler(Looper.getMainLooper()).post(() -> {
+
+            authViewModel.loginWithEmail(userEmail, userPassword);
+
             authViewModel.getCurrentUser().observeForever(new Observer<User>() {
                 @Override
                 public void onChanged(User user) {
@@ -59,17 +64,24 @@ public class HomeViewModelTest {
                     authViewModel.getCurrentUser().removeObserver(this);
                 }
             });
-        });
-
-        //========================================= Get the currentMember
-        new Handler(Looper.getMainLooper()).post(() -> {
+            //========================================= Get the currentMember
             homeViewModel.getCurrentMember().observeForever(new Observer<Member>() {
                 @Override
                 public void onChanged(Member member) {
                     currentMember = member;
 
+                    expectedReceipt = new Receipt(
+                            "SLs9ug95mJkOWdP75et5",
+                            "Test Receipt",
+                            new Date(),
+                            0.0,
+                            currentMember.getName(),
+                            currentMember.getId()
+                    );
+
                     // Update currentHome using the Id of an existing home
-                    homeViewModel.updateCurrentHome("25ziXg7T5Lt7JCvDieb5");
+                    String homeId = "25ziXg7T5Lt7JCvDieb5";
+                    homeViewModel.updateCurrentHome(homeId);
                     homeViewModel.getCurrentMember().removeObserver(this);
                 }
             });
@@ -86,15 +98,6 @@ public class HomeViewModelTest {
     @Test
     public void addNewReceiptTestCase() throws InterruptedException {
 
-        Receipt expectedReceipt = new Receipt(
-                "SLs9ug95mJkOWdP75et5",
-                "Test Receipt",
-                new Date(),
-                0.0,
-                "Nur",
-                "MOYbEMGk6Da90swlVxEwOe7k3LA2"
-        );
-
         //========================================= Get the currentHome
         new Handler(Looper.getMainLooper()).post(() -> {
             homeViewModel.getCurrentHome().observeForever(new Observer<Home>() {
@@ -107,10 +110,8 @@ public class HomeViewModelTest {
                     homeViewModel.getCurrentHome().removeObserver(this);
                 }
             });
-        });
 
-        //========================================= Observe the result message to update the currentHome
-        new Handler(Looper.getMainLooper()).post(() -> {
+            //========================================= Observe the result message to update the currentHome
             homeViewModel.getResultMessage().observeForever(new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
@@ -138,7 +139,7 @@ public class HomeViewModelTest {
         });
 
         // To make sure all operations are done before checking the results
-        Thread.sleep(5000);
+        Thread.sleep(5000); // 5 seconds
 
         // Asserts to make sure the expected receipt is the same as the returned receipt
         assertEquals(expectedReceipt.getId(), returnedReceipt.getId());
