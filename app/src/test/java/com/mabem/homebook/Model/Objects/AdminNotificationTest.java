@@ -1,6 +1,6 @@
 package com.mabem.homebook.Model.Objects;
 
-import com.mabem.homebook.Model.Objects.Home;
+import com.mabem.homebook.Model.AdminNotification;
 
 import org.junit.After;
 import org.junit.Before;

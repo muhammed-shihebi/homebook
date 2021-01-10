@@ -2,6 +2,8 @@ package com.mabem.homebook.Model.Objects;
 
 import android.net.Uri;
 
+import com.mabem.homebook.Model.User;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
