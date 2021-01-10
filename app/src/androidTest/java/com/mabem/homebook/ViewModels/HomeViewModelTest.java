@@ -8,7 +8,6 @@ import androidx.lifecycle.Observer;
 import androidx.test.core.app.ApplicationProvider;
 
 import com.mabem.homebook.Model.Home;
-import com.mabem.homebook.Model.Item;
 import com.mabem.homebook.Model.Member;
 import com.mabem.homebook.Model.Receipt;
 import com.mabem.homebook.Model.User;
@@ -18,12 +17,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
 
 public class HomeViewModelTest {
+
+    // Initialize Objects
 
     // Get an instance of the application to initialize the ViewModels with it
     Application application = (Application) ApplicationProvider.getApplicationContext();
@@ -35,21 +35,15 @@ public class HomeViewModelTest {
     // homeViewModel is needed to get the current member
     HomeViewModel homeViewModel = new HomeViewModel(application);
 
-    final Member[] currentMember = new Member[1];
-    final Home[] currentHome = new Home[1];
+    Member currentMember;
+    Home currentHome;
     // returnedReceipt will hold the receipt returned from the database
     // It will be used to verify that returned receipt is the same as the expected one
-    final Receipt[] returnedReceipt = new Receipt[1];
+    Receipt returnedReceipt = new Receipt();
 
     @Before
     public void setUp() {
-        // Initialize Objects
-        application = (Application) ApplicationProvider.getApplicationContext();
-        authViewModel = new AuthViewModel(application);
-        homeViewModel = new HomeViewModel(application);
-
         //========================================= Login a user
-
         String userEmail = "homebooktester@gmail.com";
         String userPassword = "123123123";
 
@@ -72,7 +66,7 @@ public class HomeViewModelTest {
             homeViewModel.getCurrentMember().observeForever(new Observer<Member>() {
                 @Override
                 public void onChanged(Member member) {
-                    currentMember[0] = member;
+                    currentMember = member;
 
                     // Update currentHome using the Id of an existing home
                     homeViewModel.updateCurrentHome("25ziXg7T5Lt7JCvDieb5");
@@ -90,12 +84,9 @@ public class HomeViewModelTest {
      */
 
     @Test
-    public void addReceiptTestCase() throws InterruptedException {
+    public void addNewReceiptTestCase() throws InterruptedException {
 
-        final boolean[] statusChanged = {false};
-        returnedReceipt[0] = new Receipt();
-        final Receipt[] expectedReceipt = new Receipt[1];
-        expectedReceipt[0] = new Receipt(
+        Receipt expectedReceipt = new Receipt(
                 "SLs9ug95mJkOWdP75et5",
                 "Test Receipt",
                 new Date(),
@@ -109,10 +100,10 @@ public class HomeViewModelTest {
             homeViewModel.getCurrentHome().observeForever(new Observer<Home>() {
                 @Override
                 public void onChanged(Home home) {
-                    currentHome[0] = home;
+                    currentHome = home;
 
                     // Add the Receipt to the database
-                    homeViewModel.addReceipt(expectedReceipt[0]);
+                    homeViewModel.addReceipt(expectedReceipt);
                     homeViewModel.getCurrentHome().removeObserver(this);
                 }
             });
@@ -130,11 +121,10 @@ public class HomeViewModelTest {
                         homeViewModel.getCurrentHome().observeForever(new Observer<Home>() {
                             @Override
                             public void onChanged(Home home) {
-                                if (currentHome[0] != home) {
-
+                                if (currentHome != home) {
                                     for (Receipt receipt : home.getReceipts()) {
-                                        if (receipt.getId().equals(expectedReceipt[0].getId())) {
-                                            returnedReceipt[0] = receipt;
+                                        if (receipt.getId().equals(expectedReceipt.getId())) {
+                                            returnedReceipt = receipt;
                                             break;
                                         }
                                     }
@@ -151,18 +141,18 @@ public class HomeViewModelTest {
         Thread.sleep(5000);
 
         // Asserts to make sure the expected receipt is the same as the returned receipt
-        assertEquals(expectedReceipt[0].getId(), returnedReceipt[0].getId());
-        assertEquals(expectedReceipt[0].getDate(), returnedReceipt[0].getDate());
-        assertEquals(expectedReceipt[0].getTotal(), returnedReceipt[0].getTotal());
-        assertEquals(expectedReceipt[0].getMemberId(), returnedReceipt[0].getMemberId());
-        assertEquals(expectedReceipt[0].getMemberName(), returnedReceipt[0].getMemberName());
-        assertEquals(expectedReceipt[0].getName(), returnedReceipt[0].getName());
+        assertEquals(expectedReceipt.getId(), returnedReceipt.getId());
+        assertEquals(expectedReceipt.getDate(), returnedReceipt.getDate());
+        assertEquals(expectedReceipt.getTotal(), returnedReceipt.getTotal());
+        assertEquals(expectedReceipt.getMemberId(), returnedReceipt.getMemberId());
+        assertEquals(expectedReceipt.getMemberName(), returnedReceipt.getMemberName());
+        assertEquals(expectedReceipt.getName(), returnedReceipt.getName());
     }
 
     @After
     public void deleteReceipt() {
         new Handler(Looper.getMainLooper()).post(() -> {
-            homeViewModel.deleteReceipt(returnedReceipt[0].getId());
+            homeViewModel.deleteReceipt(returnedReceipt.getId());
         });
     }
 }
