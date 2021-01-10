@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -744,49 +745,80 @@ public class Database {
         if (currentHome.getValue() != null && currentMember.getValue() != null) {
 
             // 1. Get Receipt data
-
             Map<String, Object> data = new HashMap<>();
             data.put(RECEIPT_DATE, receipt.getDate());
             data.put(MEMBER_ID, currentMember.getValue().getId());
             data.put(MEMBER_NAME, currentMember.getValue().getName());
             data.put(RECEIPT_NAME, receipt.getName());
 
-
             double total = 0.0;
 
             // 2. calculate the total
-
             for (Item item : receipt.getItems()) {
                 total += item.getPrice();
             }
-
             data.put(RECEIPT_TOTAL, total);
 
             // 3. Add Receipt to the database
+            if(!receipt.getId().isEmpty()){
+                addReceiptWithId(receipt, data);
+            }else{
+                addReceiptWithoutId(receipt, data);
+            }
+        }
+    }
 
-            firestore.collection(HOME_COLLECTION)
-                    .document(currentHome.getValue().getId())
-                    .collection(RECEIPT_COLLECTION)
-                    .add(data)
-                    .addOnSuccessListener(documentReference -> {
+    private void addReceiptWithId(Receipt receipt, Map<String, Object> data) {
+        firestore.collection(HOME_COLLECTION)
+                .document(currentHome.getValue().getId())
+                .collection(RECEIPT_COLLECTION)
+                .document(receipt.getId())
+                .set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
 
-                        // 4. Add Items to the database
-
+                        // Add Items to the new added receipt
                         for (Item item : receipt.getItems()) {
                             Map<String, Object> itemMap = new HashMap<>();
                             itemMap.put(ITEM_NAME, item.getName());
                             itemMap.put(ITEM_PRICE, item.getPrice());
 
-                            documentReference.collection(ITEM_COLLECTION)
-                                    .add(item);
+                            firestore.collection(HOME_COLLECTION)
+                                    .document(currentHome.getValue().getId())
+                                    .collection(RECEIPT_COLLECTION)
+                                    .document()
+                                    .collection(ITEM_COLLECTION)
+                                    .add(itemMap);
                         }
                         resultMessage.postValue(application.getString(R.string.new_receipt_added_message));
-                    })
-                    .addOnFailureListener(e -> {
-                        resultMessage.postValue(e.getMessage());
-                        Log.w(TAG, "Error adding document", e);
-                    });
-        }
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    resultMessage.postValue(e.getMessage());
+                    Log.w(TAG, "Error adding document", e);
+                });
+    }
+
+    private void addReceiptWithoutId(Receipt receipt, Map<String, Object> data) {
+        firestore.collection(HOME_COLLECTION)
+                .document(currentHome.getValue().getId())
+                .collection(RECEIPT_COLLECTION)
+                .add(data)
+                .addOnSuccessListener(documentReference -> {
+                    // Add Items to the database
+                    for (Item item : receipt.getItems()) {
+                        Map<String, Object> itemMap = new HashMap<>();
+                        itemMap.put(ITEM_NAME, item.getName());
+                        itemMap.put(ITEM_PRICE, item.getPrice());
+                        documentReference.collection(ITEM_COLLECTION).add(itemMap);
+                    }
+                    resultMessage.postValue(application.getString(R.string.new_receipt_added_message));
+                })
+                .addOnFailureListener(e -> {
+                    resultMessage.postValue(e.getMessage());
+                    Log.w(TAG, "Error adding document", e);
+                });
     }
 
     /**

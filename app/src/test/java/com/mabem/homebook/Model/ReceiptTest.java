@@ -1,7 +1,4 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.Item;
-import com.mabem.homebook.Model.Receipt;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
@@ -43,10 +40,11 @@ public class ReceiptTest {
     @Test
     public void receiptWithSameIdAndNameAndDateEqualToGivenReceipt_returnsTrue() {
         Double newTotal = total + 12;
-        r2 = new Receipt(id,name, date, newTotal, "not" + memberName, "not" + memberId);
+        r2 = new Receipt(id, name, date, newTotal, "not" + memberName, "not" + memberId);
 
         assertThat(r.equals(r2)).isTrue();
     }
+
     @Test
     public void receiptDifferentAsGivenObjectOfDifferentClassWithSimilarAttributes_returnsFalse() {
 

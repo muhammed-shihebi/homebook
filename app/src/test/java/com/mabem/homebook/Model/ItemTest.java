@@ -1,13 +1,10 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.Item;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.*;
 
 public class ItemTest {
     /**
@@ -18,7 +15,7 @@ public class ItemTest {
 
     @Before
     public void setUp() throws Exception {
-        it = new Item("11","example1", 110.0);
+        it = new Item("11", "example1", 110.0);
     }
 
     @After
@@ -27,13 +24,13 @@ public class ItemTest {
 
     @Test
     public void itemWithSameIdAndCodeDifferentAsGivenItem_returnsFalse() {
-        it2 = new Item("11","example1", 91.0);
+        it2 = new Item("11", "example1", 91.0);
         assertThat(it.equals(it2)).isFalse();
     }
 
     @Test
     public void itemWithSameIdAndCodeAndPriceEqualToGivenItem_returnsTrue() {
-        it2 = new Item("11","example1", 110.0);
+        it2 = new Item("11", "example1", 110.0);
         assertThat(it.equals(it2)).isTrue();
     }
 

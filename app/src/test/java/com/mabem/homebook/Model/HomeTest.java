@@ -1,6 +1,4 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.Home;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
@@ -22,7 +20,7 @@ public class HomeTest {
     @Before // each test
     public void setUp() throws Exception {
         // If you were to initialize the variable globally instead, the test cases wouldn't have been completely INDEPENDENT from one another!
-        h = new Home("11","example1", "22", true, null);
+        h = new Home("11", "example1", "22", true, null);
 
 
     }
@@ -60,10 +58,6 @@ public class HomeTest {
     public void IdEqualToGivenId_returnsTrue() {
         assertThat(h.getId()).isEqualTo("11");
     }
-
-
-
-
 
 
 }

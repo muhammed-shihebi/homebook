@@ -1,6 +1,4 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.UserNotification;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,18 +7,17 @@ import org.junit.Test;
 import static com.google.common.truth.Truth.assertThat;
 
 public class UserNotificationTest {
+    UserNotification un;
     private String homeName;
     private String type;
     private String homeId;
-
-    UserNotification un;
 
     @Before
     public void setUp() throws Exception {
         type = UserNotification.TYPE_ACCEPT;
         homeName = "testhomename";
         homeId = "testhomeid";
-        un = new UserNotification(homeName,type,homeId);
+        un = new UserNotification(homeName, type, homeId);
     }
 
     @After

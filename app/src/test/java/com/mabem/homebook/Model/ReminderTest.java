@@ -1,26 +1,22 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.Reminder;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 
 import static com.google.common.truth.Truth.assertThat;
 
 public class ReminderTest {
 
+    Reminder r, r2;
     private String id = "";
     private String name = "";
     private Date date;
     private String frequency;
-
     private Instant inst;
-    Reminder r, r2;
 
     @Before
     public void setUp() throws Exception {
@@ -45,14 +41,15 @@ public class ReminderTest {
 
         assertThat(r.equals(r2)).isTrue();
     }
+
     @Test
     public void reminderDifferentAsGivenObjectOfDifferentClassWithSimilarAttributes_returnsFalse() {
 
         class NotReminder {
 
+            public Date date;
             private String id = "testid";
             private String name = "testname";
-            public Date date;
             private String frequency = "x";
         }
 

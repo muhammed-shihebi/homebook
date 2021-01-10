@@ -1,8 +1,4 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.AdminNotification;
-import com.mabem.homebook.Model.Notification;
-import com.mabem.homebook.Model.UserNotification;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
@@ -30,9 +26,9 @@ public class NotificationTest {
 
     @Test
     public void adminNotificationsEqualToGivenAdminNotifications_returnsTrue() {
-        assertThat(n.getAdminNotifications()).isEqualTo(adminNotifications);;
+        assertThat(n.getAdminNotifications()).isEqualTo(adminNotifications);
+        ;
     }
-
 
 
 }

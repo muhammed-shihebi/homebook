@@ -38,6 +38,7 @@ public class HomeViewModel extends AndroidViewModel {
         currentHome = database.getCurrentHome();
     }
 
+    //========================================= Getters
 
     public LiveData<Member> getCurrentMember() {
         return currentMember;
@@ -55,6 +56,7 @@ public class HomeViewModel extends AndroidViewModel {
         return resultMessage;
     }
 
+
     public void updateUser(Member m, Uri localUri) {
         resultMessage.setValue(null);
         database.updateMember(m, localUri);
@@ -64,7 +66,6 @@ public class HomeViewModel extends AndroidViewModel {
         resultMessage.setValue(null);
         database.updateCurrentMember();
     }
-
 
     public void addNewHome(String homeName, boolean isPrivate) {
         resultMessage.setValue(null);

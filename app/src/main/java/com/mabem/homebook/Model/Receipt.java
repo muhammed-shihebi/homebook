@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Receipt {
-    private String id = "";
-    private String name = "";
+    private String id;
+    private String name;
     private Date date;
-    private Double total = 0.0;
+    private Double total;
     private ArrayList<Item> items;
     private String memberName;
     private String memberId;
+
+    public Receipt(){}
 
 
     public Receipt(String id, String name, Date date, Double total, String memberName, String memberId) {

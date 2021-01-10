@@ -1,19 +1,16 @@
 package com.mabem.homebook.Utils;
 
-import com.mabem.homebook.Utils.Util;
-
 import org.junit.Test;
 
 import static com.google.common.truth.Truth.assertThat;
 
-
 /**
  * Characteristics of a good unit test
- *     Fast. It is not uncommon for mature projects to have thousands of unit tests. ...
- *     Isolated. Unit tests are standalone, can be run in isolation, and have no dependencies on any outside factors such as a file system or database.
- *     Repeatable. ...
- *     Self-Checking. ...
- *     Timely.
+ * Fast. It is not uncommon for mature projects to have thousands of unit tests. ...
+ * Isolated. Unit tests are standalone, can be run in isolation, and have no dependencies on any outside factors such as a file system or database.
+ * Repeatable. ...
+ * Self-Checking. ...
+ * Timely.
  */
 
 public class UtilTest {
@@ -25,7 +22,4 @@ public class UtilTest {
         assertThat(Util.round(value, places)).isEqualTo(expected);
 
     }
-
-
-
 }

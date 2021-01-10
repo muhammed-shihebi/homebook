@@ -1,25 +1,20 @@
-package com.mabem.homebook.Model.Objects;
+package com.mabem.homebook.Model;
 
 import android.net.Uri;
-
-import com.mabem.homebook.Model.User;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.time.Instant;
-import java.util.Date;
-
 import static com.google.common.truth.Truth.assertThat;
 
 public class UserTest {
+    User u, u2;
     private String id = "";
     private String name = "";
     private String emailAddress = "";
     private String password = "";
     private Uri imageURI = null;
-    User u, u2;
 
     @Before
     public void setUp() throws Exception {
@@ -44,6 +39,7 @@ public class UserTest {
 
         assertThat(u.equals(u2)).isTrue();
     }
+
     @Test
     public void userDifferentAsGivenObjectOfDifferentClassWithSimilarAttributes_returnsFalse() {
 

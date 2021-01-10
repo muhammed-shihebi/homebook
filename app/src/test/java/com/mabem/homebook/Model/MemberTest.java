@@ -1,19 +1,14 @@
-package com.mabem.homebook.Model.Objects;
+package com.mabem.homebook.Model;
 
 import android.net.Uri;
-
-import com.mabem.homebook.Model.Home;
-import com.mabem.homebook.Model.Member;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.net.URI;
 import java.util.HashMap;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.*;
 
 public class MemberTest {
     /**
@@ -31,11 +26,10 @@ public class MemberTest {
     HashMap<Home, Boolean> home_role1;
 
 
-
     @Before
     public void setUp() throws Exception {
 
-        h1 = new Home("11","example1", "22", true, null);
+        h1 = new Home("11", "example1", "22", true, null);
         home_role1 = new HashMap<Home, Boolean>();
         home_role1.put(h1, false); // false : non-admin member
 
@@ -56,16 +50,14 @@ public class MemberTest {
     }
 
     @Test
-    public void memberIsNotAdminInAnyHomes_returnsFalse(){
-        for (Home h: mem1.getHome_role().keySet()) {
-            if (h.getId().equals(h1.getId()) && mem1.getHome_role().get(h)){
+    public void memberIsNotAdminInAnyHomes_returnsFalse() {
+        for (Home h : mem1.getHome_role().keySet()) {
+            if (h.getId().equals(h1.getId()) && mem1.getHome_role().get(h)) {
 
                 assertThat(mem1.getHome_role().get(h)).isFalse();
             }
         }
     }
-
-
 
 
 }

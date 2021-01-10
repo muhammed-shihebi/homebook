@@ -1,6 +1,4 @@
-package com.mabem.homebook.Model.Objects;
-
-import com.mabem.homebook.Model.AdminNotification;
+package com.mabem.homebook.Model;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +9,6 @@ import static com.google.common.truth.Truth.assertThat;
 /**
  * Not much to test here...
  * Test the constructor, see if UserId is initialized correctly.
- *
  */
 
 public class AdminNotificationTest {
@@ -36,10 +33,6 @@ public class AdminNotificationTest {
     public void UserIdEqualToGivenUserId_returnsTrue() {
         assertThat(an.getUserId()).isEqualTo("11");
     }
-
-
-
-
 
 
 }
